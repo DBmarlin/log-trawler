@@ -1254,6 +1254,19 @@ const Home = () => {
           <span className="text-xs">v0.1.0</span>
         </a>
       </div>
+      {!activeFileId && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-muted-foreground text-xs">
+          Made with ♥️ by{" "}
+          <a
+            href="https://www.dbmarlin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            dbmarlin.com
+          </a>
+        </div>
+      )}
       <div className="flex flex-col gap-2">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
