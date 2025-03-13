@@ -1266,13 +1266,23 @@ const Home = () => {
               title="Return to home screen"
             >
               <img
-                src="/fish-icon.svg"
-                alt="LogTrawler logo"
-                className="w-6 h-6 dark:invert"
+              src="/fish-icon2.svg"
+              alt="LogTrawler logo"
+              className="w-6 h-6 dark:hidden"
+            />
+            <img
+              src="/fish-icon2-white.svg"
+              alt="LogTrawler logo"
+              className="w-6 h-6 hidden dark:block"
+            />
+              <img
+                src="/log-trawler-badge.svg"
+                alt="LogTrawler badge"
+                className="w-24 h-10"
               />
-              <h1 className="text-xl font-semibold shrink-0 text-blue-500">
+              {/* <h1 className="text-xl font-semibold shrink-0 text-blue-500">
                 LogTrawler
-              </h1>
+              </h1> */}
             </div>
             <ThemeToggle />
           </div>

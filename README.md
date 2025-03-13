@@ -34,6 +34,11 @@ In the Log view you can filter by time, by log level or on any text in the file 
 
 ![Log Trawler log viewer](screenshots/logviewer.jpeg)
 
+## Tech Stack
+
+- [TypeScript](https://www.typescriptlang.org)
+- [React Framework](https://react.dev)
+
 ## License
 
 DBmarlin/log-trawler is licensed under the [Apache License 2.0](https://github.com/DBmarlin/log-trawler/blob/main/LICENSE)
