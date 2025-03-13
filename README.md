@@ -2,6 +2,8 @@
 
 Client-side tool for analyzing log files.
 
+[![Go to Log Trawler](https://img.shields.io/badge/Go%20to-Log%20Trawler-blue?style=for-the-badge)](https://logtrawler.netlify.app)
+
 ![Log Trawler log viewer](screenshots/logviewer.jpeg)
 
 ## Main features
