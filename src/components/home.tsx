@@ -1231,7 +1231,7 @@ const Home = () => {
           <Bot className="h-4 w-4" />
         </Button>
         <a
-          href="https://github.com/mickmcg/LogVision"
+          href="https://github.com/DBmarlin/log-trawler"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 hover:text-primary transition-colors"
