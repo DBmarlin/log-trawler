@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { Upload, X, Bot } from "lucide-react";
+import Header from "./header/Header";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Card, CardContent } from "@/components/ui/card";
@@ -1212,656 +1213,634 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen bg-background p-4 flex flex-col gap-4 relative"
+      className="min-h-screen bg-background flex flex-col relative"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragLeave={handleDragLeave}
     >
-      <ChatPanel
-        isOpen={chatPanelOpen}
-        onClose={() => setChatPanelOpen(false)}
+      <Header
+        onFileInputClick={() => document.getElementById("fileInput")?.click()}
       />
-      <div className="fixed bottom-4 right-4 flex items-center gap-2 text-muted-foreground z-10">
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
-          onClick={() => setChatPanelOpen(!chatPanelOpen)}
-        >
-          <Bot className="h-4 w-4" />
-        </Button>
-        <a
-          href="https://github.com/DBmarlin/log-trawler"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-primary transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-github"
+      <div className="p-4 flex flex-col gap-4 flex-grow">
+        <ChatPanel
+          isOpen={chatPanelOpen}
+          onClose={() => setChatPanelOpen(false)}
+        />
+        <div className="fixed bottom-4 right-4 flex items-center gap-2 text-muted-foreground z-10">
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+            onClick={() => setChatPanelOpen(!chatPanelOpen)}
           >
-            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-            <path d="M9 18c-4.51 2-5-2-7-2" />
-          </svg>
-          <span className="text-xs">v0.1.0</span>
-        </a>
-      </div>
-      {!activeFileId && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-muted-foreground text-xs">
-          Made with ♥️ by{" "}
+            <Bot className="h-4 w-4" />
+          </Button>
           <a
-            href="https://www.dbmarlin.com"
+            href="https://github.com/DBmarlin/log-trawler"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-primary transition-colors"
+            className="flex items-center gap-1 hover:text-primary transition-colors"
           >
-            dbmarlin.com
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-github"
+            >
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+            <span className="text-xs">v0.1.0</span>
           </a>
         </div>
-      )}
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => {
-                // Keep files in state but set activeFileId to null to show home screen
-                setActiveFileId(null);
-              }}
-              title="Return to home screen"
+        {!activeFileId && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-muted-foreground text-xs">
+            Made with ♥️ by{" "}
+            <a
+              href="https://www.dbmarlin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
             >
-              <img
-              src="/fish-icon2.svg"
-              alt="LogTrawler logo"
-              className="w-6 h-6 dark:hidden"
-            />
-            <img
-              src="/fish-icon2-white.svg"
-              alt="LogTrawler logo"
-              className="w-6 h-6 hidden dark:block"
-            />
-              <img
-                src="/log-trawler-badge.svg"
-                alt="LogTrawler badge"
-                className="w-24 h-10"
-              />
-              {/* <h1 className="text-xl font-semibold shrink-0 text-blue-500">
-                LogTrawler
-              </h1> */}
-            </div>
-            <ThemeToggle />
+              dbmarlin.com
+            </a>
           </div>
-          <div className="flex flex-wrap items-center gap-4">
-            {activeFileId && (
-              <>
-                <TimeRangeFilter
-                  startDate={
-                    activeFile?.timeRange?.startDate || activeFile?.startDate
-                  }
-                  endDate={
-                    activeFile?.timeRange?.endDate || activeFile?.endDate
-                  }
-                  onRangeChange={(start, end) => {
-                    // Update the time range in the same way as chart selection
-                    handleTimeRangeSelect(start, end);
-
-                    // Reset the chart selection when using the date pickers
-                    if (activeFile) {
-                      setFiles((prev) =>
-                        prev.map((file) => {
-                          if (file.id === activeFile.id) {
-                            return {
-                              ...file,
-                              timeRange: { startDate: start, endDate: end },
-                            };
-                          }
-                          return file;
-                        }),
-                      );
-                    }
-                  }}
-                />
-                <div className="hidden lg:block text-sm text-muted-foreground whitespace-nowrap">
-                  Total Lines:{" "}
-                  <span className="font-medium">
-                    {activeFile?.content.length.toLocaleString() || 0}
-                  </span>
-                  <span className="mx-2">•</span>
-                  Visible Lines:{" "}
-                  <span className="font-medium">
-                    {visibleEntries.length.toLocaleString()}
-                  </span>
-                  <span className="mx-2">•</span>(
-                  {(
-                    (visibleEntries.length /
-                      (activeFile?.content.length || 1)) *
-                    100
-                  ).toFixed(1)}
-                  % visible)
-                </div>
-                {activeFile && (
-                  <ExportButton
-                    fileName={activeFile.name}
-                    content={visibleEntries.map(
-                      (entry) => activeFile.content[entry.lineNumber - 1],
-                    )}
-                    disabled={!visibleEntries.length}
-                  />
-                )}
-              </>
-            )}
-            <Button
-              variant="outline"
-              onClick={() => document.getElementById("fileInput")?.click()}
-              className="whitespace-nowrap"
-            >
-              <div className="flex items-center gap-2">
-                <Upload className="h-4 w-4" />
-                Open Log File
-              </div>
-            </Button>
-            <input
-              id="fileInput"
-              type="file"
-              multiple
-              className="hidden"
-              onChange={async (e) => {
-                if (e.target.files) {
-                  await processFiles(Array.from(e.target.files));
-                }
-              }}
-            />
-          </div>
-        </div>
-
-        {!activeFileId ? (
-          <div className="flex flex-col gap-4">
-            <div
-              className={`border-2 border-dashed rounded-lg p-12 text-center ${isDragging ? "border-primary bg-primary/10" : "border-muted"}`}
-            >
-              <div className="flex flex-col items-center gap-2">
-                <Upload className="h-8 w-8 text-muted-foreground" />
-                <h3 className="font-semibold text-lg">
-                  Drop your log files here
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Drag and drop your log files to start analyzing. Files are
-                  processed 100% locally within your browser and not uploaded to
-                  the internet.
-                </p>
+        )}
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => {
+                  // Keep files in state but set activeFileId to null to show home screen
+                  setActiveFileId(null);
+                }}
+                title="Return to home screen"
+              >
+                {/* Logo removed from here and moved to header */}
               </div>
             </div>
-            <RecentFiles
-              onFileSelect={handleRecentFileSelect}
-              onMultipleFilesSelect={async (files) => {
-                // Process files one by one in sequence
-                for (const file of files) {
-                  await handleRecentFileSelect(file);
-                }
-              }}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-col gap-2">
-            <Tabs
-              value={activeFileId || undefined}
-              onValueChange={setActiveFileId}
-            >
-              <TabsList className="w-full justify-start h-auto p-0 bg-transparent overflow-x-auto flex-wrap">
-                {files.map((file) => (
-                  <TabsTrigger
-                    key={file.id}
-                    value={file.id}
-                    className="data-[state=active]:bg-muted relative group overflow-hidden max-w-[200px]"
-                    onContextMenu={(e) => {
-                      e.preventDefault();
-                      const contextMenu = document.createElement("div");
-                      contextMenu.className =
-                        "fixed z-50 bg-popover text-popover-foreground rounded-md border shadow-md p-1 min-w-[12rem]";
-                      contextMenu.style.left = `${e.clientX}px`;
-                      contextMenu.style.top = `${e.clientY}px`;
-
-                      const createMenuItem = (text, onClick) => {
-                        const item = document.createElement("button");
-                        item.className =
-                          "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground";
-                        item.textContent = text;
-                        item.onclick = onClick;
-                        return item;
-                      };
-
-                      // Close tab
-                      contextMenu.appendChild(
-                        createMenuItem("Close tab", () => {
-                          handleRemoveFile(file.id);
-                          document.body.removeChild(contextMenu);
-                        }),
-                      );
-
-                      // Close other tabs
-                      contextMenu.appendChild(
-                        createMenuItem("Close other tabs", () => {
-                          setFiles((prev) =>
-                            prev.filter((f) => f.id === file.id),
-                          );
-                          setActiveFileId(file.id);
-                          document.body.removeChild(contextMenu);
-                        }),
-                      );
-
-                      // Close tabs to the left
-                      contextMenu.appendChild(
-                        createMenuItem("Close tabs to the left", () => {
-                          const fileIndex = files.findIndex(
-                            (f) => f.id === file.id,
-                          );
-                          if (fileIndex > 0) {
-                            setFiles((prev) =>
-                              prev.filter((f, i) => i >= fileIndex),
-                            );
-                            setActiveFileId(file.id);
-                          }
-                          document.body.removeChild(contextMenu);
-                        }),
-                      );
-
-                      // Close tabs to the right
-                      contextMenu.appendChild(
-                        createMenuItem("Close tabs to the right", () => {
-                          const fileIndex = files.findIndex(
-                            (f) => f.id === file.id,
-                          );
-                          if (fileIndex < files.length - 1) {
-                            setFiles((prev) =>
-                              prev.filter((f, i) => i <= fileIndex),
-                            );
-                            setActiveFileId(file.id);
-                          }
-                          document.body.removeChild(contextMenu);
-                        }),
-                      );
-
-                      document.body.appendChild(contextMenu);
-
-                      // Remove the context menu when clicking outside
-                      const removeContextMenu = () => {
-                        if (document.body.contains(contextMenu)) {
-                          document.body.removeChild(contextMenu);
-                        }
-                        document.removeEventListener(
-                          "click",
-                          removeContextMenu,
-                        );
-                      };
-
-                      document.addEventListener("click", removeContextMenu);
-                    }}
-                  >
-                    <div className="relative z-10 flex items-center">
-                      <span
-                        className="truncate"
-                        title={file.name.length > 20 ? file.name : undefined}
-                      >
-                        {file.name.length > 20
-                          ? `${file.name.substring(0, 20)}...`
-                          : file.name}
-                      </span>
-                      <div
-                        role="button"
-                        tabIndex={0}
-                        className="inline-flex h-4 w-4 ml-2 items-center justify-center rounded-sm opacity-60 hover:opacity-100 hover:bg-muted/50 cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRemoveFile(file.id);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleRemoveFile(file.id);
-                          }
-                        }}
-                      >
-                        <X className="h-3 w-3" />
-                      </div>
-                    </div>
-                    {loadingFiles[file.id] !== undefined && (
-                      <div
-                        className="absolute inset-0 bg-blue-500/20 dark:bg-blue-500/30 z-0 transition-all duration-300"
-                        style={{ width: `${loadingFiles[file.id]}%` }}
-                      />
-                    )}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-
-            {activeFile ? (
-              <div className="flex flex-col h-full">
-                {activeFile.isLoading && (
-                  <div className="bg-muted/20 border rounded-md p-4 mb-4 text-center">
-                    <div className="text-sm font-medium mb-2">
-                      Loading {activeFile.name}
-                    </div>
-                    <div className="w-full bg-muted rounded-full h-2.5 mb-2">
-                      <div
-                        className="bg-blue-500 h-2.5 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${loadingFiles[activeFile.id] || 0}%`,
-                        }}
-                      />
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {loadingFiles[activeFile.id] || 0}% complete
-                    </div>
-                  </div>
-                )}
-                <TimeSeriesChart
-                  entries={chartEntries}
-                  filteredEntries={visibleEntries.map(
-                    (entry) => activeFile.content[entry.lineNumber - 1],
-                  )}
-                  onTimeRangeSelect={handleTimeRangeSelect}
-                  bucketSize={activeFile.bucketSize || "5m"}
-                  onBucketSizeChange={handleBucketSizeChange}
-                  fileStartDate={activeFile.startDate}
-                  fileEndDate={activeFile.endDate}
-                  timeRange={activeFile.timeRange}
-                />
-                <ResizablePanelGroup
-                  direction="horizontal"
-                  onLayout={(sizes) => {
-                    // When panel is dragged to be visible, update the statsVisible state
-                    if (sizes[0] > 0 && !statsVisible) {
-                      setStatsVisible(true);
-                    } else if (sizes[0] === 0 && statsVisible) {
-                      setStatsVisible(false);
+            <div className="flex flex-wrap items-center gap-4">
+              {activeFileId && (
+                <>
+                  <TimeRangeFilter
+                    startDate={
+                      activeFile?.timeRange?.startDate || activeFile?.startDate
                     }
-                  }}
-                >
-                  <ResizablePanel
-                    defaultSize={25}
-                    collapsible
-                    minSize={0}
-                    maxSize={40}
-                    className={"hidden md:block"}
-                    style={{ display: statsVisible ? undefined : "none" }}
-                    onCollapse={() => setStatsVisible(false)}
-                    onExpand={() => setStatsVisible(true)}
-                  >
-                    <div className="flex flex-col h-full">
-                      <ScrollArea className="h-[830px]">
-                        <div className="p-3 space-y-3">
-                          <LogStats
-                            entries={visibleEntries}
-                            allEntries={processedEntries}
-                            showHourlyActivity={false}
-                            onToggle={() => {
-                              setStatsVisible(false);
-                            }}
-                            showStats={statsVisible}
-                            onAddFilter={(term, type = "include") =>
-                              handleAddFilter(term, type)
+                    endDate={
+                      activeFile?.timeRange?.endDate || activeFile?.endDate
+                    }
+                    onRangeChange={(start, end) => {
+                      // Update the time range in the same way as chart selection
+                      handleTimeRangeSelect(start, end);
+
+                      // Reset the chart selection when using the date pickers
+                      if (activeFile) {
+                        setFiles((prev) =>
+                          prev.map((file) => {
+                            if (file.id === activeFile.id) {
+                              return {
+                                ...file,
+                                timeRange: { startDate: start, endDate: end },
+                              };
                             }
-                          />
-
-                          {/* Notes Panel - positioned immediately below Log Levels with no gap */}
-                          {activeFile && (
-                            <NotesPanel
-                              fileId={activeFile.id}
-                              initialNotes={activeFile.notes || ""}
-                              onSaveNotes={(notes) => {
-                                // Update notes in state
-                                setFiles((prev) =>
-                                  prev.map((file) => {
-                                    if (file.id === activeFile.id) {
-                                      return {
-                                        ...file,
-                                        notes,
-                                      };
-                                    }
-                                    return file;
-                                  }),
-                                );
-
-                                // Save to IndexedDB
-                                try {
-                                  import("@/lib/indexedDB-fix").then(
-                                    ({ updateLogFile }) => {
-                                      updateLogFile(activeFile.id, {
-                                        notes,
-                                      }).catch((err) =>
-                                        console.error(
-                                          "Failed to update notes in IndexedDB:",
-                                          err,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } catch (error) {
-                                  console.error(
-                                    "Error importing IndexedDB module:",
-                                    error,
-                                  );
-                                }
-                              }}
-                            />
-                          )}
-
-                          {/* Tags Panel */}
-                          {activeFile && (
-                            <TagsPanel
-                              fileId={activeFile.id}
-                              initialTags={activeFile.tags || []}
-                              onSaveTags={(tags) => {
-                                // Update tags in state
-                                setFiles((prev) =>
-                                  prev.map((file) => {
-                                    if (file.id === activeFile.id) {
-                                      return {
-                                        ...file,
-                                        tags,
-                                      };
-                                    }
-                                    return file;
-                                  }),
-                                );
-
-                                // Save to IndexedDB
-                                try {
-                                  import("@/lib/indexedDB-fix").then(
-                                    ({ updateLogFile }) => {
-                                      updateLogFile(activeFile.id, {
-                                        tags,
-                                      }).catch((err) =>
-                                        console.error(
-                                          "Failed to update tags in IndexedDB:",
-                                          err,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } catch (error) {
-                                  console.error(
-                                    "Error importing IndexedDB module:",
-                                    error,
-                                  );
-                                }
-                              }}
-                            />
-                          )}
-                        </div>
-                      </ScrollArea>
-                    </div>
-                  </ResizablePanel>
-
-                  <ResizableHandle
-                    withHandle
-                    className={
-                      !statsVisible
-                        ? "after:bg-primary after:w-1.5 after:h-8 after:rounded-sm cursor-col-resize"
-                        : ""
-                    }
-                    onDoubleClick={() => {
-                      if (!statsVisible) {
-                        setStatsVisible(true);
+                            return file;
+                          }),
+                        );
                       }
                     }}
                   />
+                  <div className="hidden lg:block text-sm text-muted-foreground whitespace-nowrap">
+                    Total Lines:{" "}
+                    <span className="font-medium">
+                      {activeFile?.content.length.toLocaleString() || 0}
+                    </span>
+                    <span className="mx-2">•</span>
+                    Visible Lines:{" "}
+                    <span className="font-medium">
+                      {visibleEntries.length.toLocaleString()}
+                    </span>
+                    <span className="mx-2">•</span>(
+                    {(
+                      (visibleEntries.length /
+                        (activeFile?.content.length || 1)) *
+                      100
+                    ).toFixed(1)}
+                    % visible)
+                  </div>
+                  {activeFile && (
+                    <ExportButton
+                      fileName={activeFile.name}
+                      content={visibleEntries.map(
+                        (entry) => activeFile.content[entry.lineNumber - 1],
+                      )}
+                      disabled={!visibleEntries.length}
+                    />
+                  )}
+                </>
+              )}
+              {/* Open Log File button removed from here and moved to header */}
+              <input
+                id="fileInput"
+                type="file"
+                multiple
+                className="hidden"
+                onChange={async (e) => {
+                  if (e.target.files) {
+                    await processFiles(Array.from(e.target.files));
+                  }
+                }}
+              />
+            </div>
+          </div>
 
-                  <ResizablePanel defaultSize={75}>
-                    <div className="flex flex-col h-full relative">
-                      <SearchBar
-                        onSearch={handleSearch}
-                        onAddInclude={(term, isRegex) =>
-                          handleAddFilter(term, "include", isRegex)
-                        }
-                        onAddExclude={(term, isRegex) =>
-                          handleAddFilter(term, "exclude", isRegex)
-                        }
-                        searchTerm={searchTerm}
-                        isRegex={isRegexSearch}
-                      />
-
-                      <ActiveFilters
-                        filters={activeFile?.filters}
-                        entries={activeFile?.content}
-                        onRemoveFilter={handleRemoveFilter}
-                        onToggleFilterType={(id) => {
-                          if (!activeFile?.filters) return;
-                          const filter = activeFile.filters.find(
-                            (f) => f.id === id,
-                          );
-                          if (!filter) return;
-
-                          handleAddFilter(
-                            filter.term,
-                            filter.type === "include" ? "exclude" : "include",
-                            filter.isRegex,
-                          );
-                          handleRemoveFilter(id);
-                        }}
-                        onClearAll={handleClearFilters}
-                        filterLogic={activeFile?.filterLogic || "OR"}
-                        onFilterLogicChange={handleFilterLogicChange}
-                        rightContent={
-                          <FilterPresets
-                            currentFilters={activeFile?.filters || []}
-                            presets={presets}
-                            onSavePreset={(name) => {
-                              if (!activeFile?.filters) return;
-                              const newPreset = {
-                                id: Math.random().toString(),
-                                name,
-                                filters: activeFile.filters,
-                              };
-                              setPresets((prev) => [...prev, newPreset]);
-                            }}
-                            onLoadPreset={(preset) => {
-                              if (!activeFile) return;
-                              setFiles((prev) =>
-                                prev.map((file) => {
-                                  if (file.id === activeFile.id) {
-                                    return {
-                                      ...file,
-                                      filters: preset.filters,
-                                    };
-                                  }
-                                  return file;
-                                }),
-                              );
-                            }}
-                            onDeletePreset={(presetId) => {
-                              setPresets((prev) =>
-                                prev.filter((p) => p.id !== presetId),
-                              );
-                            }}
-                          />
-                        }
-                      />
-
-                      <LogDisplay
-                        entries={visibleEntries}
-                        filters={activeFile?.filters}
-                        searchTerm={searchTerm}
-                        onAddInclude={(term) =>
-                          handleAddFilter(term, "include")
-                        }
-                        onAddExclude={(term) =>
-                          handleAddFilter(term, "exclude")
-                        }
-                        fileId={activeFile?.id}
-                        onUpdateInterestingLines={(fileId, lines) => {
-                          // Update in IndexedDB
-                          try {
-                            import("@/lib/indexedDB-fix").then(
-                              ({ updateLogFile }) => {
-                                updateLogFile(fileId, {
-                                  interestingLines: lines,
-                                }).catch((err) =>
-                                  console.error(
-                                    "Failed to update interesting lines in IndexedDB:",
-                                    err,
-                                  ),
-                                );
-                              },
-                            );
-                          } catch (error) {
-                            console.error(
-                              "Error importing IndexedDB module:",
-                              error,
-                            );
-                          }
-                        }}
-                        initialInterestingLines={activeFile?.interestingLines}
-                        initialShowOnlyMarked={activeFile?.showOnlyMarked}
-                        onUpdateShowOnlyMarked={(fileId, showOnly) => {
-                          // Update in IndexedDB
-                          try {
-                            import("@/lib/indexedDB-fix").then(
-                              ({ updateLogFile }) => {
-                                updateLogFile(fileId, {
-                                  showOnlyMarked: showOnly,
-                                }).catch((err) =>
-                                  console.error(
-                                    "Failed to update showOnlyMarked in IndexedDB:",
-                                    err,
-                                  ),
-                                );
-                              },
-                            );
-                          } catch (error) {
-                            console.error(
-                              "Error importing IndexedDB module:",
-                              error,
-                            );
-                          }
-                        }}
-                      />
-                    </div>
-                  </ResizablePanel>
-                </ResizablePanelGroup>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center p-8">
-                <div className="text-center">
-                  <h3 className="text-lg font-medium">No file selected</h3>
+          {!activeFileId ? (
+            <div className="flex flex-col gap-4">
+              <div
+                className={`border-2 border-dashed rounded-lg p-12 text-center ${isDragging ? "border-primary bg-primary/10" : "border-muted"}`}
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <Upload className="h-8 w-8 text-muted-foreground" />
+                  <h3 className="font-semibold text-lg">
+                    Drop your log files here
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Select a file from the tabs above or open a new log file.
+                    Drag and drop your log files to start analyzing. Files are
+                    processed 100% locally within your browser and not uploaded
+                    to the internet.
                   </p>
                 </div>
               </div>
-            )}
-          </div>
-        )}
+              <RecentFiles
+                onFileSelect={handleRecentFileSelect}
+                onMultipleFilesSelect={async (files) => {
+                  // Process files one by one in sequence
+                  for (const file of files) {
+                    await handleRecentFileSelect(file);
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <Tabs
+                value={activeFileId || undefined}
+                onValueChange={setActiveFileId}
+              >
+                <TabsList className="w-full justify-start h-auto p-0 bg-transparent overflow-x-auto flex-wrap">
+                  {files.map((file) => (
+                    <TabsTrigger
+                      key={file.id}
+                      value={file.id}
+                      className="data-[state=active]:bg-muted relative group overflow-hidden max-w-[200px]"
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        const contextMenu = document.createElement("div");
+                        contextMenu.className =
+                          "fixed z-50 bg-popover text-popover-foreground rounded-md border shadow-md p-1 min-w-[12rem]";
+                        contextMenu.style.left = `${e.clientX}px`;
+                        contextMenu.style.top = `${e.clientY}px`;
+
+                        const createMenuItem = (text, onClick) => {
+                          const item = document.createElement("button");
+                          item.className =
+                            "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground";
+                          item.textContent = text;
+                          item.onclick = onClick;
+                          return item;
+                        };
+
+                        // Close tab
+                        contextMenu.appendChild(
+                          createMenuItem("Close tab", () => {
+                            handleRemoveFile(file.id);
+                            document.body.removeChild(contextMenu);
+                          }),
+                        );
+
+                        // Close other tabs
+                        contextMenu.appendChild(
+                          createMenuItem("Close other tabs", () => {
+                            setFiles((prev) =>
+                              prev.filter((f) => f.id === file.id),
+                            );
+                            setActiveFileId(file.id);
+                            document.body.removeChild(contextMenu);
+                          }),
+                        );
+
+                        // Close tabs to the left
+                        contextMenu.appendChild(
+                          createMenuItem("Close tabs to the left", () => {
+                            const fileIndex = files.findIndex(
+                              (f) => f.id === file.id,
+                            );
+                            if (fileIndex > 0) {
+                              setFiles((prev) =>
+                                prev.filter((f, i) => i >= fileIndex),
+                              );
+                              setActiveFileId(file.id);
+                            }
+                            document.body.removeChild(contextMenu);
+                          }),
+                        );
+
+                        // Close tabs to the right
+                        contextMenu.appendChild(
+                          createMenuItem("Close tabs to the right", () => {
+                            const fileIndex = files.findIndex(
+                              (f) => f.id === file.id,
+                            );
+                            if (fileIndex < files.length - 1) {
+                              setFiles((prev) =>
+                                prev.filter((f, i) => i <= fileIndex),
+                              );
+                              setActiveFileId(file.id);
+                            }
+                            document.body.removeChild(contextMenu);
+                          }),
+                        );
+
+                        document.body.appendChild(contextMenu);
+
+                        // Remove the context menu when clicking outside
+                        const removeContextMenu = () => {
+                          if (document.body.contains(contextMenu)) {
+                            document.body.removeChild(contextMenu);
+                          }
+                          document.removeEventListener(
+                            "click",
+                            removeContextMenu,
+                          );
+                        };
+
+                        document.addEventListener("click", removeContextMenu);
+                      }}
+                    >
+                      <div className="relative z-10 flex items-center">
+                        <span
+                          className="truncate"
+                          title={file.name.length > 20 ? file.name : undefined}
+                        >
+                          {file.name.length > 20
+                            ? `${file.name.substring(0, 20)}...`
+                            : file.name}
+                        </span>
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          className="inline-flex h-4 w-4 ml-2 items-center justify-center rounded-sm opacity-60 hover:opacity-100 hover:bg-muted/50 cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveFile(file.id);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleRemoveFile(file.id);
+                            }
+                          }}
+                        >
+                          <X className="h-3 w-3" />
+                        </div>
+                      </div>
+                      {loadingFiles[file.id] !== undefined && (
+                        <div
+                          className="absolute inset-0 bg-blue-500/20 dark:bg-blue-500/30 z-0 transition-all duration-300"
+                          style={{ width: `${loadingFiles[file.id]}%` }}
+                        />
+                      )}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+
+              {activeFile ? (
+                <div className="flex flex-col h-full">
+                  {activeFile.isLoading && (
+                    <div className="bg-muted/20 border rounded-md p-4 mb-4 text-center">
+                      <div className="text-sm font-medium mb-2">
+                        Loading {activeFile.name}
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2.5 mb-2">
+                        <div
+                          className="bg-blue-500 h-2.5 rounded-full transition-all duration-300"
+                          style={{
+                            width: `${loadingFiles[activeFile.id] || 0}%`,
+                          }}
+                        />
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {loadingFiles[activeFile.id] || 0}% complete
+                      </div>
+                    </div>
+                  )}
+                  <TimeSeriesChart
+                    entries={chartEntries}
+                    filteredEntries={visibleEntries.map(
+                      (entry) => activeFile.content[entry.lineNumber - 1],
+                    )}
+                    onTimeRangeSelect={handleTimeRangeSelect}
+                    bucketSize={activeFile.bucketSize || "5m"}
+                    onBucketSizeChange={handleBucketSizeChange}
+                    fileStartDate={activeFile.startDate}
+                    fileEndDate={activeFile.endDate}
+                    timeRange={activeFile.timeRange}
+                  />
+                  <ResizablePanelGroup
+                    direction="horizontal"
+                    onLayout={(sizes) => {
+                      // When panel is dragged to be visible, update the statsVisible state
+                      if (sizes[0] > 0 && !statsVisible) {
+                        setStatsVisible(true);
+                      } else if (sizes[0] === 0 && statsVisible) {
+                        setStatsVisible(false);
+                      }
+                    }}
+                  >
+                    <ResizablePanel
+                      defaultSize={25}
+                      collapsible
+                      minSize={0}
+                      maxSize={40}
+                      className={"hidden md:block"}
+                      style={{ display: statsVisible ? undefined : "none" }}
+                      onCollapse={() => setStatsVisible(false)}
+                      onExpand={() => setStatsVisible(true)}
+                    >
+                      <div className="flex flex-col h-full">
+                        <ScrollArea className="h-[830px]">
+                          <div className="p-3 space-y-3">
+                            <LogStats
+                              entries={visibleEntries}
+                              allEntries={processedEntries}
+                              showHourlyActivity={false}
+                              onToggle={() => {
+                                setStatsVisible(false);
+                              }}
+                              showStats={statsVisible}
+                              onAddFilter={(term, type = "include") =>
+                                handleAddFilter(term, type)
+                              }
+                            />
+
+                            {/* Notes Panel - positioned immediately below Log Levels with no gap */}
+                            {activeFile && (
+                              <NotesPanel
+                                fileId={activeFile.id}
+                                initialNotes={activeFile.notes || ""}
+                                onSaveNotes={(notes) => {
+                                  // Update notes in state
+                                  setFiles((prev) =>
+                                    prev.map((file) => {
+                                      if (file.id === activeFile.id) {
+                                        return {
+                                          ...file,
+                                          notes,
+                                        };
+                                      }
+                                      return file;
+                                    }),
+                                  );
+
+                                  // Save to IndexedDB
+                                  try {
+                                    import("@/lib/indexedDB-fix").then(
+                                      ({ updateLogFile }) => {
+                                        updateLogFile(activeFile.id, {
+                                          notes,
+                                        }).catch((err) =>
+                                          console.error(
+                                            "Failed to update notes in IndexedDB:",
+                                            err,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } catch (error) {
+                                    console.error(
+                                      "Error importing IndexedDB module:",
+                                      error,
+                                    );
+                                  }
+                                }}
+                              />
+                            )}
+
+                            {/* Tags Panel */}
+                            {activeFile && (
+                              <TagsPanel
+                                fileId={activeFile.id}
+                                initialTags={activeFile.tags || []}
+                                onSaveTags={(tags) => {
+                                  // Update tags in state
+                                  setFiles((prev) =>
+                                    prev.map((file) => {
+                                      if (file.id === activeFile.id) {
+                                        return {
+                                          ...file,
+                                          tags,
+                                        };
+                                      }
+                                      return file;
+                                    }),
+                                  );
+
+                                  // Save to IndexedDB
+                                  try {
+                                    import("@/lib/indexedDB-fix").then(
+                                      ({ updateLogFile }) => {
+                                        updateLogFile(activeFile.id, {
+                                          tags,
+                                        }).catch((err) =>
+                                          console.error(
+                                            "Failed to update tags in IndexedDB:",
+                                            err,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } catch (error) {
+                                    console.error(
+                                      "Error importing IndexedDB module:",
+                                      error,
+                                    );
+                                  }
+                                }}
+                              />
+                            )}
+                          </div>
+                        </ScrollArea>
+                      </div>
+                    </ResizablePanel>
+
+                    <ResizableHandle
+                      withHandle
+                      className={
+                        !statsVisible
+                          ? "after:bg-primary after:w-1.5 after:h-8 after:rounded-sm cursor-col-resize"
+                          : ""
+                      }
+                      onDoubleClick={() => {
+                        if (!statsVisible) {
+                          setStatsVisible(true);
+                        }
+                      }}
+                    />
+
+                    <ResizablePanel defaultSize={75}>
+                      <div className="flex flex-col h-full relative">
+                        <SearchBar
+                          onSearch={handleSearch}
+                          onAddInclude={(term, isRegex) =>
+                            handleAddFilter(term, "include", isRegex)
+                          }
+                          onAddExclude={(term, isRegex) =>
+                            handleAddFilter(term, "exclude", isRegex)
+                          }
+                          searchTerm={searchTerm}
+                          isRegex={isRegexSearch}
+                        />
+
+                        <ActiveFilters
+                          filters={activeFile?.filters}
+                          entries={activeFile?.content}
+                          onRemoveFilter={handleRemoveFilter}
+                          onToggleFilterType={(id) => {
+                            if (!activeFile?.filters) return;
+                            const filter = activeFile.filters.find(
+                              (f) => f.id === id,
+                            );
+                            if (!filter) return;
+
+                            handleAddFilter(
+                              filter.term,
+                              filter.type === "include" ? "exclude" : "include",
+                              filter.isRegex,
+                            );
+                            handleRemoveFilter(id);
+                          }}
+                          onClearAll={handleClearFilters}
+                          filterLogic={activeFile?.filterLogic || "OR"}
+                          onFilterLogicChange={handleFilterLogicChange}
+                          rightContent={
+                            <FilterPresets
+                              currentFilters={activeFile?.filters || []}
+                              presets={presets}
+                              onSavePreset={(name) => {
+                                if (!activeFile?.filters) return;
+                                const newPreset = {
+                                  id: Math.random().toString(),
+                                  name,
+                                  filters: activeFile.filters,
+                                };
+                                setPresets((prev) => [...prev, newPreset]);
+                              }}
+                              onLoadPreset={(preset) => {
+                                if (!activeFile) return;
+                                setFiles((prev) =>
+                                  prev.map((file) => {
+                                    if (file.id === activeFile.id) {
+                                      return {
+                                        ...file,
+                                        filters: preset.filters,
+                                      };
+                                    }
+                                    return file;
+                                  }),
+                                );
+                              }}
+                              onDeletePreset={(presetId) => {
+                                setPresets((prev) =>
+                                  prev.filter((p) => p.id !== presetId),
+                                );
+                              }}
+                            />
+                          }
+                        />
+
+                        <LogDisplay
+                          entries={visibleEntries}
+                          filters={activeFile?.filters}
+                          searchTerm={searchTerm}
+                          onAddInclude={(term) =>
+                            handleAddFilter(term, "include")
+                          }
+                          onAddExclude={(term) =>
+                            handleAddFilter(term, "exclude")
+                          }
+                          fileId={activeFile?.id}
+                          onUpdateInterestingLines={(fileId, lines) => {
+                            // Update in IndexedDB
+                            try {
+                              import("@/lib/indexedDB-fix").then(
+                                ({ updateLogFile }) => {
+                                  updateLogFile(fileId, {
+                                    interestingLines: lines,
+                                  }).catch((err) =>
+                                    console.error(
+                                      "Failed to update interesting lines in IndexedDB:",
+                                      err,
+                                    ),
+                                  );
+                                },
+                              );
+                            } catch (error) {
+                              console.error(
+                                "Error importing IndexedDB module:",
+                                error,
+                              );
+                            }
+                          }}
+                          initialInterestingLines={activeFile?.interestingLines}
+                          initialShowOnlyMarked={activeFile?.showOnlyMarked}
+                          onUpdateShowOnlyMarked={(fileId, showOnly) => {
+                            // Update in IndexedDB
+                            try {
+                              import("@/lib/indexedDB-fix").then(
+                                ({ updateLogFile }) => {
+                                  updateLogFile(fileId, {
+                                    showOnlyMarked: showOnly,
+                                  }).catch((err) =>
+                                    console.error(
+                                      "Failed to update showOnlyMarked in IndexedDB:",
+                                      err,
+                                    ),
+                                  );
+                                },
+                              );
+                            } catch (error) {
+                              console.error(
+                                "Error importing IndexedDB module:",
+                                error,
+                              );
+                            }
+                          }}
+                        />
+                      </div>
+                    </ResizablePanel>
+                  </ResizablePanelGroup>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium">No file selected</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Select a file from the tabs above or open a new log file.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
