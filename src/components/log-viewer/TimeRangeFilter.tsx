@@ -121,7 +121,7 @@ const TimeRangeFilter = ({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className={`justify-start text-left font-normal ${!startDate && "text-muted-foreground"}`}
+            className={`justify-start text-left font-normal text-foreground ${!startDate && "text-muted-foreground"}`}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {startDate ? formatDate(startDate) : "Start date & time"}
@@ -169,7 +169,7 @@ const TimeRangeFilter = ({
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className={`justify-start text-left font-normal ${!endDate && "text-muted-foreground"}`}
+            className={`justify-start text-left font-normal text-foreground ${!endDate && "text-muted-foreground"}`}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {endDate ? formatDate(endDate) : "End date & time"}
