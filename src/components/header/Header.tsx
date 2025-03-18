@@ -5,11 +5,13 @@ import { Upload } from "lucide-react";
 interface HeaderProps {
   title?: string;
   onFileInputClick?: () => void;
+  onLogoClick?: () => void;
 }
 
 export default function Header({
   title = "Red Snapper",
   onFileInputClick = () => {},
+  onLogoClick = () => {},
 }: HeaderProps) {
   return (
     <header
@@ -17,7 +19,11 @@ export default function Header({
       style={{ backgroundColor: "#02203E", color: "white" }}
     >
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 cursor-pointer">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={onLogoClick}
+          title="Return to home screen"
+        >
           <img
             src="/fish-icon2-white.svg"
             alt="LogTrawler logo"
