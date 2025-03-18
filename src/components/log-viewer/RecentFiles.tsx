@@ -481,60 +481,62 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   }}
                 >
                   <td className="py-2">
-                    {selectionMode && (
-                      <input
-                        type="checkbox"
-                        checked={selectedFiles.has(file.id)}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          setSelectedFiles((prev) => {
-                            const newSet = new Set(prev);
-                            if (e.target.checked) {
-                              newSet.add(file.id);
-                            } else {
-                              newSet.delete(file.id);
-                            }
-                            return newSet;
-                          });
-                        }}
-                        className="mr-2"
-                      />
-                    )}
-                    <button
-                      className="flex items-center gap-2 text-primary hover:underline"
-                      onClick={(e) => {
-                        if (!selectionMode) {
-                          onFileSelect(file);
-                        }
-                      }}
-                    >
-                      <FileText className="h-4 w-4" />
-                      {file.name}
-                      {file.notes && file.notes.trim() !== "" && (
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <StickyNote
-                                className="h-3 w-3 text-blue-500 ml-1 cursor-help"
-                                aria-label="Has notes"
-                              />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <div className="max-w-xs">
-                                <p className="font-semibold text-xs mb-1">
-                                  Notes:
-                                </p>
-                                <p className="text-xs">
-                                  {file.notes.length > 200
-                                    ? `${file.notes.substring(0, 200)}...`
-                                    : file.notes}
-                                </p>
-                              </div>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                    <div className="flex items-center">
+                      {selectionMode && (
+                        <input
+                          type="checkbox"
+                          checked={selectedFiles.has(file.id)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            setSelectedFiles((prev) => {
+                              const newSet = new Set(prev);
+                              if (e.target.checked) {
+                                newSet.add(file.id);
+                              } else {
+                                newSet.delete(file.id);
+                              }
+                              return newSet;
+                            });
+                          }}
+                          className="mr-2"
+                        />
                       )}
-                    </button>
+                      <button
+                        className="flex items-center gap-2 text-primary hover:underline"
+                        onClick={(e) => {
+                          if (!selectionMode) {
+                            onFileSelect(file);
+                          }
+                        }}
+                      >
+                        <FileText className="h-4 w-4" />
+                        {file.name}
+                        {file.notes && file.notes.trim() !== "" && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <StickyNote
+                                  className="h-3 w-3 text-blue-500 ml-1 cursor-help"
+                                  aria-label="Has notes"
+                                />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <div className="max-w-xs">
+                                  <p className="font-semibold text-xs mb-1">
+                                    Notes:
+                                  </p>
+                                  <p className="text-xs">
+                                    {file.notes.length > 200
+                                      ? `${file.notes.substring(0, 200)}...`
+                                      : file.notes}
+                                  </p>
+                                </div>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
+                      </button>
+                    </div>
                     {file.tags && file.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-1">
                         {file.tags.map((tag, index) => (
