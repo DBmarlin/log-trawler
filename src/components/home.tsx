@@ -1221,6 +1221,28 @@ const Home = () => {
       <Header
         onFileInputClick={() => document.getElementById("fileInput")?.click()}
         onLogoClick={() => setActiveFileId(null)}
+        showDateControls={!!activeFileId}
+        startDate={activeFile?.timeRange?.startDate || activeFile?.startDate}
+        endDate={activeFile?.timeRange?.endDate || activeFile?.endDate}
+        onRangeChange={(start, end) => {
+          // Update the time range in the same way as chart selection
+          handleTimeRangeSelect(start, end);
+
+          // Reset the chart selection when using the date pickers
+          if (activeFile) {
+            setFiles((prev) =>
+              prev.map((file) => {
+                if (file.id === activeFile.id) {
+                  return {
+                    ...file,
+                    timeRange: { startDate: start, endDate: end },
+                  };
+                }
+                return file;
+              }),
+            );
+          }
+        }}
       />
       <div className="p-4 flex flex-col gap-4 flex-grow">
         <ChatPanel
@@ -1255,33 +1277,6 @@ const Home = () => {
             <div className="flex flex-wrap items-center gap-4">
               {activeFileId && (
                 <>
-                  <TimeRangeFilter
-                    startDate={
-                      activeFile?.timeRange?.startDate || activeFile?.startDate
-                    }
-                    endDate={
-                      activeFile?.timeRange?.endDate || activeFile?.endDate
-                    }
-                    onRangeChange={(start, end) => {
-                      // Update the time range in the same way as chart selection
-                      handleTimeRangeSelect(start, end);
-
-                      // Reset the chart selection when using the date pickers
-                      if (activeFile) {
-                        setFiles((prev) =>
-                          prev.map((file) => {
-                            if (file.id === activeFile.id) {
-                              return {
-                                ...file,
-                                timeRange: { startDate: start, endDate: end },
-                              };
-                            }
-                            return file;
-                          }),
-                        );
-                      }
-                    }}
-                  />
                   <div className="hidden lg:block text-sm text-muted-foreground whitespace-nowrap">
                     Total Lines:{" "}
                     <span className="font-medium">

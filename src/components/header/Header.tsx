@@ -1,17 +1,26 @@
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../theme-toggle";
 import { Upload } from "lucide-react";
+import TimeRangeFilter from "../log-viewer/TimeRangeFilter";
 
 interface HeaderProps {
   title?: string;
   onFileInputClick?: () => void;
   onLogoClick?: () => void;
+  showDateControls?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+  onRangeChange?: (start?: Date, end?: Date) => void;
 }
 
 export default function Header({
   title = "Red Snapper",
   onFileInputClick = () => {},
   onLogoClick = () => {},
+  showDateControls = false,
+  startDate,
+  endDate,
+  onRangeChange = () => {},
 }: HeaderProps) {
   return (
     <header
@@ -37,16 +46,25 @@ export default function Header({
         </div>
         <ThemeToggle />
       </div>
-      <Button
-        variant="outline"
-        onClick={onFileInputClick}
-        className="whitespace-nowrap bg-green-600 text-white hover:bg-green-700 hover:text-white border-green-600 hover:border-green-700"
-      >
-        <div className="flex items-center gap-2">
-          <Upload className="h-4 w-4" />
-          Open Log File
-        </div>
-      </Button>
+      <div className="flex items-center gap-4">
+        {showDateControls && (
+          <TimeRangeFilter
+            startDate={startDate}
+            endDate={endDate}
+            onRangeChange={onRangeChange}
+          />
+        )}
+        <Button
+          variant="outline"
+          onClick={onFileInputClick}
+          className="whitespace-nowrap bg-green-600 text-white hover:bg-green-700 hover:text-white border-green-600 hover:border-green-700"
+        >
+          <div className="flex items-center gap-2">
+            <Upload className="h-4 w-4" />
+            Open Log File
+          </div>
+        </Button>
+      </div>
     </header>
   );
 }
