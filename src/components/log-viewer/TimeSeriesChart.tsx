@@ -811,9 +811,6 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
               />
             )}
         </div>
-        <div className="text-xs text-center text-muted-foreground mt-2">
-          Click and drag to select a time range
-        </div>
       </CardContent>
     </Card>
   );

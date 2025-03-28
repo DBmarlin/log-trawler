@@ -190,40 +190,40 @@ const LogDisplay = ({
 
       // Only update state if the range has changed significantly (increased threshold)
       if (
-        Math.abs(startIndex - visibleRange.start) > 10 ||
-        Math.abs(endIndex - visibleRange.end) > 10
+        Math.abs(startIndex - visibleRange.start) > 5 ||
+        Math.abs(endIndex - visibleRange.end) > 5
       ) {
         setVisibleRange({ start: startIndex, end: endIndex });
       }
     };
 
-    // Use debounced scroll handler instead of throttled for less frequent updates
-    let scrollTimeout: number | null = null;
-    const debouncedScrollHandler = () => {
-      if (scrollTimeout !== null) {
-        window.clearTimeout(scrollTimeout);
-      }
-      scrollTimeout = window.setTimeout(() => {
+    // Use throttled scroll handler for more responsive updates
+    let lastScrollTime = 0;
+    const throttleInterval = 16; // ~60fps
+
+    const throttledScrollHandler = () => {
+      const now = Date.now();
+      if (now - lastScrollTime >= throttleInterval) {
+        lastScrollTime = now;
         handleScroll();
-        scrollTimeout = null;
-      }, 100); // Increased delay to 100ms
+      } else {
+        // Schedule next check
+        window.requestAnimationFrame(throttledScrollHandler);
+      }
     };
 
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", debouncedScrollHandler);
+      scrollContainer.addEventListener("scroll", throttledScrollHandler);
       handleScroll(); // Initial calculation
     }
 
     return () => {
       if (scrollContainer) {
-        scrollContainer.removeEventListener("scroll", debouncedScrollHandler);
-      }
-      if (scrollTimeout !== null) {
-        window.clearTimeout(scrollTimeout);
+        scrollContainer.removeEventListener("scroll", throttledScrollHandler);
       }
     };
-  }, [entries.length]);
+  }, [entries.length, visibleRange]); // Added visibleRange dependency
 
   const getHighlights = (message: string) => {
     // Skip processing if no filters
@@ -416,7 +416,14 @@ const LogDisplay = ({
         top: 0,
         behavior: "smooth",
       });
-      setTimeout(() => setScrolling(false), 500);
+      setTimeout(() => {
+        setScrolling(false);
+        // Force recalculation of visible range after scrolling completes
+        setVisibleRange({
+          start: 0,
+          end: Math.min(100, filteredEntries.length),
+        });
+      }, 500);
     }
   };
 
@@ -424,12 +431,21 @@ const LogDisplay = ({
     if (scrollContainerRef.current) {
       setScrolling(true);
       // Calculate the total height based on filtered entries
-      const totalHeight = filteredEntries.length * 40;
+      const itemHeight = 40;
+      const totalHeight = filteredEntries.length * itemHeight;
       scrollContainerRef.current.scrollTo({
         top: totalHeight,
         behavior: "smooth",
       });
-      setTimeout(() => setScrolling(false), 500);
+      setTimeout(() => {
+        setScrolling(false);
+        // Force recalculation of visible range after scrolling completes
+        const maxStart = Math.max(0, filteredEntries.length - 100);
+        setVisibleRange({
+          start: maxStart,
+          end: filteredEntries.length,
+        });
+      }, 500);
     }
   };
 
@@ -447,7 +463,23 @@ const LogDisplay = ({
         top: targetIndex * itemHeight,
         behavior: "smooth",
       });
-      setTimeout(() => setScrolling(false), 500);
+      setTimeout(() => {
+        setScrolling(false);
+        // Force recalculation of visible range after scrolling completes
+        if (scrollContainerRef.current) {
+          const { scrollTop } = scrollContainerRef.current;
+          const startIndex = Math.max(
+            0,
+            Math.floor(scrollTop / itemHeight) - 10,
+          );
+          const visibleItems = Math.ceil(pageHeight / itemHeight) + 20;
+          const endIndex = Math.min(
+            filteredEntries.length,
+            startIndex + visibleItems,
+          );
+          setVisibleRange({ start: startIndex, end: endIndex });
+        }
+      }, 500);
     }
   };
 
@@ -468,7 +500,23 @@ const LogDisplay = ({
         top: targetIndex * itemHeight,
         behavior: "smooth",
       });
-      setTimeout(() => setScrolling(false), 500);
+      setTimeout(() => {
+        setScrolling(false);
+        // Force recalculation of visible range after scrolling completes
+        if (scrollContainerRef.current) {
+          const { scrollTop } = scrollContainerRef.current;
+          const startIndex = Math.max(
+            0,
+            Math.floor(scrollTop / itemHeight) - 10,
+          );
+          const visibleItems = Math.ceil(pageHeight / itemHeight) + 20;
+          const endIndex = Math.min(
+            filteredEntries.length,
+            startIndex + visibleItems,
+          );
+          setVisibleRange({ start: startIndex, end: endIndex });
+        }
+      }, 500);
     }
   };
 
@@ -499,8 +547,9 @@ const LogDisplay = ({
   );
 
   // Calculate total height to maintain proper scrollbar
-  const totalHeight = filteredEntries.length * 40; // Approximate height of each entry
-  const topPadding = visibleRange.start * 40;
+  const itemHeight = 40; // Approximate height of each entry
+  const totalHeight = filteredEntries.length * itemHeight;
+  const topPadding = visibleRange.start * itemHeight;
 
   return (
     <div
@@ -612,13 +661,18 @@ const LogDisplay = ({
         >
           <div
             className={wrapText ? "" : "min-w-[1200px] w-full"}
-            style={{ height: `${totalHeight}px`, position: "relative" }}
+            style={{
+              height: `${totalHeight}px`,
+              position: "relative",
+              minHeight: "100%",
+            }}
           >
             <div
               style={{
                 position: "absolute",
                 top: `${topPadding}px`,
                 width: "100%",
+                minHeight: visibleEntries.length === 0 ? "100%" : "auto",
               }}
             >
               {visibleEntries.map((entry, index) => (

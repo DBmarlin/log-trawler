@@ -54,16 +54,7 @@ export default function Header({
             onRangeChange={onRangeChange}
           />
         )}
-        <Button
-          variant="outline"
-          onClick={onFileInputClick}
-          className="whitespace-nowrap bg-green-600 text-white hover:bg-green-700 hover:text-white border-green-600 hover:border-green-700"
-        >
-          <div className="flex items-center gap-2">
-            <Upload className="h-4 w-4" />
-            Open Log File
-          </div>
-        </Button>
+        {/* Open Log File button moved to home component */}
       </div>
     </header>
   );

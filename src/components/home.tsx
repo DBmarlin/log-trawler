@@ -72,6 +72,7 @@ const Home = () => {
     {},
   );
   const [chatPanelOpen, setChatPanelOpen] = useState(false);
+  const [chartVisible, setChartVisible] = useState(true);
 
   const activeFile = files.find((f) => f.id === activeFileId);
 
@@ -1259,6 +1260,8 @@ const Home = () => {
             <Bot className="h-4 w-4" />
           </Button>
         </div>
+
+        {/* Ask AI button removed from fixed position */}
         {/* Footer is now moved to the bottom of the page */}
         <div className="flex flex-col gap-2">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -1296,13 +1299,26 @@ const Home = () => {
                     % visible)
                   </div>
                   {activeFile && (
-                    <ExportButton
-                      fileName={activeFile.name}
-                      content={visibleEntries.map(
-                        (entry) => activeFile.content[entry.lineNumber - 1],
-                      )}
-                      disabled={!visibleEntries.length}
-                    />
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-4 order-first">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1 px-2 py-1 rounded-md text-xs"
+                          onClick={() => setChatPanelOpen(true)}
+                        >
+                          <Bot className="h-3 w-3" />
+                          Ask AI
+                        </Button>
+                      </div>
+                      <ExportButton
+                        fileName={activeFile.name}
+                        content={visibleEntries.map(
+                          (entry) => activeFile.content[entry.lineNumber - 1],
+                        )}
+                        disabled={!visibleEntries.length}
+                      />
+                    </div>
                   )}
                 </>
               )}
@@ -1336,6 +1352,20 @@ const Home = () => {
                     processed 100% locally within your browser and not uploaded
                     to the internet.
                   </p>
+                  <div className="mt-6">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        document.getElementById("fileInput")?.click()
+                      }
+                      className="whitespace-nowrap bg-green-600 text-white hover:bg-green-700 hover:text-white border-green-600 hover:border-green-700"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Upload className="h-4 w-4" />
+                        Open Log File
+                      </div>
+                    </Button>
+                  </div>
                 </div>
               </div>
               <RecentFiles
@@ -1480,6 +1510,24 @@ const Home = () => {
                       )}
                     </TabsTrigger>
                   ))}
+                  {/* Add new tab button */}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-9 w-9 rounded-none hover:bg-muted/50"
+                          onClick={() => setActiveFileId(null)}
+                        >
+                          <span className="text-lg font-medium">+</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Open new file</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </TabsList>
               </Tabs>
 
@@ -1503,18 +1551,55 @@ const Home = () => {
                       </div>
                     </div>
                   )}
-                  <TimeSeriesChart
-                    entries={chartEntries}
-                    filteredEntries={visibleEntries.map(
-                      (entry) => activeFile.content[entry.lineNumber - 1],
+                  <div className="mb-2 relative">
+                    {chartVisible ? (
+                      <div className="relative">
+                        <TimeSeriesChart
+                          entries={chartEntries}
+                          filteredEntries={visibleEntries.map(
+                            (entry) => activeFile.content[entry.lineNumber - 1],
+                          )}
+                          onTimeRangeSelect={handleTimeRangeSelect}
+                          bucketSize={activeFile.bucketSize || "5m"}
+                          onBucketSizeChange={handleBucketSizeChange}
+                          fileStartDate={activeFile.startDate}
+                          fileEndDate={activeFile.endDate}
+                          timeRange={activeFile.timeRange}
+                        />
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div
+                                className="absolute bottom-0 left-0 right-0 h-4 flex items-center justify-center cursor-pointer hover:bg-muted/50"
+                                onClick={() => setChartVisible(false)}
+                              >
+                                <div className="w-8 h-1.5 bg-primary rounded-sm" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Click to hide chart</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    ) : (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div
+                              className="h-4 flex items-center justify-center bg-muted/30 hover:bg-muted/50 cursor-pointer rounded-md"
+                              onClick={() => setChartVisible(true)}
+                            >
+                              <div className="w-8 h-1.5 bg-primary rounded-sm" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click to show chart</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     )}
-                    onTimeRangeSelect={handleTimeRangeSelect}
-                    bucketSize={activeFile.bucketSize || "5m"}
-                    onBucketSizeChange={handleBucketSizeChange}
-                    fileStartDate={activeFile.startDate}
-                    fileEndDate={activeFile.endDate}
-                    timeRange={activeFile.timeRange}
-                  />
+                  </div>
                   <ResizablePanelGroup
                     direction="horizontal"
                     onLayout={(sizes) => {
@@ -1642,19 +1727,24 @@ const Home = () => {
                       </div>
                     </ResizablePanel>
 
-                    <ResizableHandle
-                      withHandle
-                      className={
-                        !statsVisible
-                          ? "after:bg-primary after:w-1.5 after:h-8 after:rounded-sm cursor-col-resize"
-                          : ""
-                      }
-                      onDoubleClick={() => {
-                        if (!statsVisible) {
-                          setStatsVisible(true);
-                        }
-                      }}
-                    />
+                    {statsVisible && <ResizableHandle withHandle />}
+                    {!statsVisible && (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div
+                              className="absolute left-0 top-1/2 transform -translate-y-1/2 w-4 h-8 flex items-center justify-center cursor-pointer z-10"
+                              onClick={() => setStatsVisible(true)}
+                            >
+                              <div className="w-1.5 h-8 bg-primary rounded-sm" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Click to show stats panel</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
 
                     <ResizablePanel defaultSize={75}>
                       <div className="flex flex-col h-full relative">
