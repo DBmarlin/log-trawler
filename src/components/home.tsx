@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { Upload, X, Bot } from "lucide-react";
+import { Upload, X, Bot, Home as HomeIcon } from "lucide-react";
 import Header from "./header/Header";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -1266,16 +1266,30 @@ const Home = () => {
         <div className="flex flex-col gap-2">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div
-                className="flex items-center gap-2 cursor-pointer"
-                onClick={() => {
-                  // Keep files in state but set activeFileId to null to show home screen
-                  setActiveFileId(null);
-                }}
-                title="Return to home screen"
-              >
-                {/* Logo removed from here and moved to header */}
-              </div>
+              {activeFileId && (
+                <div className="flex items-center gap-2">
+                  <div className="bg-muted/30 p-1 rounded">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-primary"
+                    >
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                  </div>
+                  <span className="font-medium text-sm">
+                    {activeFile?.name}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="flex flex-wrap items-center gap-4">
               {activeFileId && (
@@ -1300,17 +1314,15 @@ const Home = () => {
                   </div>
                   {activeFile && (
                     <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-4 order-first">
-                        <Button
-                          variant="default"
-                          size="sm"
-                          className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1 px-2 py-1 rounded-md text-xs"
-                          onClick={() => setChatPanelOpen(true)}
-                        >
-                          <Bot className="h-3 w-3" />
-                          Ask AI
-                        </Button>
-                      </div>
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1 px-2 py-1 rounded-md text-xs"
+                        onClick={() => setChatPanelOpen(true)}
+                      >
+                        <Bot className="h-3 w-3" />
+                        Ask AI
+                      </Button>
                       <ExportButton
                         fileName={activeFile.name}
                         content={visibleEntries.map(
@@ -1339,6 +1351,27 @@ const Home = () => {
 
           {!activeFileId ? (
             <div className="flex flex-col gap-4">
+              {files.length > 0 && (
+                <div className="bg-muted/20 border rounded-md p-4 mb-2">
+                  <div className="flex justify-between items-center">
+                    <h3 className="font-semibold text-lg">
+                      You have {files.length} file
+                      {files.length !== 1 ? "s" : ""} open
+                    </h3>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        // Return to the first file in the list
+                        if (files.length > 0) {
+                          setActiveFileId(files[0].id);
+                        }
+                      }}
+                    >
+                      Return to Files
+                    </Button>
+                  </div>
+                </div>
+              )}
               <div
                 className={`border-2 border-dashed rounded-lg p-12 text-center ${isDragging ? "border-primary bg-primary/10" : "border-muted"}`}
               >
@@ -1380,6 +1413,7 @@ const Home = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
+              {/* File icon and name display moved to the top row */}
               <Tabs
                 value={activeFileId || undefined}
                 onValueChange={setActiveFileId}
@@ -1886,6 +1920,13 @@ const Home = () => {
                     <p className="text-sm text-muted-foreground">
                       Select a file from the tabs above or open a new log file.
                     </p>
+                    <Button
+                      variant="outline"
+                      className="mt-4"
+                      onClick={() => setActiveFileId(null)}
+                    >
+                      Go to Home Screen
+                    </Button>
                   </div>
                 </div>
               )}
@@ -1929,7 +1970,7 @@ const Home = () => {
               <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
               <path d="M9 18c-4.51 2-5-2-7-2" />
             </svg>
-            <span>v0.1.0</span>
+            <span>v0.2.0</span>
           </a>
         </div>
       </footer>
