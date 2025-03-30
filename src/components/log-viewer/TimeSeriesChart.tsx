@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback, useRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,6 +26,9 @@ import { format, parse } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
+// Disable animations globally for all charts
+ChartJS.defaults.animation = false;
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -38,6 +41,8 @@ ChartJS.register(
   TimeScale,
 );
 
+// Moved interface definition above the component
+
 interface TimeSeriesChartProps {
   entries?: string[];
   filteredEntries?: string[];
@@ -47,6 +52,12 @@ interface TimeSeriesChartProps {
   fileStartDate?: Date;
   fileEndDate?: Date;
   timeRange?: { startDate?: Date; endDate?: Date };
+  // Internal props for caching
+  _cachedChartData?: any;
+  _cachedTimestampData?: any;
+  _cachedOriginalLabels?: any;
+  _updateGlobalCache?: (key: string, data: any) => void;
+  _cacheKey?: string;
 }
 
 function TimeSeriesChart(props: TimeSeriesChartProps) {
@@ -59,12 +70,19 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
   const fileEndDate = props.fileEndDate;
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [chartData, setChartData] = React.useState({
-    datasets: [],
-    labels: [],
-  });
-  const [timestampData, setTimestampData] = React.useState([]);
-  const [originalLabels, setOriginalLabels] = React.useState([]);
+  // Initialize with cached data if available
+  const [chartData, setChartData] = React.useState(
+    props._cachedChartData || {
+      datasets: [],
+      labels: [],
+    },
+  );
+  const [timestampData, setTimestampData] = React.useState(
+    props._cachedTimestampData || [],
+  );
+  const [originalLabels, setOriginalLabels] = React.useState(
+    props._cachedOriginalLabels || [],
+  );
   const [isSelecting, setIsSelecting] = React.useState(false);
   const [selectionStart, setSelectionStart] = React.useState(null);
   const [selectionEnd, setSelectionEnd] = React.useState(null);
@@ -72,8 +90,46 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
   const chartRef = React.useRef(null);
   const chartContainerRef = React.useRef(null);
 
+  // Cache for processed data to avoid recalculating on tab switches
+  const processedDataCache = React.useRef(null);
+
   // Process log entries into time series data with optimizations
   React.useEffect(() => {
+    // If we have cached data from props, use it and skip processing
+    if (
+      props._cachedChartData &&
+      props._cachedTimestampData &&
+      props._cachedOriginalLabels
+    ) {
+      setChartData(props._cachedChartData);
+      setTimestampData(props._cachedTimestampData);
+      setOriginalLabels(props._cachedOriginalLabels);
+      setIsLoading(false);
+      return;
+    }
+
+    // Check if we can use cached data
+    const cacheKey = JSON.stringify({
+      entriesLength: entries.length,
+      filteredEntriesLength: filteredEntries.length,
+      bucketSize,
+      timeRangeStart: selectedRange?.startDate?.getTime(),
+      timeRangeEnd: selectedRange?.endDate?.getTime(),
+      fileStartDate: fileStartDate?.getTime(),
+      fileEndDate: fileEndDate?.getTime(),
+    });
+
+    // If we have cached data and nothing has changed, use it
+    if (
+      processedDataCache.current?.key === cacheKey &&
+      processedDataCache.current?.data
+    ) {
+      setChartData(processedDataCache.current.data.chartData);
+      setTimestampData(processedDataCache.current.data.timestampData);
+      setOriginalLabels(processedDataCache.current.data.originalLabels);
+      setIsLoading(false);
+      return;
+    }
     // Skip loading state completely to avoid flickering
     // Use requestAnimationFrame for better performance
     const rafId = requestAnimationFrame(() => {
@@ -401,7 +457,9 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
         for (const level of levelArray) {
           const data = [];
           for (const key of sortedBucketKeys) {
-            data.push(buckets[key][level] || 0);
+            // Ensure we're pushing a number, not undefined or null
+            const value = buckets[key][level] || 0;
+            data.push(typeof value === "number" ? value : 0);
           }
 
           const levelKey = level as keyof typeof levelColors;
@@ -415,14 +473,49 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
               levelColors[levelKey]?.borderColor ||
               levelColors.OTHER.borderColor,
             borderWidth: 1,
+            stack: "0", // Use a simple stack identifier
           });
         }
 
-        // Update chart data
-        setChartData({
+        // Create the chart data object
+        const newChartData = {
           labels: formattedLabels,
-          datasets,
-        });
+          datasets:
+            datasets.length > 0
+              ? datasets
+              : [
+                  {
+                    label: "No Data",
+                    data: new Array(formattedLabels.length).fill(0),
+                    backgroundColor: "rgba(156, 163, 175, 0.6)",
+                    borderColor: "rgb(156, 163, 175)",
+                    borderWidth: 1,
+                    stack: "0",
+                  },
+                ],
+        };
+
+        // Update chart data
+        setChartData(newChartData);
+
+        // Cache the processed data locally
+        processedDataCache.current = {
+          key: cacheKey,
+          data: {
+            chartData: newChartData,
+            timestampData: newTimestampData,
+            originalLabels: sortedBucketKeys,
+          },
+        };
+
+        // Update global cache if function is provided
+        if (props._updateGlobalCache && props._cacheKey) {
+          props._updateGlobalCache(props._cacheKey, {
+            chartData: newChartData,
+            timestampData: newTimestampData,
+            originalLabels: sortedBucketKeys,
+          });
+        }
       } catch (error) {
         console.error("Error processing chart data:", error);
       } finally {
@@ -609,15 +702,12 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
     }
   }, [props.timeRange, fileStartDate, fileEndDate]);
 
-  // Memoize chart options to prevent unnecessary re-renders
+  // Memoize chart options with more aggressive caching
   const options = useMemo(
     () => ({
-      animation: {
-        duration: 0, // Disable animations completely
-      },
+      animation: false,
       responsive: true,
       maintainAspectRatio: false,
-      // animation: false, // Already disabled above
       plugins: {
         legend: {
           position: "top" as const,
@@ -664,14 +754,16 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
           },
           beginAtZero: true,
           stacked: true,
+          ticks: {
+            precision: 0, // Ensure y-axis values are integers
+          },
         },
       },
       interaction: {
         mode: "nearest" as const,
         intersect: false,
       },
-      willReadFrequently: true,
-      devicePixelRatio: 1, // Lower resolution for better performance
+      devicePixelRatio: window.devicePixelRatio || 1,
     }),
     [originalLabels],
   );
@@ -796,7 +888,18 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
             </div>
           )}
           {chartData.labels.length > 0 && (
-            <Bar data={chartData} options={options} ref={chartRef} />
+            <Bar
+              data={chartData}
+              options={options}
+              ref={chartRef}
+              redraw={false} // Prevent full redraw when data changes slightly
+              updateMode="resize" // Only update on resize for better performance
+              fallbackContent={
+                <div className="flex items-center justify-center h-full">
+                  Chart could not be rendered
+                </div>
+              }
+            />
           )}
           {isSelecting &&
             selectionStart !== null &&
@@ -816,5 +919,90 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
   );
 }
 
-// Memoize the component to prevent unnecessary re-renders
-export default React.memo(TimeSeriesChart);
+// Create a wrapper component that caches chart data by fileId
+const MemoizedTimeSeriesChart = React.memo(
+  TimeSeriesChart,
+  (prevProps, nextProps) => {
+    // If we have cached data in the new props, always use it
+    if (nextProps._cachedChartData) {
+      return false; // Force render with cached data
+    }
+
+    // Only re-render if these specific props change
+    return (
+      prevProps.entries === nextProps.entries &&
+      prevProps.filteredEntries === nextProps.filteredEntries &&
+      prevProps.bucketSize === nextProps.bucketSize &&
+      prevProps.fileStartDate === nextProps.fileStartDate &&
+      prevProps.fileEndDate === nextProps.fileEndDate &&
+      JSON.stringify(prevProps.timeRange) ===
+        JSON.stringify(nextProps.timeRange) &&
+      prevProps._cacheKey === nextProps._cacheKey
+    );
+  },
+);
+
+// Global cache for chart data across all instances
+const globalChartCache = new Map();
+
+// Cache component instances by fileId
+const TimeSeriesChartWithCache = (props) => {
+  // Get a unique key for the current file/data combination
+  const cacheKey = React.useMemo(() => {
+    // Create a cache key based on relevant props
+    return JSON.stringify({
+      bucketSize: props.bucketSize,
+      timeRange: props.timeRange,
+      entriesLength: props.entries?.length,
+      filteredEntriesLength: props.filteredEntries?.length,
+      fileStartDate: props.fileStartDate?.getTime(),
+      fileEndDate: props.fileEndDate?.getTime(),
+    });
+  }, [
+    props.bucketSize,
+    props.timeRange,
+    props.entries?.length,
+    props.filteredEntries?.length,
+    props.fileStartDate,
+    props.fileEndDate,
+  ]);
+
+  // Check if we have this chart data in the global cache
+  const cachedData = globalChartCache.get(cacheKey);
+
+  // If we have cached data, use it to avoid unnecessary processing
+  const optimizedProps = useMemo(() => {
+    if (cachedData) {
+      return {
+        ...props,
+        _cachedChartData: cachedData.chartData,
+        _cachedTimestampData: cachedData.timestampData,
+        _cachedOriginalLabels: cachedData.originalLabels,
+      };
+    }
+    return props;
+  }, [props, cachedData, cacheKey]);
+
+  // Use a callback to update the global cache
+  const updateGlobalCache = useCallback((key, data) => {
+    globalChartCache.set(key, data);
+
+    // Limit cache size to prevent memory issues
+    if (globalChartCache.size > 20) {
+      // Remove oldest entry
+      const firstKey = globalChartCache.keys().next().value;
+      globalChartCache.delete(firstKey);
+    }
+  }, []);
+
+  // Return the memoized component with cache update function
+  return (
+    <MemoizedTimeSeriesChart
+      {...optimizedProps}
+      _updateGlobalCache={updateGlobalCache}
+      _cacheKey={cacheKey}
+    />
+  );
+};
+
+export default TimeSeriesChartWithCache;

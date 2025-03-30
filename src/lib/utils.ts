@@ -75,11 +75,36 @@ const DATE_FORMATS = [
   "dd/MM/yyyy HH:mm:ss", // European format
   "yyyy.MM.dd HH:mm:ss", // Dot separated
   "yyyy/MM/dd HH:mm:ss", // Slash separated with year first: 2025/01/13 12:51:06
+  "EEE MMM dd HH:mm:ss yyyy", // Format: Sun Dec 04 04:47:44 2024
+  "MMM dd HH:mm:ss", // Format without year: Dec 10 06:55:46
+  "MM-dd HH:mm:ss.SSS", // Format without year: 03-17 16:13:38.811
+  "MM-dd HH:mm:ss", // Format without year: 03-17 16:13:38
 ];
 
 const tryParseDate = (timestamp: string, format: string): Date | null => {
   try {
-    const date = parse(timestamp, format, new Date());
+    // For formats without year, ensure we use current year
+    const referenceDate = new Date();
+    const date = parse(timestamp, format, referenceDate);
+
+    // Special handling for formats without year
+    // If the parsed date is valid but has year 1970 (default when no year in format),
+    // set it to the current year
+    if (
+      isValid(date) &&
+      (format === "MMM dd HH:mm:ss" ||
+        format === "MM-dd HH:mm:ss.SSS" ||
+        format === "MM-dd HH:mm:ss") &&
+      date.getFullYear() === 1970
+    ) {
+      date.setFullYear(referenceDate.getFullYear());
+
+      // If the resulting date is in the future, it's likely from the previous year
+      if (date > referenceDate) {
+        date.setFullYear(referenceDate.getFullYear() - 1);
+      }
+    }
+
     return isValid(date) ? date : null;
   } catch {
     return null;
@@ -111,6 +136,18 @@ export const parseLogLine = (line: string): ParsedLogLine => {
   }
 
   // Try to match common log formats
+
+  // Format: [Sun Dec 04 04:47:44 2024] or [Dec 10 06:55:46]
+  const bracketedDateMatch = line.match(
+    /\[([A-Za-z]{3}\s[A-Za-z]{3}\s\d{2}\s\d{2}:\d{2}:\d{2}(?:\s\d{4})?)\]\s*(.*)/,
+  );
+  if (bracketedDateMatch) {
+    lastValidTimestamp = bracketedDateMatch[1];
+    return {
+      timestamp: lastValidTimestamp,
+      message: line,
+    };
+  }
 
   // Format: 07-Mar-2025 00:00:00.744 [INFO] Starting application
   const timestampWithMillisMatch = line.match(
@@ -150,7 +187,7 @@ export const parseLogLine = (line: string): ParsedLogLine => {
 
   // Match various timestamp formats
   const timestampRegex =
-    /(\d{4}-\d{2}-\d{2}(?:[T\s])\d{1,2}:\d{2}:\d{2}(?:,\d{3})?(?:\.\d{3})?(?:[Z])?|\d{2}[-/](?:[A-Za-z]+|\d{2})[-/]\d{4}(?:\s|:)\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?|\d{4}\/\d{2}\/\d{2}\s\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?)/;
+    /(\d{4}-\d{2}-\d{2}(?:[T\s])\d{1,2}:\d{2}:\d{2}(?:,\d{3})?(?:\.\d{3})?(?:[Z])?|\d{2}[-/](?:[A-Za-z]+|\d{2})[-/]\d{4}(?:\s|:)\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?|\d{4}\/\d{2}\/\d{2}\s\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?|\[?(?:[A-Za-z]{3}\s[A-Za-z]{3}\s\d{2}\s\d{2}:\d{2}:\d{2}(?:\s\d{4})?)\]?|(?:[A-Za-z]{3}\s\d{1,2}\s\d{2}:\d{2}:\d{2})|(?:\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}(?:\.\d{3})?))/;
   const match = line.match(timestampRegex);
 
   if (match) {
@@ -188,6 +225,47 @@ export const parseTimestamp = (timestamp: string): Date | undefined => {
     if (timestamp.match(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/)) {
       const date = new Date(timestamp.replace(" ", "T"));
       if (isValid(date)) return date;
+    }
+
+    // Handle formats like "Dec 10 06:55:46" or "Jun 14 15:16:01" without explicit year
+    const monthDayTimeMatch = timestamp.match(
+      /([A-Za-z]{3})\s+(\d{1,2})\s+(\d{2}:\d{2}:\d{2})/,
+    );
+
+    // Handle formats like "03-17 16:13:38.811" without explicit year
+    const numericMonthDayTimeMatch = timestamp.match(
+      /(\d{2})-(\d{2})\s+(\d{2}:\d{2}:\d{2}(?:\.\d{3})?)/,
+    );
+    if (monthDayTimeMatch) {
+      const [_, month, day, time] = monthDayTimeMatch;
+      const currentYear = new Date().getFullYear();
+      const fullTimestamp = `${month} ${day} ${time} ${currentYear}`;
+      const date = new Date(fullTimestamp);
+
+      // If the resulting date is in the future, it's likely from the previous year
+      if (isValid(date)) {
+        if (date > new Date()) {
+          date.setFullYear(currentYear - 1);
+        }
+        return date;
+      }
+    }
+
+    // Handle numeric month-day format
+    if (numericMonthDayTimeMatch) {
+      const [_, month, day, time] = numericMonthDayTimeMatch;
+      const currentYear = new Date().getFullYear();
+      // Create a date in format YYYY-MM-DD HH:MM:SS
+      const fullTimestamp = `${currentYear}-${month}-${day} ${time}`;
+      const date = new Date(fullTimestamp.replace(" ", "T"));
+
+      // If the resulting date is in the future, it's likely from the previous year
+      if (isValid(date)) {
+        if (date > new Date()) {
+          date.setFullYear(currentYear - 1);
+        }
+        return date;
+      }
     }
 
     // Try direct Date constructor as last resort

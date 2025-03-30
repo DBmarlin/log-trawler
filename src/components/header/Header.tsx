@@ -22,6 +22,13 @@ export default function Header({
   endDate,
   onRangeChange = () => {},
 }: HeaderProps) {
+  // Ensure dates are valid before passing to TimeRangeFilter
+  const validStartDate =
+    startDate instanceof Date && !isNaN(startDate.getTime())
+      ? startDate
+      : undefined;
+  const validEndDate =
+    endDate instanceof Date && !isNaN(endDate.getTime()) ? endDate : undefined;
   return (
     <header
       className="w-full text-white px-6 flex justify-between items-center h-[79px]"
@@ -49,8 +56,8 @@ export default function Header({
       <div className="flex items-center gap-4">
         {showDateControls && (
           <TimeRangeFilter
-            startDate={startDate}
-            endDate={endDate}
+            startDate={validStartDate}
+            endDate={validEndDate}
             onRangeChange={onRangeChange}
           />
         )}
