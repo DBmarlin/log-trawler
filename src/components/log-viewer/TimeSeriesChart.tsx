@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 // Disable animations globally for all charts
-ChartJS.defaults.animation = false;
+ChartJS.defaults.animation = false as const;
 
 ChartJS.register(
   CategoryScale,
@@ -705,7 +705,7 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
   // Memoize chart options with more aggressive caching
   const options = useMemo(
     () => ({
-      animation: false,
+      animation: false as const,
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
