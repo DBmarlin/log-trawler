@@ -48,6 +48,7 @@ interface FileViewProps {
   ) => void;
   handleFilterLogicChange: (logic: "AND" | "OR") => void;
   handleRemoveFilter: (id: string) => void;
+  handleToggleFilterType: (id: string) => void; // Add the new prop type
   handleClearFilters: () => void;
   handleSearch: (term: string, isRegex?: boolean) => void;
   searchTerm: string;
@@ -82,6 +83,7 @@ const FileView: React.FC<FileViewProps> = ({
   handleAddFilter,
   handleFilterLogicChange,
   handleRemoveFilter,
+  handleToggleFilterType, // Destructure the new prop
   handleClearFilters,
   handleSearch,
   searchTerm,
@@ -409,18 +411,7 @@ const FileView: React.FC<FileViewProps> = ({
                 filters={activeFile?.filters}
                 entries={activeFile?.content} // Pass original content for context if needed
                 onRemoveFilter={handleRemoveFilter}
-                onToggleFilterType={(id) => {
-                  if (!activeFile?.filters) return;
-                  const filter = activeFile.filters.find((f) => f.id === id);
-                  if (!filter) return;
-
-                  handleAddFilter(
-                    filter.term,
-                    filter.type === "include" ? "exclude" : "include",
-                    filter.isRegex,
-                  );
-                  handleRemoveFilter(id);
-                }}
+                onToggleFilterType={handleToggleFilterType} // Use the passed handler directly
                 onClearAll={handleClearFilters}
                 filterLogic={activeFile?.filterLogic || "OR"}
                 onFilterLogicChange={handleFilterLogicChange}

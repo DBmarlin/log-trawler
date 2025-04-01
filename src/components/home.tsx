@@ -133,6 +133,19 @@ const Home = () => {
     updateFileState(activeFile.id, { filters: [] });
   }, [activeFile, updateFileState]);
 
+  const handleToggleFilterType = useCallback((id: string) => {
+    if (!activeFile?.filters) return;
+    const updatedFilters = activeFile.filters.map((f) => {
+      if (f.id === id) {
+        // Explicitly cast the toggled type
+        const newType = (f.type === "include" ? "exclude" : "include") as "include" | "exclude";
+        return { ...f, type: newType };
+      }
+      return f;
+    });
+    updateFileState(activeFile.id, { filters: updatedFilters });
+  }, [activeFile, updateFileState]);
+
   const handleTimeRangeSelect = useCallback((startDate?: Date, endDate?: Date) => {
     if (!activeFile) return;
     const newTimeRange = startDate || endDate ? { startDate, endDate } : undefined;
@@ -367,6 +380,7 @@ const Home = () => {
                 handleAddFilter={handleAddFilter}
                 handleFilterLogicChange={handleFilterLogicChange}
                 handleRemoveFilter={handleRemoveFilter}
+                handleToggleFilterType={handleToggleFilterType} // Add the new handler here
                 handleClearFilters={handleClearFilters}
                 handleSearch={handleSearch}
                 handleSummarizeClick={handleSummarizeClick} // Keep summarize handler here
@@ -424,7 +438,7 @@ const Home = () => {
       {/* URL Dialog - Uses state/handlers from useFileManagement */}
       {showUrlDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-background rounded-lg p-6 w-full max-w-md">
+          <div className="bg-backgrounounded-lg p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold mb-4">
               Open Log File from URL
             </h3>
