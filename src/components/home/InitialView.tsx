@@ -1,0 +1,125 @@
+import React from "react";
+import { Upload } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import RecentFiles, { RecentFile } from "../log-viewer/RecentFiles";
+import { LogFile } from "../home"; // Assuming LogFile type is exported from home.tsx or moved
+
+interface InitialViewProps {
+  isDragging: boolean;
+  files: LogFile[]; // To check if any files are open for the message
+  onFileInputClick: () => void;
+  onUrlInputClick: () => void;
+  fetchLogFromUrl: (url: string) => Promise<void>;
+  handleRecentFileSelect: (file: RecentFile) => Promise<void>;
+  onMultipleFilesSelect: (files: RecentFile[]) => Promise<void>;
+  setActiveFileId: (id: string | null) => void; // To return to files if some are open
+}
+
+const InitialView: React.FC<InitialViewProps> = ({
+  isDragging,
+  files,
+  onFileInputClick,
+  onUrlInputClick,
+  fetchLogFromUrl,
+  handleRecentFileSelect,
+  onMultipleFilesSelect,
+  setActiveFileId,
+}) => {
+  return (
+    <div className="flex flex-col gap-4">
+      {files.length > 0 && (
+        <div className="bg-muted/20 border rounded-md p-4 mb-2">
+          <div className="flex justify-between items-center">
+            <h3 className="font-semibold text-lg">
+              You have {files.length} file{files.length !== 1 ? "s" : ""} open
+            </h3>
+            <Button
+              variant="outline"
+              onClick={() => {
+                // Return to the first file in the list
+                if (files.length > 0) {
+                  setActiveFileId(files[0].id);
+                }
+              }}
+            >
+              Return to Files
+            </Button>
+          </div>
+        </div>
+      )}
+      <div
+        className={`border-2 border-dashed rounded-lg p-12 text-center ${
+          isDragging ? "border-primary bg-primary/10" : "border-muted"
+        }`}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <Upload className="h-8 w-8 text-muted-foreground" />
+          <h3 className="font-semibold text-lg">Drop your log files here</h3>
+          <p className="text-sm text-muted-foreground">
+            Drag and drop your log files to start analyzing. Files are processed
+            100% locally within your browser and not uploaded to the internet.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <Button
+              variant="outline"
+              onClick={onFileInputClick}
+              className="whitespace-nowrap bg-green-600 text-white hover:bg-green-700 hover:text-white border-green-600 hover:border-green-700"
+            >
+              <div className="flex items-center gap-2">
+                <Upload className="h-4 w-4" />
+                Open Log File
+              </div>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={onUrlInputClick}
+              className="whitespace-nowrap bg-blue-600 text-white hover:bg-blue-700 hover:text-white border-blue-600 hover:border-blue-700"
+            >
+              <div className="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4"
+                >
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+                Open URL
+              </div>
+            </Button>
+            {/* Hidden input remains in home.tsx */}
+          </div>
+          {files.length === 0 && (
+            <div className="mt-4 text-sm text-muted-foreground">
+              <p>Or try a sample log file:</p>
+              <Button
+                variant="link"
+                className="text-blue-500 hover:text-blue-700"
+                onClick={() =>
+                  fetchLogFromUrl(
+                    "https://raw.githubusercontent.com/logpai/loghub/refs/heads/master/Apache/Apache_2k.log",
+                  )
+                }
+              >
+                Apache Sample Log
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+      <RecentFiles
+        onFileSelect={handleRecentFileSelect}
+        onMultipleFilesSelect={onMultipleFilesSelect}
+      />
+    </div>
+  );
+};
+
+export default InitialView;
