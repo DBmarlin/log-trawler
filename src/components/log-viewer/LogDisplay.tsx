@@ -762,7 +762,7 @@ const LogDisplay = ({
                 <path d="M15 13v2"></path>
                 <path d="M9 13v2"></path>
               </svg>
-              Ask ChatGPT
+              Ask AI
             </button>
             <button
               className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground gap-2"

@@ -1,0 +1,1000 @@
+2024-11-26 13:25:36 WARN [thread-7] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-26 15:01:36 ERROR [thread-64] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-26 15:06:36 WARN [thread-28] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-11-26 15:10:36 WARN [thread-1] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-26 15:20:36 ERROR [thread-96] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-11-26 18:01:36 WARN [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-26 20:27:36 DEBUG [thread-93] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-11-26 20:29:36 INFO [thread-84] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-11-26 21:51:36 DEBUG [thread-14] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-11-26 21:54:36 DEBUG [thread-53] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-11-26 23:25:36 WARN [thread-74] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-27 00:39:36 ERROR [thread-46] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-11-27 01:34:36 DEBUG [thread-29] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-11-27 02:24:36 WARN [thread-64] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-11-27 02:36:36 INFO [thread-13] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-27 02:40:36 DEBUG [thread-33] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-11-27 04:38:36 DEBUG [thread-39] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-27 05:21:36 ERROR [thread-23] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-27 05:28:36 INFO [thread-70] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-27 05:56:36 ERROR [thread-51] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-27 08:21:36 INFO [thread-14] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-11-27 09:47:36 ERROR [thread-35] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-11-27 10:57:36 INFO [thread-34] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-11-27 11:02:36 ERROR [thread-99] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-11-27 12:58:36 ERROR [thread-58] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-11-27 12:59:36 ERROR [thread-4] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-27 13:28:36 DEBUG [thread-80] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-11-27 14:03:36 DEBUG [thread-23] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-11-27 15:11:36 DEBUG [thread-34] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-11-27 15:51:36 DEBUG [thread-10] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-11-27 16:03:36 DEBUG [thread-34] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-11-27 16:57:36 INFO [thread-13] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-11-27 17:15:36 WARN [thread-56] org.apache.coyote.AbstractProtocol: Application stopped
+2024-11-27 17:36:36 WARN [thread-74] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-11-27 18:04:36 INFO [thread-37] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-27 19:08:36 ERROR [thread-33] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-11-27 21:02:36 WARN [thread-44] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-11-27 22:05:36 ERROR [thread-33] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-11-28 00:29:36 ERROR [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-11-28 02:13:36 ERROR [thread-10] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-11-28 02:45:36 DEBUG [thread-12] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-11-28 02:53:36 WARN [thread-60] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-11-28 03:18:36 DEBUG [thread-50] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-11-28 03:19:36 DEBUG [thread-9] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-11-28 04:01:36 WARN [thread-4] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-11-28 05:56:36 WARN [thread-34] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-11-28 06:11:36 INFO [thread-37] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-11-28 06:55:36 ERROR [thread-89] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-11-28 07:07:36 ERROR [thread-62] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-11-28 07:38:36 WARN [thread-24] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-11-28 09:53:36 ERROR [thread-31] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-11-28 10:21:36 INFO [thread-73] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-28 11:10:36 DEBUG [thread-17] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-11-28 12:19:36 ERROR [thread-25] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-11-28 14:14:36 INFO [thread-53] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-11-28 16:50:36 ERROR [thread-39] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-28 17:17:36 DEBUG [thread-75] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-28 17:25:36 INFO [thread-13] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-28 17:30:36 WARN [thread-10] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-28 17:53:36 WARN [thread-95] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-11-28 19:25:36 INFO [thread-39] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-28 19:45:36 ERROR [thread-87] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-28 20:06:36 INFO [thread-42] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-11-28 20:22:36 WARN [thread-26] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-28 20:30:36 WARN [thread-87] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-28 21:18:36 DEBUG [thread-40] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-11-28 21:38:36 ERROR [thread-7] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-28 22:45:36 ERROR [thread-20] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-29 00:03:36 WARN [thread-54] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-11-29 00:12:36 DEBUG [thread-42] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-29 00:49:36 ERROR [thread-20] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-11-29 03:53:36 WARN [thread-24] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-11-29 04:22:36 ERROR [thread-47] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-11-29 04:41:36 WARN [thread-33] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-11-29 05:05:36 DEBUG [thread-70] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-29 05:10:36 WARN [thread-92] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-11-29 05:48:36 ERROR [thread-88] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-29 05:50:36 DEBUG [thread-57] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-11-29 06:13:36 ERROR [thread-62] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-11-29 06:42:36 INFO [thread-69] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-11-29 06:45:36 INFO [thread-90] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-11-29 07:17:36 DEBUG [thread-66] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-11-29 08:04:36 WARN [thread-4] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-11-29 08:18:36 INFO [thread-75] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-11-29 09:32:36 INFO [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-29 09:33:36 WARN [thread-26] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-29 09:45:36 DEBUG [thread-84] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-11-29 11:09:36 ERROR [thread-58] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-29 11:25:36 INFO [thread-58] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-11-29 12:59:36 DEBUG [thread-76] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-11-29 13:02:36 WARN [thread-24] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-29 13:11:36 ERROR [thread-93] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-11-29 13:18:36 WARN [thread-82] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-29 13:52:36 WARN [thread-58] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-11-29 14:04:36 ERROR [thread-88] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-29 14:28:36 DEBUG [thread-70] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-29 15:16:36 WARN [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-11-29 16:39:36 WARN [thread-42] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-11-29 17:34:36 DEBUG [thread-86] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-11-29 17:34:36 INFO [thread-5] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-11-29 17:55:36 DEBUG [thread-74] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-11-29 18:25:36 ERROR [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-29 18:52:36 DEBUG [thread-4] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-11-29 19:38:36 WARN [thread-42] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-29 21:04:36 WARN [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-11-29 23:31:36 INFO [thread-87] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-11-30 00:24:36 INFO [thread-80] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-11-30 01:16:36 DEBUG [thread-6] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-11-30 02:17:36 WARN [thread-43] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-11-30 02:28:36 WARN [thread-31] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-11-30 02:34:36 INFO [thread-31] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-11-30 02:44:36 ERROR [thread-74] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-11-30 04:07:36 INFO [thread-4] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-30 04:22:36 ERROR [thread-71] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-11-30 07:30:36 WARN [thread-89] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-11-30 08:32:36 DEBUG [thread-41] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-30 08:36:36 ERROR [thread-48] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-11-30 09:21:36 INFO [thread-57] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-11-30 10:01:36 ERROR [thread-46] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-11-30 10:12:36 DEBUG [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-11-30 10:45:36 WARN [thread-77] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-11-30 11:07:36 WARN [thread-61] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-11-30 11:27:36 ERROR [thread-79] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-11-30 11:55:36 WARN [thread-61] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-11-30 12:10:36 ERROR [thread-98] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-11-30 12:48:36 ERROR [thread-91] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-11-30 14:24:36 ERROR [thread-70] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-11-30 14:59:36 WARN [thread-17] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-11-30 15:50:36 DEBUG [thread-42] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-11-30 17:14:36 ERROR [thread-86] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-11-30 19:23:36 ERROR [thread-83] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-11-30 19:38:36 INFO [thread-75] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-11-30 19:53:36 INFO [thread-1] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-11-30 21:17:36 ERROR [thread-1] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-11-30 21:24:36 INFO [thread-44] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-30 22:03:36 WARN [thread-95] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-30 22:22:36 WARN [thread-96] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-11-30 23:50:36 DEBUG [thread-79] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-01 01:34:36 ERROR [thread-93] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-01 01:58:36 WARN [thread-4] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-01 01:58:36 WARN [thread-24] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-01 04:01:36 INFO [thread-14] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-01 04:51:36 DEBUG [thread-65] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-01 05:39:36 DEBUG [thread-23] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-01 05:56:36 DEBUG [thread-30] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-01 06:15:36 DEBUG [thread-71] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-01 06:32:36 DEBUG [thread-13] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-01 06:39:36 ERROR [thread-18] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-01 07:19:36 ERROR [thread-55] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-01 07:35:36 WARN [thread-34] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-01 08:16:36 ERROR [thread-27] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-01 09:21:36 DEBUG [thread-95] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-01 09:28:36 WARN [thread-10] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-01 09:38:36 ERROR [thread-26] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-01 10:11:36 WARN [thread-56] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-01 10:32:36 DEBUG [thread-29] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-01 14:37:36 DEBUG [thread-96] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-01 16:12:36 ERROR [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-01 19:23:36 ERROR [thread-11] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-01 19:43:36 DEBUG [thread-52] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-01 21:20:36 INFO [thread-18] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-01 21:27:36 WARN [thread-14] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-01 22:58:36 DEBUG [thread-61] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-01 23:25:36 INFO [thread-100] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-01 23:49:36 WARN [thread-11] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-02 00:19:36 WARN [thread-10] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-02 01:30:36 WARN [thread-10] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-02 03:47:36 INFO [thread-3] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-02 03:57:36 ERROR [thread-72] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-02 04:01:36 ERROR [thread-51] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-02 04:13:36 DEBUG [thread-64] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-02 05:48:36 WARN [thread-30] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-02 06:56:36 ERROR [thread-26] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-02 07:08:36 ERROR [thread-98] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-02 07:20:36 ERROR [thread-81] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-02 07:30:36 DEBUG [thread-85] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-02 07:44:36 WARN [thread-78] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-02 08:12:36 ERROR [thread-56] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-02 09:19:36 DEBUG [thread-74] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-02 09:31:36 WARN [thread-48] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-02 09:44:36 DEBUG [thread-18] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-02 11:28:36 WARN [thread-85] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-02 12:17:36 DEBUG [thread-33] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-02 12:47:36 INFO [thread-40] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-02 13:27:36 DEBUG [thread-49] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-02 13:46:36 ERROR [thread-23] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-02 14:22:36 WARN [thread-47] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-02 14:23:36 DEBUG [thread-19] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-02 15:01:36 ERROR [thread-94] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-02 15:18:36 INFO [thread-73] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-02 15:56:36 WARN [thread-97] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-02 16:59:36 DEBUG [thread-99] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-02 20:00:36 ERROR [thread-73] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-02 21:10:36 DEBUG [thread-87] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-02 21:24:36 INFO [thread-55] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-02 21:49:36 DEBUG [thread-25] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-02 21:57:36 WARN [thread-50] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-02 22:33:36 ERROR [thread-82] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-02 22:44:36 WARN [thread-5] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-02 23:06:36 WARN [thread-24] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-02 23:51:36 ERROR [thread-49] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-03 00:03:36 DEBUG [thread-77] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-03 03:33:36 DEBUG [thread-1] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-03 04:47:36 WARN [thread-78] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-03 05:11:36 INFO [thread-98] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-03 05:50:36 ERROR [thread-74] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-03 05:54:36 ERROR [thread-71] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-03 06:09:36 INFO [thread-73] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-03 06:46:36 DEBUG [thread-21] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-03 06:52:36 ERROR [thread-46] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-03 07:13:36 INFO [thread-37] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-03 08:01:36 ERROR [thread-69] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-03 08:11:36 ERROR [thread-14] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-03 09:05:36 DEBUG [thread-44] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-03 09:10:36 ERROR [thread-30] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-03 10:15:36 INFO [thread-46] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-03 11:04:36 WARN [thread-91] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-03 11:52:36 INFO [thread-13] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-03 12:26:36 INFO [thread-36] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-03 14:37:36 INFO [thread-4] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-03 17:02:36 ERROR [thread-4] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-03 17:15:36 DEBUG [thread-7] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-03 17:25:36 DEBUG [thread-82] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-03 18:01:36 INFO [thread-35] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-03 19:51:36 WARN [thread-51] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-03 19:51:36 ERROR [thread-100] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-03 21:10:36 INFO [thread-67] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-03 22:40:36 INFO [thread-72] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-03 23:32:36 INFO [thread-52] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-03 23:42:36 WARN [thread-20] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-04 00:09:36 WARN [thread-54] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-04 01:21:36 INFO [thread-84] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-04 02:26:36 WARN [thread-55] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-04 02:36:36 DEBUG [thread-39] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-04 02:40:36 ERROR [thread-46] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-04 03:14:36 INFO [thread-18] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-04 09:16:36 WARN [thread-35] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-04 10:39:36 DEBUG [thread-55] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-04 12:04:36 WARN [thread-48] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-04 13:14:36 INFO [thread-96] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-04 14:33:36 ERROR [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-04 14:38:36 INFO [thread-6] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-04 16:07:36 DEBUG [thread-58] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-04 16:48:36 DEBUG [thread-86] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-04 18:38:36 WARN [thread-93] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-04 18:49:36 WARN [thread-5] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-04 18:58:36 WARN [thread-31] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-04 19:45:36 ERROR [thread-7] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-04 20:10:36 INFO [thread-83] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-04 20:20:36 INFO [thread-70] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-04 20:51:36 ERROR [thread-18] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-04 20:53:36 INFO [thread-19] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-04 20:55:36 DEBUG [thread-19] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-04 21:33:36 INFO [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-05 00:04:36 INFO [thread-91] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-05 01:27:36 DEBUG [thread-71] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-05 01:59:36 INFO [thread-82] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-05 02:25:36 INFO [thread-37] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-05 02:53:36 WARN [thread-77] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-05 03:23:36 INFO [thread-63] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-05 03:35:36 WARN [thread-35] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 04:05:36 DEBUG [thread-41] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-05 04:26:36 INFO [thread-98] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-05 04:28:36 WARN [thread-25] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-05 06:13:36 INFO [thread-75] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-05 08:17:36 WARN [thread-23] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 09:11:36 DEBUG [thread-1] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-05 09:13:36 ERROR [thread-44] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 11:22:36 WARN [thread-78] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-05 12:29:36 INFO [thread-13] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-05 12:52:36 WARN [thread-57] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-05 13:11:36 WARN [thread-36] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-05 13:15:36 WARN [thread-59] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-05 13:42:36 ERROR [thread-60] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-05 14:19:36 DEBUG [thread-98] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-05 14:40:36 DEBUG [thread-84] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-05 15:04:36 INFO [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-05 15:23:36 DEBUG [thread-68] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-05 16:07:36 WARN [thread-67] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 17:39:36 DEBUG [thread-48] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-05 17:43:36 INFO [thread-12] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-05 17:50:36 WARN [thread-53] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-05 18:16:36 DEBUG [thread-48] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-05 19:04:36 DEBUG [thread-65] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-05 19:53:36 INFO [thread-19] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-05 21:15:36 ERROR [thread-5] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 21:34:36 ERROR [thread-78] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-05 22:07:36 ERROR [thread-45] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 23:12:36 WARN [thread-74] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-05 23:27:36 WARN [thread-82] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-05 23:41:36 WARN [thread-35] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-06 01:19:36 DEBUG [thread-83] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-06 02:09:36 DEBUG [thread-44] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-06 03:33:36 WARN [thread-61] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-06 04:42:36 INFO [thread-19] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-06 06:04:36 INFO [thread-43] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-06 06:22:36 WARN [thread-11] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-06 06:43:36 WARN [thread-24] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-06 07:36:36 ERROR [thread-59] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-06 08:22:36 WARN [thread-8] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-06 08:51:36 WARN [thread-44] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-06 09:36:36 WARN [thread-98] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-06 10:17:36 ERROR [thread-17] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-06 10:35:36 INFO [thread-100] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-06 11:06:36 ERROR [thread-76] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-06 11:40:36 INFO [thread-11] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-06 13:47:36 DEBUG [thread-11] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-06 13:58:36 DEBUG [thread-91] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-06 14:57:36 WARN [thread-44] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-06 16:13:36 INFO [thread-66] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-06 16:35:36 INFO [thread-21] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-06 17:06:36 INFO [thread-28] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-06 17:48:36 DEBUG [thread-25] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-06 18:24:36 DEBUG [thread-48] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-06 18:42:36 DEBUG [thread-93] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-06 19:15:36 WARN [thread-20] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-06 21:41:36 DEBUG [thread-93] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-06 22:16:36 WARN [thread-25] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-06 22:21:36 ERROR [thread-97] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-06 22:31:36 WARN [thread-11] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-06 22:44:36 DEBUG [thread-43] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-06 23:48:36 ERROR [thread-55] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-07 00:05:36 WARN [thread-45] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-07 03:11:36 ERROR [thread-93] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-07 04:39:36 WARN [thread-81] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-07 05:18:36 WARN [thread-4] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-07 05:30:36 INFO [thread-74] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-07 05:59:36 INFO [thread-100] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-07 06:07:36 DEBUG [thread-54] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-07 06:41:36 WARN [thread-23] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-07 06:50:36 DEBUG [thread-3] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-07 07:46:36 WARN [thread-38] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-07 07:52:36 DEBUG [thread-26] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-07 09:26:36 DEBUG [thread-60] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-07 10:45:36 INFO [thread-67] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-07 11:57:36 ERROR [thread-89] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-07 12:52:36 INFO [thread-77] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-07 13:41:36 DEBUG [thread-60] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-07 14:21:36 INFO [thread-72] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-07 14:26:36 INFO [thread-78] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-07 14:31:36 ERROR [thread-61] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-07 15:11:36 WARN [thread-91] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-07 15:13:36 INFO [thread-5] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-07 16:36:36 ERROR [thread-82] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-07 17:05:36 INFO [thread-84] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-07 17:06:36 ERROR [thread-44] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-07 18:27:36 DEBUG [thread-29] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-07 19:14:36 DEBUG [thread-95] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-07 19:55:36 ERROR [thread-74] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-07 20:54:36 WARN [thread-61] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-07 21:28:36 WARN [thread-32] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-07 21:49:36 INFO [thread-39] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-07 22:34:36 ERROR [thread-70] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-07 23:05:36 ERROR [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-08 01:11:36 WARN [thread-68] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-08 01:28:36 ERROR [thread-100] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-08 01:46:36 DEBUG [thread-97] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-08 03:17:36 WARN [thread-49] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-08 04:37:36 DEBUG [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-08 04:52:36 ERROR [thread-9] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-08 06:37:36 INFO [thread-97] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-08 06:56:36 ERROR [thread-22] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-08 07:27:36 DEBUG [thread-85] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-08 08:23:36 INFO [thread-53] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-08 09:06:36 ERROR [thread-81] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-08 09:23:36 DEBUG [thread-98] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-08 10:52:36 INFO [thread-78] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-08 11:05:36 ERROR [thread-47] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-08 11:35:36 DEBUG [thread-28] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-08 11:49:36 ERROR [thread-23] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-08 12:00:36 DEBUG [thread-35] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-08 12:32:36 DEBUG [thread-11] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-08 13:15:36 ERROR [thread-90] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-08 13:44:36 WARN [thread-17] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-08 13:46:36 DEBUG [thread-14] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-08 15:04:36 ERROR [thread-100] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-08 15:19:36 ERROR [thread-44] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-08 15:44:36 INFO [thread-68] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-08 15:55:36 DEBUG [thread-42] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-08 17:30:36 WARN [thread-30] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-08 17:39:36 ERROR [thread-24] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-08 17:42:36 INFO [thread-72] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-08 18:09:36 INFO [thread-61] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-08 18:43:36 ERROR [thread-20] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-08 18:45:36 INFO [thread-61] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-08 20:12:36 ERROR [thread-67] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-08 20:36:36 DEBUG [thread-85] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-08 22:38:36 WARN [thread-69] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-08 23:12:36 WARN [thread-98] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-08 23:51:36 DEBUG [thread-26] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-09 00:46:36 DEBUG [thread-99] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-09 00:52:36 INFO [thread-75] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-09 03:18:36 DEBUG [thread-4] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-09 03:39:36 INFO [thread-52] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-09 04:06:36 DEBUG [thread-27] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-09 07:16:36 INFO [thread-11] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-09 07:22:36 WARN [thread-59] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-09 07:41:36 DEBUG [thread-48] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-09 07:43:36 ERROR [thread-9] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-09 09:41:36 INFO [thread-43] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-09 09:58:36 WARN [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-09 10:27:36 ERROR [thread-19] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-09 11:06:36 INFO [thread-1] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-09 11:44:36 INFO [thread-38] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-09 12:00:36 INFO [thread-76] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-09 12:00:36 WARN [thread-8] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-09 12:44:36 DEBUG [thread-53] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-09 12:46:36 INFO [thread-84] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-09 13:04:36 WARN [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-09 13:17:36 DEBUG [thread-90] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-09 13:31:36 INFO [thread-18] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-09 13:51:36 WARN [thread-89] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-09 13:54:36 ERROR [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-09 14:15:36 INFO [thread-61] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-09 16:09:36 ERROR [thread-99] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-09 16:17:36 ERROR [thread-85] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-09 16:20:36 WARN [thread-91] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-09 16:50:36 DEBUG [thread-26] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-09 17:34:36 DEBUG [thread-39] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-09 17:50:36 INFO [thread-82] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-09 19:22:36 DEBUG [thread-68] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-09 20:00:36 WARN [thread-34] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-09 20:02:36 ERROR [thread-91] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-09 20:59:36 DEBUG [thread-60] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-09 21:08:36 INFO [thread-28] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-09 21:25:36 ERROR [thread-83] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-09 21:43:36 DEBUG [thread-3] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-09 21:45:36 DEBUG [thread-15] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-09 22:00:36 ERROR [thread-79] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-09 22:04:36 DEBUG [thread-56] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-09 23:47:36 WARN [thread-89] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-10 00:17:36 INFO [thread-37] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-10 00:38:36 WARN [thread-92] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-10 00:45:36 ERROR [thread-23] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-10 01:03:36 INFO [thread-64] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-10 01:13:36 INFO [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-10 01:14:36 INFO [thread-59] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-10 01:39:36 DEBUG [thread-56] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-10 02:24:36 DEBUG [thread-25] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-10 03:20:36 INFO [thread-79] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-10 03:30:36 ERROR [thread-93] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-10 04:36:36 DEBUG [thread-52] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-10 04:52:36 DEBUG [thread-4] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-10 05:03:36 DEBUG [thread-90] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-10 05:58:36 WARN [thread-94] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-10 06:48:36 DEBUG [thread-78] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-10 06:51:36 DEBUG [thread-44] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-10 07:32:36 DEBUG [thread-61] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-10 08:11:36 INFO [thread-85] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-10 08:44:36 WARN [thread-86] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-10 09:11:36 DEBUG [thread-32] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-10 10:15:36 WARN [thread-42] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-10 10:51:36 ERROR [thread-29] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-10 11:23:36 WARN [thread-49] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-10 11:27:36 INFO [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-10 11:36:36 DEBUG [thread-54] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-10 11:50:36 WARN [thread-13] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-10 12:17:36 INFO [thread-43] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-10 12:20:36 ERROR [thread-41] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-10 13:14:36 INFO [thread-12] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-10 14:06:36 DEBUG [thread-73] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-10 15:36:36 DEBUG [thread-17] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-10 15:52:36 INFO [thread-40] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-10 16:51:36 INFO [thread-86] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-10 18:16:36 ERROR [thread-98] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-10 20:12:36 DEBUG [thread-49] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-10 20:20:36 ERROR [thread-78] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-10 21:15:36 INFO [thread-77] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-10 21:16:36 INFO [thread-92] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-10 21:18:36 ERROR [thread-25] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-10 21:22:36 DEBUG [thread-57] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-10 22:13:36 DEBUG [thread-38] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-10 22:21:36 WARN [thread-15] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-11 01:24:36 WARN [thread-27] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-11 02:28:36 INFO [thread-79] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-11 03:46:36 ERROR [thread-8] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 03:57:36 ERROR [thread-13] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-11 05:51:36 WARN [thread-21] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-11 06:20:36 DEBUG [thread-36] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-11 06:21:36 WARN [thread-40] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-11 07:45:36 ERROR [thread-34] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 08:37:36 WARN [thread-14] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-11 08:42:36 WARN [thread-22] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-11 09:23:36 INFO [thread-3] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-11 09:49:36 DEBUG [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-11 09:50:36 DEBUG [thread-25] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 10:27:36 DEBUG [thread-66] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-11 10:50:36 ERROR [thread-54] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 11:00:36 DEBUG [thread-72] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-11 11:30:36 WARN [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-11 11:39:36 ERROR [thread-17] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-11 15:09:36 ERROR [thread-77] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-11 15:16:36 ERROR [thread-9] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-11 15:31:36 INFO [thread-98] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 15:45:36 DEBUG [thread-36] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-11 15:49:36 INFO [thread-30] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-11 15:51:36 DEBUG [thread-27] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-11 16:14:36 INFO [thread-16] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-11 17:16:36 DEBUG [thread-27] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-11 18:23:36 WARN [thread-84] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-11 19:05:36 ERROR [thread-79] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-11 19:07:36 DEBUG [thread-25] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-11 19:17:36 ERROR [thread-60] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-11 19:38:36 DEBUG [thread-55] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 21:21:36 ERROR [thread-77] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-11 21:37:36 INFO [thread-71] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-11 21:54:36 DEBUG [thread-83] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-11 23:29:36 ERROR [thread-85] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-12 00:36:36 INFO [thread-99] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-12 00:50:36 DEBUG [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-12 01:10:36 DEBUG [thread-99] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-12 01:16:36 WARN [thread-37] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-12 01:21:36 INFO [thread-36] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-12 01:48:36 DEBUG [thread-61] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-12 02:44:36 ERROR [thread-80] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-12 04:02:36 WARN [thread-40] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-12 05:27:36 DEBUG [thread-44] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-12 05:35:36 ERROR [thread-29] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-12 05:37:36 WARN [thread-60] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 05:45:36 WARN [thread-43] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-12 06:36:36 DEBUG [thread-34] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-12 06:55:36 ERROR [thread-44] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 06:57:36 ERROR [thread-20] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-12 07:03:36 INFO [thread-51] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 09:39:36 WARN [thread-82] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-12 10:09:36 DEBUG [thread-50] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-12 10:23:36 ERROR [thread-27] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-12 10:38:36 DEBUG [thread-8] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-12 11:08:36 ERROR [thread-64] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-12 12:41:36 WARN [thread-88] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-12 13:10:36 WARN [thread-39] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 13:19:36 WARN [thread-40] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-12 14:34:36 ERROR [thread-71] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-12 14:48:36 WARN [thread-72] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 15:04:36 ERROR [thread-22] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-12 16:01:36 DEBUG [thread-4] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-12 16:03:36 ERROR [thread-24] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-12 17:28:36 DEBUG [thread-23] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-12 17:50:36 WARN [thread-41] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-12 18:27:36 DEBUG [thread-49] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-12 18:30:36 DEBUG [thread-12] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-12 18:40:36 INFO [thread-34] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-12 19:38:36 ERROR [thread-68] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-12 21:31:36 ERROR [thread-74] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-13 00:11:36 INFO [thread-3] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-13 01:54:36 DEBUG [thread-6] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-13 01:54:36 WARN [thread-64] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-13 02:06:36 INFO [thread-51] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-13 02:28:36 ERROR [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-13 03:06:36 DEBUG [thread-42] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-13 04:07:36 WARN [thread-65] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-13 05:49:36 WARN [thread-57] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-13 05:52:36 INFO [thread-38] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-13 06:30:36 DEBUG [thread-68] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-13 06:58:36 WARN [thread-34] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-13 08:24:36 ERROR [thread-2] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-13 08:37:36 WARN [thread-73] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-13 08:54:36 DEBUG [thread-66] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-13 09:10:36 ERROR [thread-88] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-13 10:13:36 WARN [thread-59] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-13 10:35:36 DEBUG [thread-83] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-13 14:22:36 DEBUG [thread-39] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-13 15:16:36 WARN [thread-1] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-13 15:37:36 ERROR [thread-42] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-13 15:39:36 ERROR [thread-89] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-13 15:39:36 WARN [thread-41] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-13 15:40:36 ERROR [thread-95] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-13 17:43:36 INFO [thread-43] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-13 18:03:36 WARN [thread-27] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-13 18:16:36 WARN [thread-53] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-13 21:01:36 INFO [thread-87] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-13 22:40:36 WARN [thread-13] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-13 23:06:36 ERROR [thread-23] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-13 23:19:36 WARN [thread-59] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-14 01:32:36 INFO [thread-1] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-14 01:54:36 INFO [thread-21] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-14 02:33:36 ERROR [thread-54] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-14 04:40:36 INFO [thread-81] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-14 04:52:36 ERROR [thread-13] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-14 05:28:36 ERROR [thread-17] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-14 05:58:36 DEBUG [thread-1] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-14 06:23:36 DEBUG [thread-99] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-14 06:27:36 DEBUG [thread-91] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-14 07:04:36 INFO [thread-63] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-14 07:15:36 WARN [thread-67] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-14 07:57:36 WARN [thread-59] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-14 07:59:36 DEBUG [thread-54] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-14 08:33:36 DEBUG [thread-23] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-14 09:41:36 DEBUG [thread-19] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-14 10:07:36 ERROR [thread-15] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-14 10:18:36 ERROR [thread-36] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-14 10:42:36 DEBUG [thread-77] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-14 10:44:36 DEBUG [thread-41] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-14 10:59:36 ERROR [thread-65] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-14 11:23:36 ERROR [thread-40] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-14 11:33:36 DEBUG [thread-29] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-14 12:15:36 DEBUG [thread-50] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-14 12:41:36 WARN [thread-61] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-14 12:42:36 INFO [thread-82] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-14 14:25:36 WARN [thread-56] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-14 15:59:36 DEBUG [thread-82] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-14 16:12:36 ERROR [thread-37] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-14 17:35:36 INFO [thread-19] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-14 21:11:36 INFO [thread-53] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-14 22:02:36 INFO [thread-13] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-14 22:13:36 DEBUG [thread-28] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-14 23:18:36 DEBUG [thread-82] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-15 00:02:36 DEBUG [thread-93] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-15 01:20:36 ERROR [thread-34] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 01:37:36 WARN [thread-49] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-15 02:22:36 WARN [thread-4] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-15 03:02:36 WARN [thread-66] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 03:16:36 ERROR [thread-40] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-15 04:36:36 ERROR [thread-29] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-15 04:43:36 ERROR [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-15 04:50:36 ERROR [thread-16] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-15 07:06:36 DEBUG [thread-84] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 07:16:36 DEBUG [thread-65] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-15 07:25:36 ERROR [thread-32] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-15 08:37:36 ERROR [thread-38] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-15 08:51:36 ERROR [thread-53] org.apache.catalina.startup.Bootstrap: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 08:52:36 WARN [thread-82] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-15 10:24:36 WARN [thread-95] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-15 10:39:36 WARN [thread-94] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-15 12:26:36 ERROR [thread-84] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-15 14:00:36 DEBUG [thread-69] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-15 14:25:36 WARN [thread-50] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-15 14:41:36 INFO [thread-3] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 15:40:36 INFO [thread-69] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-15 16:08:36 DEBUG [thread-46] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-15 16:13:36 WARN [thread-80] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-15 16:51:36 DEBUG [thread-93] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-15 17:17:36 DEBUG [thread-82] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-15 17:21:36 WARN [thread-16] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-15 17:56:36 WARN [thread-29] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-15 18:25:36 INFO [thread-52] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-15 20:12:36 DEBUG [thread-73] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-15 21:13:36 DEBUG [thread-70] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-15 21:31:36 ERROR [thread-6] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-15 22:27:36 INFO [thread-51] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-15 22:30:36 WARN [thread-85] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-15 23:11:36 DEBUG [thread-14] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-16 02:00:36 WARN [thread-91] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-16 03:51:36 DEBUG [thread-22] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-16 04:43:36 DEBUG [thread-45] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-16 06:34:36 INFO [thread-92] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-16 06:54:36 DEBUG [thread-50] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-16 07:10:36 WARN [thread-66] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-16 08:00:36 WARN [thread-100] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-16 08:03:36 DEBUG [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-16 08:14:36 DEBUG [thread-91] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-16 09:29:36 INFO [thread-21] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-16 11:13:36 ERROR [thread-70] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-16 11:26:36 DEBUG [thread-100] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-16 12:00:36 WARN [thread-4] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-16 13:46:36 ERROR [thread-3] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-16 14:06:36 ERROR [thread-7] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-16 14:08:36 WARN [thread-85] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-16 14:49:36 ERROR [thread-47] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-16 15:00:36 DEBUG [thread-64] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-16 16:11:36 WARN [thread-81] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-16 16:29:36 WARN [thread-9] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-16 17:25:36 DEBUG [thread-98] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-16 19:30:36 WARN [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-16 20:02:36 DEBUG [thread-92] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-16 21:20:36 ERROR [thread-87] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-16 21:52:36 INFO [thread-4] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-16 23:03:36 DEBUG [thread-78] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-17 00:00:36 INFO [thread-95] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-17 01:11:36 INFO [thread-16] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-17 02:07:36 DEBUG [thread-62] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-17 02:18:36 ERROR [thread-54] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-17 03:29:36 ERROR [thread-34] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-17 04:40:36 WARN [thread-95] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-17 06:06:36 ERROR [thread-51] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-17 06:33:36 INFO [thread-10] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-17 08:08:36 DEBUG [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-17 09:11:36 ERROR [thread-90] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-17 09:29:36 WARN [thread-87] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-17 09:35:36 WARN [thread-35] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-17 09:50:36 WARN [thread-48] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-17 11:13:36 INFO [thread-5] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-17 11:38:36 ERROR [thread-45] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-17 11:45:36 INFO [thread-93] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-17 11:51:36 WARN [thread-22] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-17 12:09:36 DEBUG [thread-95] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-17 12:22:36 WARN [thread-22] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-17 12:23:36 ERROR [thread-39] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-17 14:21:36 INFO [thread-7] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-17 15:56:36 ERROR [thread-14] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-17 16:34:36 INFO [thread-66] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-17 16:36:36 WARN [thread-59] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-17 16:37:36 INFO [thread-65] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-17 16:37:36 ERROR [thread-43] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-17 16:54:36 WARN [thread-85] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-17 17:02:36 WARN [thread-74] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-17 17:05:36 DEBUG [thread-9] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-17 17:05:36 DEBUG [thread-82] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-17 18:02:36 WARN [thread-47] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-17 18:30:36 WARN [thread-30] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-17 19:07:36 INFO [thread-73] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-17 22:10:36 INFO [thread-96] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-17 22:35:36 WARN [thread-47] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-17 23:51:36 DEBUG [thread-35] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-18 00:22:36 WARN [thread-60] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-18 00:43:36 WARN [thread-21] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-18 01:49:36 INFO [thread-33] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-18 04:48:36 DEBUG [thread-80] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-18 05:51:36 INFO [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-18 06:26:36 DEBUG [thread-49] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-18 07:20:36 ERROR [thread-67] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-18 07:32:36 ERROR [thread-38] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-18 07:48:36 DEBUG [thread-100] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-18 07:57:36 WARN [thread-71] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-18 08:14:36 WARN [thread-32] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-18 08:18:36 INFO [thread-37] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-18 08:19:36 WARN [thread-44] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-18 08:36:36 DEBUG [thread-73] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-18 09:01:36 ERROR [thread-69] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-18 10:18:36 DEBUG [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-18 10:34:36 DEBUG [thread-26] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-18 10:45:36 INFO [thread-13] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-18 11:12:36 ERROR [thread-36] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-18 11:21:36 ERROR [thread-16] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-18 12:38:36 INFO [thread-8] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-18 12:58:36 ERROR [thread-41] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-18 13:07:36 ERROR [thread-49] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-18 14:04:36 DEBUG [thread-68] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-18 14:23:36 INFO [thread-19] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-18 14:44:36 DEBUG [thread-83] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-18 14:53:36 ERROR [thread-88] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-18 15:23:36 ERROR [thread-5] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-18 18:51:36 INFO [thread-100] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-18 19:45:36 WARN [thread-1] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-18 20:37:36 ERROR [thread-31] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-18 22:06:36 INFO [thread-51] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-18 23:36:36 ERROR [thread-77] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-18 23:45:36 ERROR [thread-12] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-19 01:49:36 WARN [thread-96] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-19 03:04:36 INFO [thread-88] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-19 03:14:36 WARN [thread-63] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-19 04:43:36 DEBUG [thread-86] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-19 06:24:36 WARN [thread-48] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-19 06:38:36 DEBUG [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-19 07:31:36 ERROR [thread-43] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-19 07:43:36 WARN [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-19 07:52:36 DEBUG [thread-24] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-19 08:08:36 WARN [thread-59] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 08:11:36 DEBUG [thread-19] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-19 09:06:36 INFO [thread-19] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-19 09:34:36 DEBUG [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-19 10:01:36 DEBUG [thread-65] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-19 11:58:36 WARN [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-19 12:06:36 DEBUG [thread-39] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 14:06:36 DEBUG [thread-94] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-19 14:09:36 INFO [thread-80] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-19 14:27:36 ERROR [thread-38] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-19 14:52:36 DEBUG [thread-49] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-19 16:12:36 WARN [thread-19] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-19 16:14:36 INFO [thread-22] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-19 16:47:36 INFO [thread-39] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-19 16:50:36 INFO [thread-20] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-19 16:56:36 DEBUG [thread-75] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-19 18:19:36 ERROR [thread-14] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-19 18:48:36 INFO [thread-43] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-19 19:41:36 INFO [thread-27] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-19 19:50:36 INFO [thread-80] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 19:57:36 DEBUG [thread-97] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 20:28:36 ERROR [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-19 20:36:36 ERROR [thread-54] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-19 20:37:36 ERROR [thread-70] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-19 20:50:36 ERROR [thread-24] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-19 21:49:36 INFO [thread-93] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-19 22:29:36 WARN [thread-31] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 23:19:36 DEBUG [thread-8] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-19 23:51:36 DEBUG [thread-52] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-20 00:01:36 INFO [thread-54] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-20 00:47:36 DEBUG [thread-19] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-20 00:54:36 DEBUG [thread-2] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-20 01:23:36 DEBUG [thread-30] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-20 01:50:36 ERROR [thread-6] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-20 02:14:36 INFO [thread-44] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-20 02:30:36 INFO [thread-2] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-20 03:39:36 DEBUG [thread-56] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-20 04:30:36 WARN [thread-44] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-20 04:45:36 DEBUG [thread-40] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-20 06:25:36 ERROR [thread-92] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-20 06:35:36 INFO [thread-86] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-20 06:51:36 DEBUG [thread-85] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-20 07:30:36 WARN [thread-58] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-20 08:11:36 ERROR [thread-44] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-20 08:26:36 ERROR [thread-48] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-20 09:47:36 INFO [thread-89] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-20 10:58:36 WARN [thread-62] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-20 13:18:36 DEBUG [thread-17] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-20 13:22:36 WARN [thread-33] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-20 13:28:36 WARN [thread-35] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-20 13:38:36 INFO [thread-1] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-20 16:26:36 WARN [thread-64] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-20 18:50:36 INFO [thread-92] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-20 18:51:36 WARN [thread-46] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-20 19:29:36 INFO [thread-53] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-20 20:16:36 ERROR [thread-39] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-20 20:50:36 DEBUG [thread-90] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-20 22:02:36 WARN [thread-25] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-20 23:23:36 INFO [thread-60] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-21 01:25:36 ERROR [thread-95] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-21 02:06:36 WARN [thread-81] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-21 02:20:36 DEBUG [thread-89] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-21 03:14:36 INFO [thread-92] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-21 03:49:36 WARN [thread-28] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-21 04:36:36 ERROR [thread-27] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-21 07:42:36 INFO [thread-44] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-21 08:20:36 ERROR [thread-32] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-21 08:36:36 ERROR [thread-60] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-21 10:08:36 ERROR [thread-61] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-21 11:00:36 WARN [thread-2] org.apache.catalina.startup.Bootstrap: Loading Spring application context
+2024-12-21 11:51:36 DEBUG [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-21 11:58:36 INFO [thread-40] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-21 12:43:36 INFO [thread-57] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-21 12:59:36 DEBUG [thread-57] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-21 13:30:36 INFO [thread-68] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-21 13:40:36 WARN [thread-49] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-21 13:58:36 DEBUG [thread-78] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-21 14:29:36 WARN [thread-90] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-21 14:53:36 DEBUG [thread-60] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-21 17:40:36 DEBUG [thread-39] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-21 18:03:36 WARN [thread-5] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-21 19:04:36 WARN [thread-28] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-21 21:41:36 ERROR [thread-94] org.apache.coyote.AbstractProtocol: Starting service Catalina
+2024-12-21 21:41:36 INFO [thread-56] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-21 22:00:36 DEBUG [thread-10] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-21 22:19:36 INFO [thread-81] org.apache.coyote.AbstractProtocol: Context initialization failed
+2024-12-21 23:29:36 WARN [thread-13] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-22 02:39:36 ERROR [thread-91] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-22 04:21:36 DEBUG [thread-13] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-22 04:33:36 WARN [thread-59] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-22 05:44:36 INFO [thread-55] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-22 06:34:36 DEBUG [thread-94] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-22 07:13:36 DEBUG [thread-74] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-22 07:26:36 INFO [thread-26] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-22 07:45:36 ERROR [thread-82] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-22 07:51:36 ERROR [thread-76] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-22 07:58:36 ERROR [thread-20] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-22 07:59:36 ERROR [thread-98] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-22 08:03:36 ERROR [thread-96] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-22 08:41:36 DEBUG [thread-3] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-22 09:33:36 DEBUG [thread-92] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-22 09:40:36 ERROR [thread-81] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-22 09:45:36 DEBUG [thread-69] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-22 10:14:36 WARN [thread-35] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-22 10:21:36 INFO [thread-81] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-22 11:00:36 DEBUG [thread-36] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-22 12:52:36 WARN [thread-75] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-22 12:58:36 DEBUG [thread-64] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-22 13:53:36 INFO [thread-55] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-22 13:59:36 WARN [thread-1] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-22 15:34:36 INFO [thread-45] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-22 16:31:36 ERROR [thread-54] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-22 16:40:36 DEBUG [thread-85] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-22 17:11:36 ERROR [thread-56] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-22 18:42:36 DEBUG [thread-12] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-22 18:49:36 INFO [thread-11] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-22 18:57:36 DEBUG [thread-7] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-22 19:45:36 DEBUG [thread-89] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: SEVERE: Servlet.service() for servlet threw exception
+2024-12-22 19:54:36 INFO [thread-2] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-22 22:10:36 DEBUG [thread-77] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-23 00:35:36 DEBUG [thread-18] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-23 00:39:36 ERROR [thread-64] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-23 01:55:36 WARN [thread-2] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-23 02:20:36 WARN [thread-80] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-23 02:42:36 ERROR [thread-52] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-23 02:48:36 ERROR [thread-51] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-23 03:21:36 WARN [thread-64] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-23 03:59:36 INFO [thread-93] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-23 04:13:36 ERROR [thread-94] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-23 06:24:36 WARN [thread-100] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-23 07:32:36 DEBUG [thread-7] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-23 08:39:36 WARN [thread-91] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-23 09:14:36 WARN [thread-21] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-23 09:37:36 ERROR [thread-4] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-23 09:54:36 INFO [thread-54] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-23 12:14:36 DEBUG [thread-70] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-23 13:32:36 WARN [thread-62] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-23 13:54:36 WARN [thread-13] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-23 13:59:36 WARN [thread-97] org.apache.tomcat.util.net.NioEndpoint: Server startup in 456 ms
+2024-12-23 15:04:36 INFO [thread-14] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-23 15:29:36 INFO [thread-24] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-23 17:18:36 WARN [thread-7] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-23 17:19:36 INFO [thread-83] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-23 18:31:36 WARN [thread-9] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-23 18:43:36 DEBUG [thread-41] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-23 19:39:36 ERROR [thread-78] org.apache.catalina.loader.WebappClassLoaderBase: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-23 19:53:36 INFO [thread-42] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-23 21:48:36 DEBUG [thread-49] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-23 22:43:36 WARN [thread-4] org.apache.catalina.startup.Bootstrap: Initializing ProtocolHandler
+2024-12-23 22:49:36 INFO [thread-8] org.apache.tomcat.util.net.NioEndpoint: Starting service Catalina
+2024-12-23 23:08:36 DEBUG [thread-77] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-23 23:20:36 DEBUG [thread-57] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-24 00:14:36 WARN [thread-90] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-24 01:22:36 DEBUG [thread-49] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-24 01:51:36 ERROR [thread-65] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-24 01:59:36 ERROR [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-24 01:59:36 WARN [thread-80] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-24 02:15:36 INFO [thread-65] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-24 05:15:36 ERROR [thread-95] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-24 05:29:36 WARN [thread-5] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-24 06:08:36 DEBUG [thread-59] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-24 06:23:36 INFO [thread-13] org.apache.coyote.AbstractProtocol: Initializing ProtocolHandler
+2024-12-24 06:34:36 DEBUG [thread-58] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-24 07:25:36 ERROR [thread-79] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-24 08:00:36 ERROR [thread-16] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-24 09:35:36 INFO [thread-62] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-24 12:09:36 INFO [thread-38] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-24 12:47:36 INFO [thread-1] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-24 13:21:36 INFO [thread-14] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-24 13:46:36 INFO [thread-87] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-24 15:18:36 ERROR [thread-90] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-24 15:18:36 WARN [thread-34] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-24 15:20:36 INFO [thread-16] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-24 16:39:36 WARN [thread-94] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-24 17:32:36 ERROR [thread-9] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-24 17:36:36 ERROR [thread-40] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-24 18:49:36 ERROR [thread-66] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-24 19:40:36 WARN [thread-39] org.apache.tomcat.util.net.NioEndpoint: Unable to register MBeans
+2024-12-24 21:38:36 DEBUG [thread-61] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-24 22:33:36 DEBUG [thread-74] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-25 00:33:36 ERROR [thread-7] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-25 00:42:36 ERROR [thread-6] org.apache.coyote.AbstractProtocol: Application stopped
+2024-12-25 01:12:36 INFO [thread-64] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-25 01:36:36 ERROR [thread-38] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-25 02:08:36 ERROR [thread-85] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-25 02:38:36 WARN [thread-26] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-25 02:53:36 DEBUG [thread-54] org.apache.catalina.startup.Bootstrap: Application stopped
+2024-12-25 03:24:36 INFO [thread-41] org.apache.catalina.startup.Bootstrap: Server startup in 456 ms
+2024-12-25 05:55:36 WARN [thread-38] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-25 05:55:36 ERROR [thread-19] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-25 06:08:36 ERROR [thread-11] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-25 07:32:36 DEBUG [thread-54] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-25 07:47:36 WARN [thread-39] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Loading Spring application context
+2024-12-25 09:26:36 DEBUG [thread-97] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-25 10:00:36 ERROR [thread-90] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-25 10:36:36 DEBUG [thread-32] org.apache.tomcat.util.net.NioEndpoint: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-25 11:11:36 ERROR [thread-15] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-25 11:52:36 INFO [thread-46] org.apache.catalina.startup.Bootstrap: Context initialization failed
+2024-12-25 11:54:36 DEBUG [thread-29] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-25 11:55:36 INFO [thread-19] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-25 12:16:36 DEBUG [thread-25] org.apache.tomcat.util.net.NioEndpoint: Loading Spring application context
+2024-12-25 13:05:36 INFO [thread-60] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-25 15:09:36 ERROR [thread-89] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-25 15:48:36 ERROR [thread-54] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-25 17:37:36 DEBUG [thread-33] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-25 17:41:36 ERROR [thread-48] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-25 17:57:36 WARN [thread-96] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-25 18:39:36 DEBUG [thread-82] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-25 19:16:36 DEBUG [thread-37] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-25 20:26:36 INFO [thread-92] org.apache.catalina.loader.WebappClassLoaderBase: Initializing ProtocolHandler
+2024-12-25 20:30:36 WARN [thread-26] org.apache.catalina.loader.WebappClassLoaderBase: Server startup in 456 ms
+2024-12-25 20:30:36 ERROR [thread-93] org.apache.tomcat.util.net.NioEndpoint: Context initialization failed
+2024-12-25 20:37:36 DEBUG [thread-62] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Application stopped
+2024-12-25 21:24:36 ERROR [thread-80] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-25 21:29:36 WARN [thread-5] org.apache.catalina.loader.WebappClassLoaderBase: Starting service Catalina
+2024-12-25 23:31:36 DEBUG [thread-16] org.apache.catalina.startup.Bootstrap: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-25 23:39:36 DEBUG [thread-47] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-26 01:48:36 INFO [thread-59] org.apache.catalina.loader.WebappClassLoaderBase: SEVERE: Servlet.service() for servlet threw exception
+2024-12-26 02:47:36 WARN [thread-88] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-26 03:42:36 INFO [thread-75] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Unable to register MBeans
+2024-12-26 07:18:36 WARN [thread-22] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-26 07:22:36 ERROR [thread-76] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-26 08:04:36 DEBUG [thread-76] org.apache.tomcat.util.net.NioEndpoint: Connection reset by peer
+2024-12-26 08:20:36 ERROR [thread-90] org.apache.coyote.AbstractProtocol: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-26 10:15:36 DEBUG [thread-78] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-26 10:21:36 DEBUG [thread-49] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Server startup in 456 ms
+2024-12-26 10:22:36 WARN [thread-14] org.apache.coyote.AbstractProtocol: Loading Spring application context
+2024-12-26 11:24:36 WARN [thread-93] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-26 11:48:36 WARN [thread-95] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-26 12:04:36 DEBUG [thread-86] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-26 14:08:36 WARN [thread-55] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-26 15:07:36 WARN [thread-75] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer
+2024-12-26 15:20:36 INFO [thread-53] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Starting service Catalina
+2024-12-26 15:54:36 ERROR [thread-77] org.apache.coyote.AbstractProtocol: Connection reset by peer
+2024-12-26 17:42:36 ERROR [thread-73] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Initializing ProtocolHandler
+2024-12-26 18:25:36 INFO [thread-98] org.apache.tomcat.util.net.NioEndpoint: Initializing ProtocolHandler
+2024-12-26 19:09:36 ERROR [thread-37] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Connection reset by peer
+2024-12-26 20:43:36 ERROR [thread-17] org.apache.tomcat.util.net.NioEndpoint: Application stopped
+2024-12-26 21:33:36 WARN [thread-84] org.apache.catalina.loader.WebappClassLoaderBase: Unable to register MBeans
+2024-12-26 21:52:36 INFO [thread-31] org.apache.catalina.loader.WebappClassLoaderBase: Application stopped
+2024-12-26 22:16:36 WARN [thread-43] org.apache.coyote.AbstractProtocol: SEVERE: Servlet.service() for servlet threw exception
+2024-12-26 22:42:36 ERROR [thread-89] org.apache.catalina.startup.Bootstrap: Connection reset by peer
+2024-12-27 00:07:36 INFO [thread-58] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-27 00:17:36 WARN [thread-18] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Context initialization failed
+2024-12-27 00:43:36 DEBUG [thread-4] org.apache.coyote.AbstractProtocol: Unable to register MBeans
+2024-12-27 04:36:36 DEBUG [thread-83] org.apache.catalina.loader.WebappClassLoaderBase: Loading Spring application context
+2024-12-27 06:04:36 INFO [thread-17] org.apache.catalina.core.ContainerBase.[Catalina].[localhost]: Deployment of web application directory /var/lib/tomcat/webapps/ROOT has finished
+2024-12-27 06:44:36 WARN [thread-21] org.apache.catalina.startup.Bootstrap: Starting service Catalina
+2024-12-27 07:09:36 WARN [thread-96] org.apache.catalina.loader.WebappClassLoaderBase: Context initialization failed
+2024-12-27 07:49:36 DEBUG [thread-79] org.apache.catalina.startup.Bootstrap: Unable to register MBeans
+2024-12-27 08:20:36 DEBUG [thread-1] org.apache.tomcat.util.net.NioEndpoint: SEVERE: Servlet.service() for servlet threw exception
+2024-12-27 10:47:36 INFO [thread-10] org.apache.coyote.AbstractProtocol: Server startup in 456 ms
+2024-12-27 10:53:36 WARN [thread-86] org.apache.catalina.loader.WebappClassLoaderBase: Connection reset by peer

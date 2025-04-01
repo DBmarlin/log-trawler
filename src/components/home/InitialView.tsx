@@ -97,8 +97,10 @@ const InitialView: React.FC<InitialViewProps> = ({
             {/* Hidden input remains in home.tsx */}
           </div>
           {files.length === 0 && (
-            <div className="mt-4 text-sm text-muted-foreground">
-              <p>Or try a sample log file:</p>
+            <div className="flex items-center justify-between mt-4">
+              <p className="text-sm text-muted-foreground">
+                Or try a sample log file:
+              </p>
               <Button
                 variant="link"
                 className="text-blue-500 hover:text-blue-700"

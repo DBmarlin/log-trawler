@@ -264,7 +264,7 @@ export function useFileManagement() {
         return newState;
       });
     }, 500);
-  }, [activeFileId]); // Added activeFileId dependency
+  }, []); // Removed activeFileId dependency
 
   const handleDrop = useCallback(async (e: React.DragEvent) => {
     e.preventDefault();

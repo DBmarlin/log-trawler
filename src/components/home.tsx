@@ -92,6 +92,7 @@ const Home = () => {
   // Effect for chat panel event listener remains in Home
   useEffect(() => {
     const handleSetChatPanelOpen = (event: CustomEvent<{ open: boolean }>) => {
+      console.log("Home: handleSetChatPanelOpen received event:", event.detail); // Diagnostic log
       if (event.detail.open) {
         setChatPanelOpen(true);
       }
@@ -213,10 +214,23 @@ const Home = () => {
         endDate={activeFile?.timeRange?.endDate || activeFile?.endDate} // Use activeFile from hook
         onRangeChange={handleTimeRangeSelect} // Pass handler directly
       />
+      {/* Moved file input here so it's always available */}
+      <input
+        id="fileInput"
+        type="file"
+        multiple
+        className="hidden"
+        onChange={async (e) => {
+          if (e.target.files) {
+            await processFiles(Array.from(e.target.files)); // Use processFiles from hook
+          }
+        }}
+      />
       <div className="p-4 flex flex-col gap-4 flex-grow">
         <ChatPanel
           isOpen={chatPanelOpen}
           onClose={() => setChatPanelOpen(false)}
+          onOpenRequest={() => setChatPanelOpen(true)} // Pass the state setter directly
         />
         {/* Chat button remains */}
         <div className="fixed bottom-4 right-4 flex items-center gap-2 text-muted-foreground z-10">
@@ -298,18 +312,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-              {/* Input is part of the file handling logic, managed by the hook/passed props */}
-              <input
-                id="fileInput"
-                type="file"
-                multiple
-                className="hidden"
-                onChange={async (e) => {
-                  if (e.target.files) {
-                    await processFiles(Array.from(e.target.files)); // Use processFiles from hook
-                  }
-                }}
-              />
+              {/* Input moved outside this conditional block */}
             </div>
           )}
 

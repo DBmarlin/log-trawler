@@ -1,0 +1,1000 @@
+2025-03-08 16:57:32 [CRITICAL] (BufferPool): mysqld started.
+2025-03-08 16:57:51 [ERROR] (Replication): Replication stopped due to error.
+2025-03-08 17:01:08 [CRITICAL] (Query): mysqld started.
+2025-03-08 17:01:58 [INFO] (InnoDB): Table locked for too long.
+2025-03-08 17:03:22 [WARNING] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 17:06:33 [ALERT] (InnoDB): Disk space running low.
+2025-03-08 17:07:33 [CRITICAL] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 17:08:17 [ALERT] (Replication): SSL handshake failed.
+2025-03-08 17:10:32 [ERROR] (Replication): SSL handshake failed.
+2025-03-08 17:13:44 [CRITICAL] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 17:18:02 [CRITICAL] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 17:18:03 [INFO] (Query): Buffer pool size adjusted dynamically.
+2025-03-08 17:22:20 [INFO] (Query): SSL handshake failed.
+2025-03-08 17:23:43 [ERROR] (General): User 'root' logged in.
+2025-03-08 17:26:17 [WARNING] (Replication): Buffer pool size adjusted dynamically.
+2025-03-08 17:26:43 [INFO] (Connection): Table corruption detected, attempting repair.
+2025-03-08 17:29:07 [WARNING] (Replication): Disk space running low.
+2025-03-08 17:31:34 [INFO] (BufferPool): Query execution exceeded timeout.
+2025-03-08 17:34:25 [INFO] (Connection): Connection refused: Too many connections.
+2025-03-08 17:37:11 [ALERT] (Query): Table locked for too long.
+2025-03-08 17:38:27 [ERROR] (InnoDB): Replication stopped due to error.
+2025-03-08 17:41:11 [CRITICAL] (Replication): Connection refused: Too many connections.
+2025-03-08 17:43:40 [ALERT] (BufferPool): User 'root' logged in.
+2025-03-08 17:43:56 [INFO] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-08 17:45:05 [WARNING] (General): Replication stopped due to error.
+2025-03-08 17:47:09 [INFO] (InnoDB): Connection refused: Too many connections.
+2025-03-08 17:47:24 [WARNING] (Query): Query execution exceeded timeout.
+2025-03-08 17:48:47 [ALERT] (Connection): Query execution exceeded timeout.
+2025-03-08 17:51:20 [ERROR] (InnoDB): Query execution exceeded timeout.
+2025-03-08 17:53:10 [ERROR] (Replication): Table locked for too long.
+2025-03-08 17:54:42 [CRITICAL] (General): Table corruption detected, attempting repair.
+2025-03-08 17:58:20 [ALERT] (Replication): Table corruption detected, attempting repair.
+2025-03-08 18:02:40 [INFO] (Replication): User 'root' logged in.
+2025-03-08 18:03:42 [ALERT] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 18:08:35 [ALERT] (Connection): User 'root' logged in.
+2025-03-08 18:11:37 [WARNING] (Replication): Table locked for too long.
+2025-03-08 18:14:04 [WARNING] (Query): User 'root' logged in.
+2025-03-08 18:17:58 [INFO] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 18:18:00 [ERROR] (Replication): SSL handshake failed.
+2025-03-08 18:18:38 [CRITICAL] (Connection): mysqld shutting down.
+2025-03-08 18:20:19 [CRITICAL] (InnoDB): Disk space running low.
+2025-03-08 18:23:54 [INFO] (InnoDB): Slow query detected.
+2025-03-08 18:26:46 [ERROR] (InnoDB): Query execution exceeded timeout.
+2025-03-08 18:27:34 [WARNING] (Query): Slow query detected.
+2025-03-08 18:28:02 [INFO] (Query): Table locked for too long.
+2025-03-08 18:30:47 [INFO] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-08 18:33:40 [CRITICAL] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 18:38:01 [ALERT] (Query): Replication stopped due to error.
+2025-03-08 18:40:47 [WARNING] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 18:42:51 [ALERT] (General): Table locked for too long.
+2025-03-08 18:43:19 [INFO] (InnoDB): SSL handshake failed.
+2025-03-08 18:44:13 [CRITICAL] (Connection): User 'root' logged in.
+2025-03-08 18:46:00 [INFO] (BufferPool): mysqld shutting down.
+2025-03-08 18:46:34 [ALERT] (Query): Slow query detected.
+2025-03-08 18:50:32 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-08 18:54:34 [INFO] (General): SSL handshake failed.
+2025-03-08 18:54:54 [INFO] (General): Buffer pool size adjusted dynamically.
+2025-03-08 18:59:47 [ALERT] (Replication): User 'root' logged in.
+2025-03-08 19:04:00 [ALERT] (Replication): Table locked for too long.
+2025-03-08 19:05:16 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-08 19:07:04 [INFO] (Replication): User 'root' logged in.
+2025-03-08 19:09:52 [CRITICAL] (BufferPool): Query execution exceeded timeout.
+2025-03-08 19:12:12 [INFO] (Query): User 'root' logged in.
+2025-03-08 19:13:23 [ERROR] (Query): Slow query detected.
+2025-03-08 19:16:08 [CRITICAL] (BufferPool): User 'root' logged in.
+2025-03-08 19:19:57 [CRITICAL] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-08 19:21:28 [WARNING] (BufferPool): Replication stopped due to error.
+2025-03-08 19:24:32 [INFO] (Replication): Table corruption detected, attempting repair.
+2025-03-08 19:27:28 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-08 19:32:23 [WARNING] (Replication): Table locked for too long.
+2025-03-08 19:33:03 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 19:33:31 [CRITICAL] (BufferPool): Query execution exceeded timeout.
+2025-03-08 19:38:18 [CRITICAL] (Replication): Connection refused: Too many connections.
+2025-03-08 19:39:18 [WARNING] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-08 19:42:36 [ERROR] (General): Table locked for too long.
+2025-03-08 19:44:20 [WARNING] (Connection): Connection refused: Too many connections.
+2025-03-08 19:46:14 [ERROR] (InnoDB): mysqld shutting down.
+2025-03-08 19:46:46 [ALERT] (Replication): Table corruption detected, attempting repair.
+2025-03-08 19:48:11 [WARNING] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 19:51:05 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-08 19:51:41 [ALERT] (General): User 'root' logged in.
+2025-03-08 19:56:16 [INFO] (Query): mysqld shutting down.
+2025-03-08 19:57:04 [ERROR] (Query): User 'root' logged in.
+2025-03-08 20:00:33 [CRITICAL] (Query): mysqld started.
+2025-03-08 20:05:23 [ERROR] (Query): Buffer pool size adjusted dynamically.
+2025-03-08 20:09:19 [WARNING] (Replication): Query execution exceeded timeout.
+2025-03-08 20:11:00 [ALERT] (Replication): Disk space running low.
+2025-03-08 20:14:13 [ERROR] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 20:14:53 [ERROR] (General): User 'root' logged in.
+2025-03-08 20:19:07 [INFO] (Replication): Query execution exceeded timeout.
+2025-03-08 20:22:45 [ALERT] (Replication): Disk space running low.
+2025-03-08 20:25:49 [CRITICAL] (BufferPool): Connection refused: Too many connections.
+2025-03-08 20:27:44 [ERROR] (Connection): Buffer pool size adjusted dynamically.
+2025-03-08 20:28:52 [ERROR] (Query): Replication stopped due to error.
+2025-03-08 20:33:23 [CRITICAL] (Replication): mysqld started.
+2025-03-08 20:34:03 [CRITICAL] (Connection): Disk space running low.
+2025-03-08 20:37:08 [INFO] (Connection): Slow query detected.
+2025-03-08 20:37:47 [INFO] (Connection): User 'root' logged in.
+2025-03-08 20:38:21 [ALERT] (Query): Replication stopped due to error.
+2025-03-08 20:40:21 [INFO] (General): Slow query detected.
+2025-03-08 20:41:23 [ALERT] (Query): Table locked for too long.
+2025-03-08 20:42:27 [CRITICAL] (Replication): Connection refused: Too many connections.
+2025-03-08 20:46:01 [WARNING] (InnoDB): Replication stopped due to error.
+2025-03-08 20:46:53 [INFO] (Connection): Query execution exceeded timeout.
+2025-03-08 20:50:49 [CRITICAL] (Query): Replication stopped due to error.
+2025-03-08 20:53:13 [INFO] (Connection): User 'root' logged in.
+2025-03-08 20:57:37 [ERROR] (BufferPool): Table locked for too long.
+2025-03-08 21:00:57 [ERROR] (BufferPool): SSL handshake failed.
+2025-03-08 21:02:39 [CRITICAL] (Connection): Table corruption detected, attempting repair.
+2025-03-08 21:07:31 [CRITICAL] (Query): SSL handshake failed.
+2025-03-08 21:08:50 [WARNING] (Connection): Query execution exceeded timeout.
+2025-03-08 21:10:42 [WARNING] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 21:11:02 [ERROR] (Connection): Buffer pool size adjusted dynamically.
+2025-03-08 21:11:49 [WARNING] (Query): Slow query detected.
+2025-03-08 21:13:19 [ALERT] (General): Slow query detected.
+2025-03-08 21:15:14 [WARNING] (Replication): mysqld shutting down.
+2025-03-08 21:18:08 [INFO] (BufferPool): SSL handshake failed.
+2025-03-08 21:20:33 [ALERT] (Replication): Connection refused: Too many connections.
+2025-03-08 21:24:09 [CRITICAL] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 21:28:41 [ERROR] (Query): Disk space running low.
+2025-03-08 21:28:57 [INFO] (InnoDB): SSL handshake failed.
+2025-03-08 21:29:37 [WARNING] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 21:31:12 [ALERT] (Query): Replication stopped due to error.
+2025-03-08 21:31:41 [ALERT] (Replication): Connection refused: Too many connections.
+2025-03-08 21:35:40 [ALERT] (Query): Table locked for too long.
+2025-03-08 21:36:56 [ERROR] (General): Slow query detected.
+2025-03-08 21:40:13 [INFO] (Connection): mysqld shutting down.
+2025-03-08 21:43:56 [INFO] (Replication): User 'root' logged in.
+2025-03-08 21:46:27 [CRITICAL] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 21:47:38 [ERROR] (General): SSL handshake failed.
+2025-03-08 21:48:15 [ERROR] (General): Disk space running low.
+2025-03-08 21:49:43 [ALERT] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 21:52:02 [ALERT] (General): Connection refused: Too many connections.
+2025-03-08 21:53:36 [CRITICAL] (Connection): Replication stopped due to error.
+2025-03-08 21:56:45 [ERROR] (General): Table corruption detected, attempting repair.
+2025-03-08 22:00:37 [ERROR] (Replication): Connection refused: Too many connections.
+2025-03-08 22:02:22 [CRITICAL] (Replication): Buffer pool size adjusted dynamically.
+2025-03-08 22:06:42 [INFO] (General): Connection refused: Too many connections.
+2025-03-08 22:08:01 [ALERT] (Replication): Slow query detected.
+2025-03-08 22:12:08 [CRITICAL] (InnoDB): Table corruption detected, attempting repair.
+2025-03-08 22:13:11 [ALERT] (Replication): Query execution exceeded timeout.
+2025-03-08 22:17:35 [ALERT] (General): Replication stopped due to error.
+2025-03-08 22:19:30 [ERROR] (Replication): Disk space running low.
+2025-03-08 22:20:08 [WARNING] (BufferPool): Connection refused: Too many connections.
+2025-03-08 22:20:15 [INFO] (General): Connection refused: Too many connections.
+2025-03-08 22:22:59 [ALERT] (BufferPool): Connection refused: Too many connections.
+2025-03-08 22:27:40 [ERROR] (Replication): User 'root' logged in.
+2025-03-08 22:28:13 [WARNING] (Query): User 'root' logged in.
+2025-03-08 22:28:33 [CRITICAL] (Replication): SSL handshake failed.
+2025-03-08 22:29:08 [CRITICAL] (General): Slow query detected.
+2025-03-08 22:34:00 [CRITICAL] (Connection): mysqld shutting down.
+2025-03-08 22:34:48 [CRITICAL] (Connection): SSL handshake failed.
+2025-03-08 22:37:51 [ALERT] (Replication): Replication stopped due to error.
+2025-03-08 22:39:40 [ALERT] (BufferPool): Connection refused: Too many connections.
+2025-03-08 22:42:47 [WARNING] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 22:47:23 [ERROR] (Connection): Table locked for too long.
+2025-03-08 22:47:34 [CRITICAL] (Query): Table locked for too long.
+2025-03-08 22:52:05 [ALERT] (Query): mysqld shutting down.
+2025-03-08 22:56:21 [ALERT] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 23:01:07 [ALERT] (Query): Connection refused: Too many connections.
+2025-03-08 23:04:08 [ALERT] (InnoDB): Disk space running low.
+2025-03-08 23:04:10 [WARNING] (Query): mysqld shutting down.
+2025-03-08 23:08:31 [ALERT] (InnoDB): SSL handshake failed.
+2025-03-08 23:09:31 [CRITICAL] (Replication): Buffer pool size adjusted dynamically.
+2025-03-08 23:09:39 [ERROR] (InnoDB): Query execution exceeded timeout.
+2025-03-08 23:12:46 [ERROR] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 23:16:01 [ERROR] (General): mysqld shutting down.
+2025-03-08 23:20:36 [WARNING] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 23:24:38 [INFO] (Connection): Table locked for too long.
+2025-03-08 23:27:22 [ALERT] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 23:27:25 [CRITICAL] (General): Disk space running low.
+2025-03-08 23:31:10 [ERROR] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-08 23:32:42 [INFO] (Connection): Replication stopped due to error.
+2025-03-08 23:36:33 [INFO] (General): Slow query detected.
+2025-03-08 23:37:01 [INFO] (Query): mysqld started.
+2025-03-08 23:38:03 [ERROR] (Replication): Query execution exceeded timeout.
+2025-03-08 23:41:50 [CRITICAL] (Query): Slow query detected.
+2025-03-08 23:44:59 [ERROR] (Replication): Buffer pool size adjusted dynamically.
+2025-03-08 23:47:06 [INFO] (Replication): Replication stopped due to error.
+2025-03-08 23:49:13 [CRITICAL] (Replication): Table corruption detected, attempting repair.
+2025-03-08 23:53:29 [ALERT] (BufferPool): mysqld started.
+2025-03-08 23:54:33 [WARNING] (InnoDB): mysqld shutting down.
+2025-03-08 23:56:41 [ERROR] (General): Query execution exceeded timeout.
+2025-03-08 23:56:47 [WARNING] (Connection): Connection refused: Too many connections.
+2025-03-08 23:58:14 [WARNING] (General): mysqld shutting down.
+2025-03-09 00:02:23 [ALERT] (BufferPool): mysqld started.
+2025-03-09 00:05:05 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-09 00:08:22 [CRITICAL] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 00:09:45 [INFO] (InnoDB): mysqld shutting down.
+2025-03-09 00:11:48 [INFO] (Replication): Table corruption detected, attempting repair.
+2025-03-09 00:15:09 [WARNING] (Connection): Connection refused: Too many connections.
+2025-03-09 00:17:02 [ALERT] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 00:21:34 [CRITICAL] (Connection): Connection refused: Too many connections.
+2025-03-09 00:24:27 [INFO] (Replication): Table corruption detected, attempting repair.
+2025-03-09 00:25:19 [ALERT] (Replication): Connection refused: Too many connections.
+2025-03-09 00:26:55 [ERROR] (Replication): mysqld started.
+2025-03-09 00:28:00 [WARNING] (Connection): Slow query detected.
+2025-03-09 00:30:45 [CRITICAL] (General): Replication stopped due to error.
+2025-03-09 00:33:08 [CRITICAL] (InnoDB): User 'root' logged in.
+2025-03-09 00:36:17 [ALERT] (Replication): SSL handshake failed.
+2025-03-09 00:38:48 [CRITICAL] (Replication): Connection refused: Too many connections.
+2025-03-09 00:40:37 [WARNING] (General): Disk space running low.
+2025-03-09 00:42:55 [ERROR] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 00:45:54 [INFO] (BufferPool): Slow query detected.
+2025-03-09 00:47:00 [ERROR] (Replication): Query execution exceeded timeout.
+2025-03-09 00:47:06 [ALERT] (Query): Query execution exceeded timeout.
+2025-03-09 00:49:30 [CRITICAL] (Query): mysqld shutting down.
+2025-03-09 00:51:16 [ERROR] (Query): Replication stopped due to error.
+2025-03-09 00:52:43 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 00:54:17 [WARNING] (Replication): User 'root' logged in.
+2025-03-09 00:56:13 [CRITICAL] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 00:59:50 [ERROR] (General): Replication stopped due to error.
+2025-03-09 01:00:53 [ALERT] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 01:05:52 [INFO] (Connection): mysqld started.
+2025-03-09 01:07:52 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-09 01:10:11 [ALERT] (BufferPool): Connection refused: Too many connections.
+2025-03-09 01:10:57 [WARNING] (InnoDB): mysqld started.
+2025-03-09 01:15:24 [INFO] (Connection): Slow query detected.
+2025-03-09 01:16:18 [ALERT] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 01:21:12 [INFO] (BufferPool): User 'root' logged in.
+2025-03-09 01:25:27 [CRITICAL] (InnoDB): Connection refused: Too many connections.
+2025-03-09 01:29:11 [ERROR] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 01:29:50 [ERROR] (General): User 'root' logged in.
+2025-03-09 01:33:13 [WARNING] (General): User 'root' logged in.
+2025-03-09 01:36:07 [ERROR] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 01:38:01 [CRITICAL] (General): mysqld started.
+2025-03-09 01:39:12 [WARNING] (General): Disk space running low.
+2025-03-09 01:41:01 [CRITICAL] (BufferPool): SSL handshake failed.
+2025-03-09 01:45:38 [WARNING] (Connection): Table corruption detected, attempting repair.
+2025-03-09 01:47:38 [ERROR] (General): SSL handshake failed.
+2025-03-09 01:50:10 [CRITICAL] (Replication): Slow query detected.
+2025-03-09 01:50:53 [INFO] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-09 01:55:11 [ALERT] (Connection): Disk space running low.
+2025-03-09 01:57:07 [INFO] (BufferPool): mysqld started.
+2025-03-09 02:01:47 [INFO] (Connection): SSL handshake failed.
+2025-03-09 02:01:57 [ERROR] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 02:03:04 [INFO] (BufferPool): Query execution exceeded timeout.
+2025-03-09 02:04:24 [WARNING] (Replication): mysqld started.
+2025-03-09 02:07:14 [CRITICAL] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 02:10:10 [INFO] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 02:10:23 [ERROR] (BufferPool): User 'root' logged in.
+2025-03-09 02:13:22 [CRITICAL] (Replication): Table locked for too long.
+2025-03-09 02:16:27 [ALERT] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 02:19:02 [ERROR] (Replication): Connection refused: Too many connections.
+2025-03-09 02:19:47 [CRITICAL] (Connection): Replication stopped due to error.
+2025-03-09 02:24:36 [WARNING] (InnoDB): Table locked for too long.
+2025-03-09 02:24:40 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 02:26:27 [ERROR] (Query): Disk space running low.
+2025-03-09 02:28:34 [ERROR] (Replication): Connection refused: Too many connections.
+2025-03-09 02:33:07 [CRITICAL] (General): mysqld shutting down.
+2025-03-09 02:36:13 [ERROR] (Query): Connection refused: Too many connections.
+2025-03-09 02:40:08 [ERROR] (InnoDB): Disk space running low.
+2025-03-09 02:43:49 [ERROR] (BufferPool): Disk space running low.
+2025-03-09 02:46:40 [ALERT] (BufferPool): Slow query detected.
+2025-03-09 02:50:25 [WARNING] (Query): Query execution exceeded timeout.
+2025-03-09 02:54:03 [CRITICAL] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 02:54:44 [ERROR] (InnoDB): mysqld started.
+2025-03-09 02:56:23 [ERROR] (Replication): Slow query detected.
+2025-03-09 02:57:27 [CRITICAL] (Replication): Table locked for too long.
+2025-03-09 03:02:11 [ERROR] (BufferPool): Connection refused: Too many connections.
+2025-03-09 03:06:44 [ERROR] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 03:08:18 [ALERT] (General): Table corruption detected, attempting repair.
+2025-03-09 03:08:56 [ERROR] (BufferPool): mysqld started.
+2025-03-09 03:13:05 [WARNING] (Connection): Replication stopped due to error.
+2025-03-09 03:15:35 [CRITICAL] (General): Table corruption detected, attempting repair.
+2025-03-09 03:19:50 [ERROR] (Connection): Slow query detected.
+2025-03-09 03:21:19 [CRITICAL] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 03:23:27 [ERROR] (General): mysqld shutting down.
+2025-03-09 03:27:00 [INFO] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 03:27:40 [CRITICAL] (Query): mysqld started.
+2025-03-09 03:31:06 [CRITICAL] (InnoDB): Connection refused: Too many connections.
+2025-03-09 03:32:37 [CRITICAL] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 03:36:35 [CRITICAL] (Connection): Table corruption detected, attempting repair.
+2025-03-09 03:40:00 [WARNING] (BufferPool): mysqld shutting down.
+2025-03-09 03:41:05 [CRITICAL] (Connection): Table locked for too long.
+2025-03-09 03:45:42 [ALERT] (General): User 'root' logged in.
+2025-03-09 03:48:52 [INFO] (General): Slow query detected.
+2025-03-09 03:49:48 [ERROR] (InnoDB): Table locked for too long.
+2025-03-09 03:50:15 [ALERT] (InnoDB): User 'root' logged in.
+2025-03-09 03:54:15 [INFO] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 03:55:23 [CRITICAL] (Query): Slow query detected.
+2025-03-09 03:57:50 [ALERT] (BufferPool): Query execution exceeded timeout.
+2025-03-09 04:01:13 [ERROR] (General): Buffer pool size adjusted dynamically.
+2025-03-09 04:02:07 [INFO] (BufferPool): User 'root' logged in.
+2025-03-09 04:03:07 [ALERT] (Replication): Query execution exceeded timeout.
+2025-03-09 04:05:05 [ERROR] (Replication): SSL handshake failed.
+2025-03-09 04:09:33 [WARNING] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 04:12:20 [ERROR] (Connection): mysqld started.
+2025-03-09 04:13:05 [WARNING] (Connection): Disk space running low.
+2025-03-09 04:13:39 [WARNING] (General): Disk space running low.
+2025-03-09 04:14:08 [ERROR] (Connection): Disk space running low.
+2025-03-09 04:15:19 [INFO] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 04:18:48 [CRITICAL] (Connection): Table locked for too long.
+2025-03-09 04:22:47 [WARNING] (General): mysqld shutting down.
+2025-03-09 04:23:17 [WARNING] (General): mysqld shutting down.
+2025-03-09 04:24:49 [ALERT] (InnoDB): mysqld started.
+2025-03-09 04:25:00 [ALERT] (Query): mysqld started.
+2025-03-09 04:25:59 [INFO] (General): Buffer pool size adjusted dynamically.
+2025-03-09 04:27:21 [ERROR] (Connection): User 'root' logged in.
+2025-03-09 04:28:48 [ERROR] (General): Buffer pool size adjusted dynamically.
+2025-03-09 04:29:30 [ALERT] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 04:31:07 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-09 04:35:50 [ERROR] (General): mysqld started.
+2025-03-09 04:35:52 [ALERT] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 04:40:05 [ALERT] (Query): User 'root' logged in.
+2025-03-09 04:42:18 [WARNING] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 04:45:52 [ALERT] (Connection): Disk space running low.
+2025-03-09 04:49:58 [INFO] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 04:54:33 [ALERT] (General): mysqld shutting down.
+2025-03-09 04:54:39 [INFO] (Connection): mysqld shutting down.
+2025-03-09 04:55:53 [INFO] (General): Connection refused: Too many connections.
+2025-03-09 04:57:16 [INFO] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 05:00:30 [CRITICAL] (Connection): Table corruption detected, attempting repair.
+2025-03-09 05:02:49 [WARNING] (General): Slow query detected.
+2025-03-09 05:05:29 [WARNING] (Query): User 'root' logged in.
+2025-03-09 05:10:21 [INFO] (Replication): Disk space running low.
+2025-03-09 05:11:34 [WARNING] (BufferPool): Connection refused: Too many connections.
+2025-03-09 05:15:24 [ALERT] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-09 05:19:34 [ALERT] (Query): Slow query detected.
+2025-03-09 05:20:47 [ALERT] (InnoDB): Table locked for too long.
+2025-03-09 05:23:53 [WARNING] (General): Slow query detected.
+2025-03-09 05:24:01 [CRITICAL] (Query): Disk space running low.
+2025-03-09 05:25:40 [WARNING] (Replication): SSL handshake failed.
+2025-03-09 05:26:33 [WARNING] (Replication): Table locked for too long.
+2025-03-09 05:31:04 [INFO] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 05:34:14 [INFO] (Query): Replication stopped due to error.
+2025-03-09 05:36:25 [ERROR] (Replication): mysqld shutting down.
+2025-03-09 05:39:50 [WARNING] (BufferPool): Table locked for too long.
+2025-03-09 05:43:10 [ALERT] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 05:44:01 [ERROR] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-09 05:48:13 [WARNING] (Replication): mysqld started.
+2025-03-09 05:49:01 [ERROR] (Replication): Slow query detected.
+2025-03-09 05:53:50 [INFO] (BufferPool): Slow query detected.
+2025-03-09 05:55:41 [INFO] (Replication): SSL handshake failed.
+2025-03-09 05:57:40 [CRITICAL] (Replication): Query execution exceeded timeout.
+2025-03-09 05:57:47 [INFO] (BufferPool): Replication stopped due to error.
+2025-03-09 05:59:23 [ALERT] (Query): User 'root' logged in.
+2025-03-09 06:00:53 [CRITICAL] (Replication): Table corruption detected, attempting repair.
+2025-03-09 06:03:38 [WARNING] (General): SSL handshake failed.
+2025-03-09 06:06:21 [CRITICAL] (General): Table corruption detected, attempting repair.
+2025-03-09 06:06:42 [CRITICAL] (Connection): Replication stopped due to error.
+2025-03-09 06:09:40 [WARNING] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 06:13:17 [ERROR] (Connection): Query execution exceeded timeout.
+2025-03-09 06:13:21 [WARNING] (General): Table locked for too long.
+2025-03-09 06:17:11 [CRITICAL] (Query): Table locked for too long.
+2025-03-09 06:20:53 [ERROR] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 06:22:47 [WARNING] (Connection): Table locked for too long.
+2025-03-09 06:25:11 [CRITICAL] (Connection): mysqld started.
+2025-03-09 06:27:00 [ALERT] (Query): Table locked for too long.
+2025-03-09 06:29:12 [ERROR] (General): Slow query detected.
+2025-03-09 06:29:49 [ERROR] (Replication): Connection refused: Too many connections.
+2025-03-09 06:31:52 [ALERT] (Query): mysqld shutting down.
+2025-03-09 06:34:22 [WARNING] (General): Slow query detected.
+2025-03-09 06:36:21 [CRITICAL] (BufferPool): Replication stopped due to error.
+2025-03-09 06:39:17 [INFO] (Connection): Table corruption detected, attempting repair.
+2025-03-09 06:39:26 [ERROR] (Connection): mysqld shutting down.
+2025-03-09 06:44:16 [ERROR] (Replication): Slow query detected.
+2025-03-09 06:45:15 [CRITICAL] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-09 06:48:39 [CRITICAL] (Connection): Table locked for too long.
+2025-03-09 06:51:10 [ALERT] (General): Slow query detected.
+2025-03-09 06:52:35 [WARNING] (BufferPool): SSL handshake failed.
+2025-03-09 06:54:31 [INFO] (General): Replication stopped due to error.
+2025-03-09 06:55:05 [WARNING] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-09 06:59:23 [WARNING] (Connection): Disk space running low.
+2025-03-09 07:00:18 [ERROR] (General): Query execution exceeded timeout.
+2025-03-09 07:02:23 [CRITICAL] (Connection): Disk space running low.
+2025-03-09 07:04:08 [INFO] (General): Replication stopped due to error.
+2025-03-09 07:09:04 [ALERT] (BufferPool): mysqld started.
+2025-03-09 07:11:16 [WARNING] (General): Slow query detected.
+2025-03-09 07:15:22 [CRITICAL] (InnoDB): Disk space running low.
+2025-03-09 07:18:19 [WARNING] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 07:20:31 [WARNING] (Query): User 'root' logged in.
+2025-03-09 07:24:02 [WARNING] (Query): Query execution exceeded timeout.
+2025-03-09 07:27:33 [WARNING] (BufferPool): mysqld started.
+2025-03-09 07:30:25 [ERROR] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 07:34:46 [INFO] (General): mysqld started.
+2025-03-09 07:36:38 [ERROR] (InnoDB): SSL handshake failed.
+2025-03-09 07:37:45 [WARNING] (BufferPool): Query execution exceeded timeout.
+2025-03-09 07:37:54 [INFO] (Connection): Query execution exceeded timeout.
+2025-03-09 07:40:05 [ERROR] (BufferPool): Disk space running low.
+2025-03-09 07:42:47 [CRITICAL] (InnoDB): mysqld started.
+2025-03-09 07:46:07 [ERROR] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 07:50:43 [ERROR] (Query): mysqld started.
+2025-03-09 07:52:49 [INFO] (Replication): Replication stopped due to error.
+2025-03-09 07:56:32 [INFO] (Connection): mysqld started.
+2025-03-09 07:58:55 [INFO] (Query): User 'root' logged in.
+2025-03-09 08:01:10 [CRITICAL] (Query): Connection refused: Too many connections.
+2025-03-09 08:04:29 [INFO] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 08:05:33 [ERROR] (Connection): Table locked for too long.
+2025-03-09 08:09:11 [WARNING] (Connection): Slow query detected.
+2025-03-09 08:09:26 [INFO] (Query): SSL handshake failed.
+2025-03-09 08:10:33 [WARNING] (BufferPool): mysqld shutting down.
+2025-03-09 08:12:21 [INFO] (Connection): Replication stopped due to error.
+2025-03-09 08:16:38 [WARNING] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 08:18:13 [INFO] (Query): User 'root' logged in.
+2025-03-09 08:20:20 [ALERT] (Replication): Connection refused: Too many connections.
+2025-03-09 08:23:14 [ALERT] (Connection): User 'root' logged in.
+2025-03-09 08:27:41 [ERROR] (Replication): Replication stopped due to error.
+2025-03-09 08:32:12 [WARNING] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 08:36:46 [ALERT] (Connection): User 'root' logged in.
+2025-03-09 08:40:43 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-09 08:44:19 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 08:45:24 [WARNING] (BufferPool): Slow query detected.
+2025-03-09 08:48:44 [INFO] (InnoDB): Connection refused: Too many connections.
+2025-03-09 08:50:39 [WARNING] (General): Query execution exceeded timeout.
+2025-03-09 08:52:37 [INFO] (BufferPool): Slow query detected.
+2025-03-09 08:57:11 [INFO] (Connection): Disk space running low.
+2025-03-09 09:01:08 [WARNING] (BufferPool): Table locked for too long.
+2025-03-09 09:03:20 [WARNING] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 09:04:34 [WARNING] (InnoDB): Table locked for too long.
+2025-03-09 09:06:59 [ERROR] (Query): Table corruption detected, attempting repair.
+2025-03-09 09:11:41 [CRITICAL] (Replication): mysqld started.
+2025-03-09 09:12:26 [CRITICAL] (BufferPool): mysqld shutting down.
+2025-03-09 09:16:55 [ALERT] (BufferPool): User 'root' logged in.
+2025-03-09 09:18:10 [ERROR] (BufferPool): Query execution exceeded timeout.
+2025-03-09 09:18:56 [ERROR] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 09:21:34 [ALERT] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 09:24:47 [INFO] (General): SSL handshake failed.
+2025-03-09 09:25:27 [ERROR] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 09:29:39 [ALERT] (General): User 'root' logged in.
+2025-03-09 09:29:46 [CRITICAL] (General): mysqld started.
+2025-03-09 09:30:24 [ALERT] (General): Table corruption detected, attempting repair.
+2025-03-09 09:34:10 [INFO] (Connection): SSL handshake failed.
+2025-03-09 09:36:31 [WARNING] (InnoDB): User 'root' logged in.
+2025-03-09 09:38:20 [ERROR] (Replication): Disk space running low.
+2025-03-09 09:39:49 [ERROR] (Query): SSL handshake failed.
+2025-03-09 09:41:33 [ALERT] (General): Connection refused: Too many connections.
+2025-03-09 09:45:02 [WARNING] (BufferPool): Disk space running low.
+2025-03-09 09:45:20 [INFO] (BufferPool): Table locked for too long.
+2025-03-09 09:49:07 [ERROR] (InnoDB): mysqld started.
+2025-03-09 09:50:44 [INFO] (BufferPool): Table locked for too long.
+2025-03-09 09:55:18 [CRITICAL] (BufferPool): Replication stopped due to error.
+2025-03-09 09:58:33 [INFO] (Connection): Connection refused: Too many connections.
+2025-03-09 10:01:27 [ERROR] (General): Buffer pool size adjusted dynamically.
+2025-03-09 10:02:40 [CRITICAL] (Query): Table locked for too long.
+2025-03-09 10:06:02 [WARNING] (InnoDB): mysqld shutting down.
+2025-03-09 10:06:49 [ALERT] (InnoDB): Connection refused: Too many connections.
+2025-03-09 10:07:54 [ERROR] (General): Slow query detected.
+2025-03-09 10:09:37 [INFO] (General): Table corruption detected, attempting repair.
+2025-03-09 10:13:38 [ERROR] (Query): Connection refused: Too many connections.
+2025-03-09 10:14:12 [ERROR] (Replication): SSL handshake failed.
+2025-03-09 10:17:01 [ALERT] (General): mysqld started.
+2025-03-09 10:21:03 [ALERT] (Query): User 'root' logged in.
+2025-03-09 10:21:26 [INFO] (Connection): SSL handshake failed.
+2025-03-09 10:25:58 [CRITICAL] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 10:26:30 [ERROR] (Query): Disk space running low.
+2025-03-09 10:28:40 [CRITICAL] (General): Table locked for too long.
+2025-03-09 10:32:17 [ALERT] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 10:36:46 [INFO] (BufferPool): Disk space running low.
+2025-03-09 10:40:58 [ALERT] (Query): Connection refused: Too many connections.
+2025-03-09 10:45:37 [ALERT] (Connection): Disk space running low.
+2025-03-09 10:47:02 [CRITICAL] (Connection): Query execution exceeded timeout.
+2025-03-09 10:50:46 [CRITICAL] (InnoDB): Connection refused: Too many connections.
+2025-03-09 10:51:24 [INFO] (Connection): mysqld started.
+2025-03-09 10:53:11 [INFO] (InnoDB): Table locked for too long.
+2025-03-09 10:54:13 [ALERT] (Query): Connection refused: Too many connections.
+2025-03-09 10:54:29 [CRITICAL] (InnoDB): Replication stopped due to error.
+2025-03-09 10:55:08 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 10:56:49 [ERROR] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 10:59:18 [CRITICAL] (Connection): Query execution exceeded timeout.
+2025-03-09 11:03:07 [CRITICAL] (Connection): Buffer pool size adjusted dynamically.
+2025-03-09 11:07:12 [ALERT] (BufferPool): Replication stopped due to error.
+2025-03-09 11:08:11 [INFO] (Connection): mysqld shutting down.
+2025-03-09 11:09:05 [ERROR] (Connection): Query execution exceeded timeout.
+2025-03-09 11:13:21 [INFO] (BufferPool): Table locked for too long.
+2025-03-09 11:18:16 [INFO] (Query): mysqld started.
+2025-03-09 11:18:43 [CRITICAL] (General): Table locked for too long.
+2025-03-09 11:21:36 [ERROR] (Query): mysqld started.
+2025-03-09 11:26:18 [WARNING] (InnoDB): mysqld shutting down.
+2025-03-09 11:29:41 [CRITICAL] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-09 11:33:22 [ERROR] (InnoDB): User 'root' logged in.
+2025-03-09 11:38:19 [ALERT] (BufferPool): mysqld shutting down.
+2025-03-09 11:41:27 [ALERT] (Query): User 'root' logged in.
+2025-03-09 11:45:53 [ERROR] (InnoDB): SSL handshake failed.
+2025-03-09 11:49:41 [ERROR] (Query): Table corruption detected, attempting repair.
+2025-03-09 11:54:22 [INFO] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 11:57:16 [ALERT] (Query): Table corruption detected, attempting repair.
+2025-03-09 12:01:40 [ERROR] (General): Slow query detected.
+2025-03-09 12:05:57 [CRITICAL] (Query): User 'root' logged in.
+2025-03-09 12:10:43 [WARNING] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 12:12:29 [CRITICAL] (Replication): mysqld started.
+2025-03-09 12:13:54 [WARNING] (General): mysqld shutting down.
+2025-03-09 12:18:12 [ERROR] (BufferPool): mysqld shutting down.
+2025-03-09 12:19:15 [INFO] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 12:23:59 [ERROR] (Connection): mysqld started.
+2025-03-09 12:25:24 [ALERT] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 12:25:52 [WARNING] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 12:26:53 [WARNING] (General): Disk space running low.
+2025-03-09 12:27:24 [CRITICAL] (General): mysqld shutting down.
+2025-03-09 12:32:09 [CRITICAL] (Query): Connection refused: Too many connections.
+2025-03-09 12:35:45 [ERROR] (General): SSL handshake failed.
+2025-03-09 12:36:52 [ERROR] (Query): Table locked for too long.
+2025-03-09 12:40:21 [ALERT] (BufferPool): Query execution exceeded timeout.
+2025-03-09 12:42:28 [ALERT] (InnoDB): mysqld shutting down.
+2025-03-09 12:45:55 [CRITICAL] (Query): Connection refused: Too many connections.
+2025-03-09 12:49:19 [INFO] (Connection): Table locked for too long.
+2025-03-09 12:50:38 [WARNING] (Query): User 'root' logged in.
+2025-03-09 12:54:36 [CRITICAL] (Replication): Replication stopped due to error.
+2025-03-09 12:59:12 [ERROR] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-09 13:00:19 [WARNING] (InnoDB): Slow query detected.
+2025-03-09 13:03:42 [ALERT] (General): Slow query detected.
+2025-03-09 13:07:01 [CRITICAL] (Query): Table corruption detected, attempting repair.
+2025-03-09 13:11:03 [WARNING] (General): Disk space running low.
+2025-03-09 13:14:27 [ALERT] (General): mysqld started.
+2025-03-09 13:17:01 [ALERT] (Replication): Slow query detected.
+2025-03-09 13:17:10 [CRITICAL] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 13:22:01 [ERROR] (Query): Disk space running low.
+2025-03-09 13:22:43 [ERROR] (General): SSL handshake failed.
+2025-03-09 13:24:16 [WARNING] (General): mysqld shutting down.
+2025-03-09 13:27:28 [ERROR] (BufferPool): Connection refused: Too many connections.
+2025-03-09 13:30:23 [ALERT] (Query): mysqld shutting down.
+2025-03-09 13:32:27 [WARNING] (Replication): mysqld shutting down.
+2025-03-09 13:32:32 [WARNING] (Replication): Query execution exceeded timeout.
+2025-03-09 13:36:07 [ERROR] (BufferPool): Table locked for too long.
+2025-03-09 13:38:12 [INFO] (Query): Table corruption detected, attempting repair.
+2025-03-09 13:42:12 [ALERT] (BufferPool): mysqld shutting down.
+2025-03-09 13:42:19 [WARNING] (Query): Disk space running low.
+2025-03-09 13:45:13 [CRITICAL] (Query): Replication stopped due to error.
+2025-03-09 13:45:55 [ALERT] (Replication): SSL handshake failed.
+2025-03-09 13:48:31 [CRITICAL] (Replication): Table corruption detected, attempting repair.
+2025-03-09 13:48:50 [INFO] (General): Disk space running low.
+2025-03-09 13:52:01 [CRITICAL] (Query): mysqld shutting down.
+2025-03-09 13:52:19 [CRITICAL] (Connection): Replication stopped due to error.
+2025-03-09 13:53:06 [WARNING] (General): Disk space running low.
+2025-03-09 13:55:37 [ERROR] (Connection): mysqld shutting down.
+2025-03-09 13:57:31 [ALERT] (Query): mysqld started.
+2025-03-09 13:59:52 [CRITICAL] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 14:02:18 [ERROR] (BufferPool): Query execution exceeded timeout.
+2025-03-09 14:05:44 [ALERT] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 14:10:43 [ERROR] (General): mysqld shutting down.
+2025-03-09 14:12:47 [INFO] (Connection): Connection refused: Too many connections.
+2025-03-09 14:16:38 [CRITICAL] (Query): Slow query detected.
+2025-03-09 14:17:02 [CRITICAL] (Connection): Query execution exceeded timeout.
+2025-03-09 14:18:06 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-09 14:20:04 [ERROR] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-09 14:25:03 [WARNING] (General): mysqld started.
+2025-03-09 14:29:47 [ALERT] (BufferPool): mysqld shutting down.
+2025-03-09 14:31:35 [CRITICAL] (InnoDB): mysqld shutting down.
+2025-03-09 14:33:59 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 14:36:59 [ERROR] (Connection): Replication stopped due to error.
+2025-03-09 14:39:19 [ALERT] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-09 14:44:15 [ALERT] (Replication): Query execution exceeded timeout.
+2025-03-09 14:47:05 [ERROR] (InnoDB): Connection refused: Too many connections.
+2025-03-09 14:47:55 [ALERT] (Replication): Query execution exceeded timeout.
+2025-03-09 14:49:15 [CRITICAL] (Query): mysqld shutting down.
+2025-03-09 14:53:35 [WARNING] (General): Disk space running low.
+2025-03-09 14:56:00 [WARNING] (BufferPool): User 'root' logged in.
+2025-03-09 14:57:41 [ALERT] (General): Disk space running low.
+2025-03-09 14:57:45 [ALERT] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 15:01:21 [WARNING] (BufferPool): Replication stopped due to error.
+2025-03-09 15:02:51 [CRITICAL] (InnoDB): Slow query detected.
+2025-03-09 15:03:16 [ALERT] (Query): Connection refused: Too many connections.
+2025-03-09 15:05:52 [ERROR] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 15:07:40 [INFO] (Connection): mysqld started.
+2025-03-09 15:11:26 [INFO] (InnoDB): Table locked for too long.
+2025-03-09 15:12:26 [CRITICAL] (Query): User 'root' logged in.
+2025-03-09 15:13:16 [ALERT] (Query): Disk space running low.
+2025-03-09 15:17:53 [CRITICAL] (BufferPool): mysqld shutting down.
+2025-03-09 15:21:23 [ALERT] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 15:25:40 [ALERT] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 15:27:09 [WARNING] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 15:30:48 [WARNING] (BufferPool): Query execution exceeded timeout.
+2025-03-09 15:32:27 [WARNING] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 15:34:00 [WARNING] (Query): Connection refused: Too many connections.
+2025-03-09 15:35:39 [CRITICAL] (Replication): Table locked for too long.
+2025-03-09 15:39:28 [ALERT] (General): mysqld shutting down.
+2025-03-09 15:43:30 [WARNING] (General): mysqld shutting down.
+2025-03-09 15:47:34 [INFO] (General): Query execution exceeded timeout.
+2025-03-09 15:49:06 [ERROR] (Connection): Connection refused: Too many connections.
+2025-03-09 15:53:25 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 15:56:45 [INFO] (BufferPool): Disk space running low.
+2025-03-09 15:57:04 [CRITICAL] (General): Table locked for too long.
+2025-03-09 16:00:48 [ALERT] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 16:01:22 [WARNING] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 16:01:50 [ERROR] (Query): mysqld started.
+2025-03-09 16:05:11 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-09 16:07:45 [INFO] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 16:08:24 [CRITICAL] (InnoDB): User 'root' logged in.
+2025-03-09 16:09:14 [CRITICAL] (Query): Connection refused: Too many connections.
+2025-03-09 16:10:47 [WARNING] (General): Query execution exceeded timeout.
+2025-03-09 16:14:29 [INFO] (Query): Table corruption detected, attempting repair.
+2025-03-09 16:17:42 [ALERT] (BufferPool): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 16:22:13 [ERROR] (InnoDB): Slow query detected.
+2025-03-09 16:25:52 [ERROR] (Connection): mysqld started.
+2025-03-09 16:27:28 [ERROR] (Query): mysqld shutting down.
+2025-03-09 16:30:09 [WARNING] (Replication): mysqld shutting down.
+2025-03-09 16:34:54 [WARNING] (Connection): mysqld shutting down.
+2025-03-09 16:38:02 [ERROR] (Query): mysqld shutting down.
+2025-03-09 16:41:55 [ALERT] (Query): Slow query detected.
+2025-03-09 16:46:46 [INFO] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 16:49:56 [CRITICAL] (Connection): Table corruption detected, attempting repair.
+2025-03-09 16:54:29 [ALERT] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-09 16:54:56 [WARNING] (Connection): Replication stopped due to error.
+2025-03-09 16:58:03 [WARNING] (Replication): Table corruption detected, attempting repair.
+2025-03-09 16:58:27 [ALERT] (Query): Disk space running low.
+2025-03-09 16:59:11 [INFO] (InnoDB): Connection refused: Too many connections.
+2025-03-09 17:01:43 [INFO] (Query): SSL handshake failed.
+2025-03-09 17:03:24 [CRITICAL] (Query): Replication stopped due to error.
+2025-03-09 17:07:12 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 17:11:12 [ALERT] (Replication): Query execution exceeded timeout.
+2025-03-09 17:15:39 [INFO] (Replication): User 'root' logged in.
+2025-03-09 17:16:57 [INFO] (Query): mysqld started.
+2025-03-09 17:18:19 [WARNING] (Connection): mysqld shutting down.
+2025-03-09 17:18:48 [WARNING] (Replication): Disk space running low.
+2025-03-09 17:21:26 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 17:24:56 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-09 17:26:37 [CRITICAL] (Connection): Slow query detected.
+2025-03-09 17:26:56 [ERROR] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 17:28:00 [ALERT] (InnoDB): Connection refused: Too many connections.
+2025-03-09 17:28:16 [INFO] (BufferPool): Slow query detected.
+2025-03-09 17:28:55 [CRITICAL] (InnoDB): mysqld shutting down.
+2025-03-09 17:32:38 [INFO] (Query): Table locked for too long.
+2025-03-09 17:32:40 [CRITICAL] (General): mysqld started.
+2025-03-09 17:33:25 [WARNING] (Replication): Table locked for too long.
+2025-03-09 17:33:40 [WARNING] (Replication): mysqld started.
+2025-03-09 17:37:32 [ALERT] (Replication): Table locked for too long.
+2025-03-09 17:41:20 [ALERT] (InnoDB): Slow query detected.
+2025-03-09 17:45:06 [WARNING] (Replication): Table corruption detected, attempting repair.
+2025-03-09 17:45:54 [CRITICAL] (Connection): User 'root' logged in.
+2025-03-09 17:47:55 [ERROR] (Replication): User 'root' logged in.
+2025-03-09 17:48:50 [ALERT] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 17:52:06 [ERROR] (InnoDB): mysqld started.
+2025-03-09 17:55:50 [ERROR] (Connection): Connection refused: Too many connections.
+2025-03-09 17:56:36 [CRITICAL] (BufferPool): Connection refused: Too many connections.
+2025-03-09 18:01:27 [CRITICAL] (BufferPool): Slow query detected.
+2025-03-09 18:03:55 [ERROR] (BufferPool): Slow query detected.
+2025-03-09 18:05:16 [INFO] (Query): Table locked for too long.
+2025-03-09 18:07:58 [ALERT] (InnoDB): Slow query detected.
+2025-03-09 18:09:54 [INFO] (Replication): Disk space running low.
+2025-03-09 18:10:59 [ERROR] (General): Table corruption detected, attempting repair.
+2025-03-09 18:11:17 [INFO] (Replication): User 'root' logged in.
+2025-03-09 18:12:15 [ERROR] (InnoDB): Slow query detected.
+2025-03-09 18:13:04 [WARNING] (Query): Slow query detected.
+2025-03-09 18:17:29 [ALERT] (InnoDB): Query execution exceeded timeout.
+2025-03-09 18:20:56 [ERROR] (Query): Slow query detected.
+2025-03-09 18:24:34 [CRITICAL] (InnoDB): Slow query detected.
+2025-03-09 18:28:45 [ALERT] (Connection): mysqld shutting down.
+2025-03-09 18:32:19 [INFO] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 18:34:15 [CRITICAL] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 18:37:19 [INFO] (General): mysqld shutting down.
+2025-03-09 18:40:31 [CRITICAL] (InnoDB): Slow query detected.
+2025-03-09 18:40:34 [CRITICAL] (Replication): Query execution exceeded timeout.
+2025-03-09 18:43:54 [ALERT] (Replication): User 'root' logged in.
+2025-03-09 18:44:56 [CRITICAL] (General): mysqld started.
+2025-03-09 18:48:46 [WARNING] (Query): Connection refused: Too many connections.
+2025-03-09 18:53:06 [ALERT] (InnoDB): Query execution exceeded timeout.
+2025-03-09 18:54:49 [CRITICAL] (Replication): Table locked for too long.
+2025-03-09 18:55:32 [INFO] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 18:56:42 [CRITICAL] (Connection): Query execution exceeded timeout.
+2025-03-09 18:57:59 [INFO] (BufferPool): Table corruption detected, attempting repair.
+2025-03-09 19:00:06 [ERROR] (Replication): Table locked for too long.
+2025-03-09 19:02:07 [WARNING] (General): Table corruption detected, attempting repair.
+2025-03-09 19:02:57 [INFO] (Replication): User 'root' logged in.
+2025-03-09 19:06:34 [INFO] (General): Slow query detected.
+2025-03-09 19:10:16 [ERROR] (Replication): Slow query detected.
+2025-03-09 19:13:57 [ALERT] (Query): Disk space running low.
+2025-03-09 19:15:41 [ALERT] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 19:19:21 [ALERT] (InnoDB): User 'root' logged in.
+2025-03-09 19:20:10 [CRITICAL] (Query): SSL handshake failed.
+2025-03-09 19:22:06 [INFO] (General): mysqld started.
+2025-03-09 19:23:13 [CRITICAL] (InnoDB): Disk space running low.
+2025-03-09 19:27:41 [ALERT] (BufferPool): Replication stopped due to error.
+2025-03-09 19:28:02 [CRITICAL] (Query): SSL handshake failed.
+2025-03-09 19:28:40 [ALERT] (General): mysqld shutting down.
+2025-03-09 19:29:05 [CRITICAL] (Connection): SSL handshake failed.
+2025-03-09 19:29:50 [CRITICAL] (Replication): Disk space running low.
+2025-03-09 19:34:20 [ERROR] (BufferPool): User 'root' logged in.
+2025-03-09 19:34:41 [CRITICAL] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 19:38:32 [ERROR] (BufferPool): mysqld started.
+2025-03-09 19:38:52 [INFO] (Connection): SSL handshake failed.
+2025-03-09 19:40:44 [INFO] (General): Query execution exceeded timeout.
+2025-03-09 19:45:18 [ALERT] (Connection): mysqld started.
+2025-03-09 19:49:52 [ERROR] (Query): SSL handshake failed.
+2025-03-09 19:54:33 [WARNING] (InnoDB): Slow query detected.
+2025-03-09 19:57:50 [WARNING] (General): Replication stopped due to error.
+2025-03-09 19:58:51 [ERROR] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 20:00:07 [ALERT] (InnoDB): Replication stopped due to error.
+2025-03-09 20:03:04 [WARNING] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 20:08:04 [ALERT] (BufferPool): Table locked for too long.
+2025-03-09 20:10:41 [WARNING] (BufferPool): mysqld shutting down.
+2025-03-09 20:14:20 [WARNING] (Replication): Disk space running low.
+2025-03-09 20:17:31 [ERROR] (General): mysqld started.
+2025-03-09 20:20:55 [ERROR] (InnoDB): Table corruption detected, attempting repair.
+2025-03-09 20:21:20 [ERROR] (BufferPool): Slow query detected.
+2025-03-09 20:24:25 [INFO] (InnoDB): Connection refused: Too many connections.
+2025-03-09 20:25:05 [WARNING] (Query): Replication stopped due to error.
+2025-03-09 20:25:29 [ALERT] (Replication): Slow query detected.
+2025-03-09 20:28:08 [INFO] (BufferPool): User 'root' logged in.
+2025-03-09 20:29:51 [ALERT] (InnoDB): mysqld started.
+2025-03-09 20:33:21 [CRITICAL] (InnoDB): mysqld started.
+2025-03-09 20:37:48 [INFO] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 20:42:40 [WARNING] (InnoDB): Slow query detected.
+2025-03-09 20:43:21 [WARNING] (Replication): Disk space running low.
+2025-03-09 20:44:08 [WARNING] (BufferPool): mysqld shutting down.
+2025-03-09 20:46:52 [CRITICAL] (Query): mysqld shutting down.
+2025-03-09 20:49:08 [ALERT] (BufferPool): Slow query detected.
+2025-03-09 20:53:56 [INFO] (Query): Table corruption detected, attempting repair.
+2025-03-09 20:58:21 [ERROR] (InnoDB): User 'root' logged in.
+2025-03-09 21:02:40 [ERROR] (Replication): Table locked for too long.
+2025-03-09 21:03:21 [WARNING] (InnoDB): Connection refused: Too many connections.
+2025-03-09 21:06:41 [ALERT] (InnoDB): Table locked for too long.
+2025-03-09 21:09:04 [INFO] (General): Buffer pool size adjusted dynamically.
+2025-03-09 21:12:57 [ERROR] (Query): mysqld started.
+2025-03-09 21:16:58 [WARNING] (General): Buffer pool size adjusted dynamically.
+2025-03-09 21:21:22 [ALERT] (BufferPool): mysqld shutting down.
+2025-03-09 21:24:57 [ERROR] (Query): User 'root' logged in.
+2025-03-09 21:27:12 [INFO] (Query): SSL handshake failed.
+2025-03-09 21:27:18 [INFO] (BufferPool): Slow query detected.
+2025-03-09 21:27:47 [ERROR] (Query): Disk space running low.
+2025-03-09 21:31:06 [INFO] (BufferPool): Replication stopped due to error.
+2025-03-09 21:33:06 [WARNING] (Replication): Table locked for too long.
+2025-03-09 21:33:31 [ALERT] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 21:33:33 [ALERT] (BufferPool): SSL handshake failed.
+2025-03-09 21:36:01 [ERROR] (General): Buffer pool size adjusted dynamically.
+2025-03-09 21:36:50 [ALERT] (Connection): Table locked for too long.
+2025-03-09 21:38:27 [ERROR] (InnoDB): mysqld shutting down.
+2025-03-09 21:39:39 [ERROR] (Replication): Disk space running low.
+2025-03-09 21:44:01 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 21:45:37 [WARNING] (Connection): Replication stopped due to error.
+2025-03-09 21:48:41 [INFO] (BufferPool): mysqld started.
+2025-03-09 21:50:10 [CRITICAL] (Query): Query execution exceeded timeout.
+2025-03-09 21:54:37 [CRITICAL] (Replication): Table locked for too long.
+2025-03-09 21:57:16 [INFO] (InnoDB): mysqld started.
+2025-03-09 21:57:21 [ERROR] (General): mysqld shutting down.
+2025-03-09 21:57:24 [ALERT] (General): mysqld started.
+2025-03-09 21:57:32 [WARNING] (BufferPool): Query execution exceeded timeout.
+2025-03-09 22:00:45 [WARNING] (BufferPool): Connection refused: Too many connections.
+2025-03-09 22:02:08 [ERROR] (InnoDB): SSL handshake failed.
+2025-03-09 22:04:47 [INFO] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 22:06:25 [ALERT] (Query): User 'root' logged in.
+2025-03-09 22:10:31 [ALERT] (Connection): Table locked for too long.
+2025-03-09 22:13:41 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-09 22:15:41 [CRITICAL] (Connection): Connection refused: Too many connections.
+2025-03-09 22:19:38 [INFO] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 22:23:12 [CRITICAL] (Query): mysqld started.
+2025-03-09 22:27:12 [ALERT] (Replication): Replication stopped due to error.
+2025-03-09 22:27:31 [CRITICAL] (General): Table corruption detected, attempting repair.
+2025-03-09 22:29:22 [ALERT] (InnoDB): Replication stopped due to error.
+2025-03-09 22:32:57 [INFO] (Replication): User 'root' logged in.
+2025-03-09 22:37:00 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-09 22:40:07 [ALERT] (Connection): SSL handshake failed.
+2025-03-09 22:41:03 [WARNING] (InnoDB): Table locked for too long.
+2025-03-09 22:42:11 [CRITICAL] (General): mysqld started.
+2025-03-09 22:44:35 [CRITICAL] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 22:47:46 [ALERT] (BufferPool): SSL handshake failed.
+2025-03-09 22:51:47 [ERROR] (Replication): Table locked for too long.
+2025-03-09 22:52:12 [ERROR] (General): SSL handshake failed.
+2025-03-09 22:52:51 [INFO] (Query): SSL handshake failed.
+2025-03-09 22:55:54 [ALERT] (BufferPool): mysqld shutting down.
+2025-03-09 22:59:12 [INFO] (Connection): Table locked for too long.
+2025-03-09 23:00:18 [CRITICAL] (Query): SSL handshake failed.
+2025-03-09 23:04:03 [INFO] (BufferPool): Connection refused: Too many connections.
+2025-03-09 23:08:11 [INFO] (BufferPool): Query execution exceeded timeout.
+2025-03-09 23:08:16 [ERROR] (Query): Disk space running low.
+2025-03-09 23:11:00 [INFO] (Connection): SSL handshake failed.
+2025-03-09 23:15:48 [ALERT] (Connection): Disk space running low.
+2025-03-09 23:18:15 [CRITICAL] (Connection): Slow query detected.
+2025-03-09 23:23:04 [INFO] (Replication): mysqld started.
+2025-03-09 23:23:49 [INFO] (Connection): Table locked for too long.
+2025-03-09 23:26:33 [INFO] (InnoDB): mysqld started.
+2025-03-09 23:29:30 [CRITICAL] (Connection): User 'root' logged in.
+2025-03-09 23:29:40 [INFO] (Replication): User 'root' logged in.
+2025-03-09 23:31:01 [ALERT] (Replication): Buffer pool size adjusted dynamically.
+2025-03-09 23:34:28 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 23:36:27 [WARNING] (BufferPool): mysqld shutting down.
+2025-03-09 23:39:30 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-09 23:43:37 [WARNING] (Replication): Connection refused: Too many connections.
+2025-03-09 23:45:19 [WARNING] (General): Disk space running low.
+2025-03-09 23:46:25 [INFO] (Query): Buffer pool size adjusted dynamically.
+2025-03-09 23:47:41 [WARNING] (General): Replication stopped due to error.
+2025-03-09 23:48:41 [INFO] (BufferPool): Table locked for too long.
+2025-03-09 23:53:28 [ALERT] (General): mysqld shutting down.
+2025-03-09 23:54:15 [CRITICAL] (InnoDB): Slow query detected.
+2025-03-09 23:57:55 [ERROR] (InnoDB): Table corruption detected, attempting repair.
+2025-03-10 00:01:38 [WARNING] (Replication): SSL handshake failed.
+2025-03-10 00:04:47 [ERROR] (Replication): Buffer pool size adjusted dynamically.
+2025-03-10 00:05:14 [ALERT] (InnoDB): Table locked for too long.
+2025-03-10 00:06:20 [CRITICAL] (Connection): mysqld started.
+2025-03-10 00:09:16 [WARNING] (General): Table corruption detected, attempting repair.
+2025-03-10 00:13:07 [ERROR] (Replication): Query execution exceeded timeout.
+2025-03-10 00:17:21 [CRITICAL] (InnoDB): mysqld started.
+2025-03-10 00:20:36 [ERROR] (Query): Connection refused: Too many connections.
+2025-03-10 00:24:00 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-10 00:27:59 [ERROR] (General): Connection refused: Too many connections.
+2025-03-10 00:31:54 [CRITICAL] (Replication): Table locked for too long.
+2025-03-10 00:34:57 [CRITICAL] (General): Disk space running low.
+2025-03-10 00:38:30 [ALERT] (Replication): mysqld started.
+2025-03-10 00:41:16 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-10 00:44:30 [INFO] (Connection): Slow query detected.
+2025-03-10 00:47:29 [INFO] (General): Connection refused: Too many connections.
+2025-03-10 00:47:31 [WARNING] (InnoDB): mysqld started.
+2025-03-10 00:51:14 [CRITICAL] (General): Buffer pool size adjusted dynamically.
+2025-03-10 00:55:39 [ERROR] (Connection): Replication stopped due to error.
+2025-03-10 00:57:39 [CRITICAL] (Connection): Table locked for too long.
+2025-03-10 01:01:42 [ALERT] (Replication): Connection refused: Too many connections.
+2025-03-10 01:05:22 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 01:08:02 [ERROR] (Query): mysqld shutting down.
+2025-03-10 01:10:11 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 01:14:02 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 01:18:40 [INFO] (BufferPool): mysqld shutting down.
+2025-03-10 01:19:02 [CRITICAL] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-10 01:23:26 [CRITICAL] (General): Table corruption detected, attempting repair.
+2025-03-10 01:24:49 [ERROR] (Connection): Slow query detected.
+2025-03-10 01:28:32 [ERROR] (General): Connection refused: Too many connections.
+2025-03-10 01:33:00 [CRITICAL] (Connection): Disk space running low.
+2025-03-10 01:33:53 [ALERT] (Connection): Query execution exceeded timeout.
+2025-03-10 01:34:24 [INFO] (General): Disk space running low.
+2025-03-10 01:36:48 [ALERT] (InnoDB): Connection refused: Too many connections.
+2025-03-10 01:37:41 [ALERT] (InnoDB): User 'root' logged in.
+2025-03-10 01:39:40 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-10 01:40:54 [WARNING] (BufferPool): User 'root' logged in.
+2025-03-10 01:42:34 [ERROR] (Replication): Slow query detected.
+2025-03-10 01:47:22 [WARNING] (Connection): Table locked for too long.
+2025-03-10 01:48:12 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-10 01:52:45 [ALERT] (General): Disk space running low.
+2025-03-10 01:57:12 [ALERT] (BufferPool): Replication stopped due to error.
+2025-03-10 01:57:34 [INFO] (Connection): Table locked for too long.
+2025-03-10 01:57:38 [CRITICAL] (InnoDB): Query execution exceeded timeout.
+2025-03-10 02:01:46 [CRITICAL] (Query): Connection refused: Too many connections.
+2025-03-10 02:04:10 [WARNING] (General): Slow query detected.
+2025-03-10 02:04:48 [WARNING] (InnoDB): Query execution exceeded timeout.
+2025-03-10 02:08:29 [ERROR] (BufferPool): Query execution exceeded timeout.
+2025-03-10 02:10:08 [ALERT] (InnoDB): User 'root' logged in.
+2025-03-10 02:10:39 [ALERT] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-10 02:14:04 [ALERT] (InnoDB): Connection refused: Too many connections.
+2025-03-10 02:17:11 [ALERT] (BufferPool): Table locked for too long.
+2025-03-10 02:22:01 [WARNING] (InnoDB): User 'root' logged in.
+2025-03-10 02:26:42 [ERROR] (BufferPool): Disk space running low.
+2025-03-10 02:29:32 [ERROR] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 02:32:06 [ERROR] (BufferPool): User 'root' logged in.
+2025-03-10 02:35:12 [CRITICAL] (General): mysqld started.
+2025-03-10 02:36:06 [ERROR] (InnoDB): mysqld started.
+2025-03-10 02:38:02 [INFO] (Replication): Disk space running low.
+2025-03-10 02:40:17 [ERROR] (InnoDB): Table corruption detected, attempting repair.
+2025-03-10 02:42:39 [INFO] (General): Query execution exceeded timeout.
+2025-03-10 02:43:12 [ALERT] (General): User 'root' logged in.
+2025-03-10 02:43:19 [ERROR] (Replication): mysqld shutting down.
+2025-03-10 02:44:28 [INFO] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 02:47:47 [CRITICAL] (Query): mysqld shutting down.
+2025-03-10 02:51:48 [INFO] (Query): Replication stopped due to error.
+2025-03-10 02:55:46 [ALERT] (Query): Table corruption detected, attempting repair.
+2025-03-10 02:58:51 [CRITICAL] (Query): Buffer pool size adjusted dynamically.
+2025-03-10 03:02:04 [INFO] (BufferPool): Disk space running low.
+2025-03-10 03:05:35 [ALERT] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 03:09:30 [CRITICAL] (Replication): Slow query detected.
+2025-03-10 03:14:05 [ERROR] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-10 03:16:12 [CRITICAL] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 03:16:25 [CRITICAL] (General): Connection refused: Too many connections.
+2025-03-10 03:17:12 [ERROR] (Connection): mysqld started.
+2025-03-10 03:19:00 [INFO] (Connection): User 'root' logged in.
+2025-03-10 03:23:17 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-10 03:24:07 [ALERT] (Replication): Disk space running low.
+2025-03-10 03:26:38 [WARNING] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 03:27:12 [CRITICAL] (InnoDB): Table locked for too long.
+2025-03-10 03:32:05 [ALERT] (Connection): Buffer pool size adjusted dynamically.
+2025-03-10 03:36:42 [INFO] (General): Connection refused: Too many connections.
+2025-03-10 03:36:49 [WARNING] (Query): Disk space running low.
+2025-03-10 03:38:43 [WARNING] (Query): mysqld started.
+2025-03-10 03:39:51 [INFO] (BufferPool): Table locked for too long.
+2025-03-10 03:40:45 [CRITICAL] (Replication): Buffer pool size adjusted dynamically.
+2025-03-10 03:44:11 [ALERT] (InnoDB): Replication stopped due to error.
+2025-03-10 03:47:37 [INFO] (Query): Query execution exceeded timeout.
+2025-03-10 03:47:43 [WARNING] (InnoDB): User 'root' logged in.
+2025-03-10 03:49:21 [ALERT] (Replication): mysqld shutting down.
+2025-03-10 03:51:21 [WARNING] (BufferPool): User 'root' logged in.
+2025-03-10 03:53:15 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 03:57:59 [CRITICAL] (Query): Table locked for too long.
+2025-03-10 04:02:40 [INFO] (BufferPool): Connection refused: Too many connections.
+2025-03-10 04:04:52 [ALERT] (General): Table corruption detected, attempting repair.
+2025-03-10 04:07:06 [ERROR] (Query): Query execution exceeded timeout.
+2025-03-10 04:07:25 [ERROR] (InnoDB): User 'root' logged in.
+2025-03-10 04:08:00 [WARNING] (Replication): Disk space running low.
+2025-03-10 04:11:00 [ALERT] (General): Disk space running low.
+2025-03-10 04:12:53 [WARNING] (InnoDB): Disk space running low.
+2025-03-10 04:13:45 [INFO] (InnoDB): Replication stopped due to error.
+2025-03-10 04:13:46 [WARNING] (General): SSL handshake failed.
+2025-03-10 04:15:46 [WARNING] (Connection): mysqld started.
+2025-03-10 04:18:26 [WARNING] (Query): SSL handshake failed.
+2025-03-10 04:19:49 [ALERT] (General): Buffer pool size adjusted dynamically.
+2025-03-10 04:22:56 [ALERT] (InnoDB): Replication stopped due to error.
+2025-03-10 04:23:59 [WARNING] (General): Connection refused: Too many connections.
+2025-03-10 04:25:20 [INFO] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 04:26:09 [INFO] (InnoDB): mysqld started.
+2025-03-10 04:28:38 [INFO] (General): Replication stopped due to error.
+2025-03-10 04:30:15 [ALERT] (Connection): Buffer pool size adjusted dynamically.
+2025-03-10 04:34:46 [ALERT] (General): Buffer pool size adjusted dynamically.
+2025-03-10 04:36:16 [WARNING] (Query): Connection refused: Too many connections.
+2025-03-10 04:40:16 [CRITICAL] (InnoDB): Slow query detected.
+2025-03-10 04:43:40 [INFO] (Replication): Table corruption detected, attempting repair.
+2025-03-10 04:47:45 [WARNING] (Query): Slow query detected.
+2025-03-10 04:52:21 [CRITICAL] (Connection): mysqld started.
+2025-03-10 04:56:14 [WARNING] (Query): Query execution exceeded timeout.
+2025-03-10 05:00:41 [WARNING] (Connection): mysqld started.
+2025-03-10 05:01:00 [ERROR] (Replication): mysqld started.
+2025-03-10 05:04:43 [ALERT] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 05:07:40 [INFO] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 05:11:47 [ERROR] (Query): Query execution exceeded timeout.
+2025-03-10 05:13:20 [CRITICAL] (Query): Query execution exceeded timeout.
+2025-03-10 05:14:26 [WARNING] (Query): User 'root' logged in.
+2025-03-10 05:15:13 [ALERT] (Query): User 'root' logged in.
+2025-03-10 05:19:12 [WARNING] (Connection): Buffer pool size adjusted dynamically.
+2025-03-10 05:20:52 [WARNING] (Connection): SSL handshake failed.
+2025-03-10 05:25:45 [WARNING] (InnoDB): Connection refused: Too many connections.
+2025-03-10 05:29:38 [WARNING] (General): SSL handshake failed.
+2025-03-10 05:32:11 [WARNING] (General): Table locked for too long.
+2025-03-10 05:36:58 [ERROR] (Connection): Query execution exceeded timeout.
+2025-03-10 05:41:53 [WARNING] (InnoDB): Replication stopped due to error.
+2025-03-10 05:42:01 [CRITICAL] (Query): Replication stopped due to error.
+2025-03-10 05:42:37 [WARNING] (Connection): mysqld shutting down.
+2025-03-10 05:43:34 [ALERT] (BufferPool): Table locked for too long.
+2025-03-10 05:44:30 [CRITICAL] (Query): Table locked for too long.
+2025-03-10 05:45:40 [WARNING] (Replication): SSL handshake failed.
+2025-03-10 05:48:25 [ERROR] (Replication): Disk space running low.
+2025-03-10 05:53:05 [ERROR] (BufferPool): Query execution exceeded timeout.
+2025-03-10 05:57:34 [ERROR] (InnoDB): Connection refused: Too many connections.
+2025-03-10 05:58:49 [WARNING] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-10 05:59:11 [ERROR] (Query): Table locked for too long.
+2025-03-10 06:01:31 [ALERT] (InnoDB): Slow query detected.
+2025-03-10 06:02:59 [ERROR] (General): Query execution exceeded timeout.
+2025-03-10 06:05:26 [WARNING] (Connection): SSL handshake failed.
+2025-03-10 06:05:53 [ERROR] (General): Slow query detected.
+2025-03-10 06:09:04 [CRITICAL] (General): Disk space running low.
+2025-03-10 06:12:42 [ALERT] (InnoDB): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 06:15:37 [ALERT] (Query): User 'root' logged in.
+2025-03-10 06:18:56 [INFO] (BufferPool): SSL handshake failed.
+2025-03-10 06:22:09 [ERROR] (Replication): mysqld shutting down.
+2025-03-10 06:24:16 [WARNING] (Connection): Connection refused: Too many connections.
+2025-03-10 06:28:27 [CRITICAL] (General): SSL handshake failed.
+2025-03-10 06:29:01 [CRITICAL] (InnoDB): SSL handshake failed.
+2025-03-10 06:33:58 [WARNING] (General): SSL handshake failed.
+2025-03-10 06:34:21 [ERROR] (Replication): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 06:35:04 [CRITICAL] (Replication): mysqld shutting down.
+2025-03-10 06:38:28 [WARNING] (InnoDB): Connection refused: Too many connections.
+2025-03-10 06:41:15 [CRITICAL] (Query): Replication stopped due to error.
+2025-03-10 06:46:11 [ERROR] (Query): User 'root' logged in.
+2025-03-10 06:49:21 [ALERT] (Connection): Disk space running low.
+2025-03-10 06:50:12 [CRITICAL] (Replication): Query execution exceeded timeout.
+2025-03-10 06:53:19 [ERROR] (Query): Table locked for too long.
+2025-03-10 06:55:26 [CRITICAL] (BufferPool): Replication stopped due to error.
+2025-03-10 06:58:22 [ERROR] (Query): Buffer pool size adjusted dynamically.
+2025-03-10 06:59:44 [ALERT] (Connection): Buffer pool size adjusted dynamically.
+2025-03-10 07:03:59 [ALERT] (BufferPool): User 'root' logged in.
+2025-03-10 07:05:32 [ALERT] (Connection): Slow query detected.
+2025-03-10 07:07:14 [ALERT] (InnoDB): User 'root' logged in.
+2025-03-10 07:11:55 [INFO] (General): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 07:12:38 [INFO] (InnoDB): mysqld started.
+2025-03-10 07:15:40 [INFO] (InnoDB): Table locked for too long.
+2025-03-10 07:19:16 [INFO] (InnoDB): Slow query detected.
+2025-03-10 07:20:30 [CRITICAL] (General): User 'root' logged in.
+2025-03-10 07:22:22 [CRITICAL] (BufferPool): User 'root' logged in.
+2025-03-10 07:27:12 [ALERT] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 07:28:17 [ALERT] (Query): Table corruption detected, attempting repair.
+2025-03-10 07:30:29 [INFO] (General): Disk space running low.
+2025-03-10 07:30:56 [INFO] (BufferPool): Replication stopped due to error.
+2025-03-10 07:35:37 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-10 07:39:13 [ERROR] (BufferPool): Table corruption detected, attempting repair.
+2025-03-10 07:40:53 [CRITICAL] (Connection): mysqld shutting down.
+2025-03-10 07:40:57 [ALERT] (Connection): Connection refused: Too many connections.
+2025-03-10 07:42:20 [ERROR] (Connection): SSL handshake failed.
+2025-03-10 07:44:48 [ALERT] (Connection): Replication stopped due to error.
+2025-03-10 07:49:07 [ALERT] (InnoDB): Buffer pool size adjusted dynamically.
+2025-03-10 07:52:24 [INFO] (BufferPool): Query execution exceeded timeout.
+2025-03-10 07:55:49 [WARNING] (Replication): SSL handshake failed.
+2025-03-10 07:57:46 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-10 08:01:20 [INFO] (General): Query execution exceeded timeout.
+2025-03-10 08:03:09 [CRITICAL] (Connection): Connection refused: Too many connections.
+2025-03-10 08:06:36 [CRITICAL] (Replication): Query execution exceeded timeout.
+2025-03-10 08:10:04 [WARNING] (General): User 'root' logged in.
+2025-03-10 08:13:20 [ERROR] (General): Table corruption detected, attempting repair.
+2025-03-10 08:16:12 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 08:20:32 [WARNING] (InnoDB): Query execution exceeded timeout.
+2025-03-10 08:22:58 [INFO] (Query): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 08:25:13 [INFO] (Connection): Table locked for too long.
+2025-03-10 08:28:10 [ERROR] (BufferPool): Query execution exceeded timeout.
+2025-03-10 08:28:56 [CRITICAL] (BufferPool): Buffer pool size adjusted dynamically.
+2025-03-10 08:32:51 [ALERT] (General): Connection refused: Too many connections.
+2025-03-10 08:33:32 [INFO] (Replication): SSL handshake failed.
+2025-03-10 08:34:58 [WARNING] (Replication): Disk space running low.
+2025-03-10 08:38:17 [CRITICAL] (Query): Buffer pool size adjusted dynamically.
+2025-03-10 08:38:28 [CRITICAL] (Replication): User 'root' logged in.
+2025-03-10 08:40:36 [ERROR] (Replication): Table locked for too long.
+2025-03-10 08:41:00 [ERROR] (InnoDB): mysqld started.
+2025-03-10 08:41:20 [ERROR] (General): Query execution exceeded timeout.
+2025-03-10 08:44:41 [ERROR] (BufferPool): mysqld started.
+2025-03-10 08:48:21 [ALERT] (General): Buffer pool size adjusted dynamically.
+2025-03-10 08:52:32 [CRITICAL] (Connection): Connection refused: Too many connections.
+2025-03-10 08:55:22 [INFO] (InnoDB): mysqld started.
+2025-03-10 08:58:18 [INFO] (Connection): Buffer pool size adjusted dynamically.
+2025-03-10 09:01:46 [WARNING] (General): Table locked for too long.
+2025-03-10 09:04:29 [ALERT] (Connection): Table corruption detected, attempting repair.
+2025-03-10 09:06:47 [CRITICAL] (General): Slow query detected.
+2025-03-10 09:09:19 [INFO] (Replication): Table corruption detected, attempting repair.
+2025-03-10 09:12:06 [ERROR] (BufferPool): User 'root' logged in.
+2025-03-10 09:14:54 [INFO] (Replication): User 'root' logged in.
+2025-03-10 09:18:48 [WARNING] (Connection): InnoDB: Log sequence number is ahead of the checkpoint.
+2025-03-10 09:21:15 [WARNING] (Connection): User 'root' logged in.
+2025-03-10 09:22:36 [INFO] (BufferPool): Connection refused: Too many connections.
+2025-03-10 09:24:22 [CRITICAL] (General): Table locked for too long.
+2025-03-10 09:25:47 [ALERT] (Replication): Slow query detected.
+2025-03-10 09:28:08 [CRITICAL] (InnoDB): Table locked for too long.

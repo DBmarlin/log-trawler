@@ -1,0 +1,119 @@
+2025-03-28 18:13:16.026 UTC [4122654] LOG:  server process (PID 2950607) was terminated by signal 9: Killed
+2025-03-28 18:13:16.026 UTC [4122654] DETAIL:  Failed process was running: delete from sql where datasource_id = $1
+2025-03-28 18:13:16.026 UTC [4122654] LOG:  terminating any other active server processes
+2025-03-28 18:13:16.027 UTC [3920995] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.027 UTC [3920995] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.027 UTC [3920995] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.028 UTC [4176594] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.028 UTC [4176594] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.028 UTC [4176594] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.029 UTC [4176654] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.029 UTC [4176654] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.029 UTC [4176654] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.029 UTC [4125727] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.029 UTC [4125727] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.029 UTC [4125727] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.031 UTC [4167777] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.031 UTC [4167777] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.031 UTC [4167777] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.031 UTC [4167775] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.031 UTC [4167775] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.031 UTC [4167775] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.033 UTC [4167758] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.033 UTC [4167758] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.033 UTC [4167758] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.034 UTC [4129433] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.034 UTC [4129433] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.034 UTC [4129433] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.034 UTC [4167757] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.034 UTC [4167757] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.034 UTC [4167757] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.035 UTC [4103749] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.035 UTC [4103749] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.035 UTC [4103749] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.035 UTC [4086394] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.035 UTC [4086394] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.035 UTC [4086394] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.036 UTC [4001880] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.036 UTC [4001880] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.036 UTC [4001880] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.037 UTC [3810636] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.037 UTC [3810636] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.037 UTC [3810636] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.046 UTC [4124449] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.046 UTC [4124449] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.046 UTC [4124449] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.047 UTC [3896335] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.047 UTC [3896335] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.047 UTC [3896335] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.048 UTC [4122660] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.048 UTC [4122660] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.048 UTC [4122660] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.048 UTC [4176653] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.048 UTC [4176653] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.048 UTC [4176653] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.049 UTC [4171773] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.049 UTC [4171773] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.049 UTC [4171773] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.056 UTC [3914360] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.056 UTC [3914360] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.056 UTC [3914360] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.056 UTC [3914360] CONTEXT:  writing block 13699 of relation base/16385/23014635
+2025-03-28 18:13:16.056 UTC [4093013] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.056 UTC [4093013] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.056 UTC [4093013] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.057 UTC [3657549] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.057 UTC [3657549] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.057 UTC [3657549] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.065 UTC [3912663] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.065 UTC [3912663] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.065 UTC [3912663] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.117 UTC [4167647] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.117 UTC [4167647] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.117 UTC [4167647] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.123 UTC [4156696] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.123 UTC [4156696] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.123 UTC [4156696] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.128 UTC [4167776] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.128 UTC [4167776] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.128 UTC [4167776] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.138 UTC [4168307] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.138 UTC [4168307] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.138 UTC [4168307] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.139 UTC [4168297] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.139 UTC [4168297] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.139 UTC [4168297] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.146 UTC [4129434] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.146 UTC [4129434] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.146 UTC [4129434] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.126 UTC [4171783] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.126 UTC [4171783] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.126 UTC [4171783] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.154 UTC [4176652] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.154 UTC [4176652] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.154 UTC [4176652] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.156 UTC [4168286] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.156 UTC [4168286] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.156 UTC [4168286] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.159 UTC [4167639] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.159 UTC [4167639] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.159 UTC [4167639] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.167 UTC [4168280] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.167 UTC [4168280] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.167 UTC [4168280] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.169 UTC [4167656] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.169 UTC [4167656] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.169 UTC [4167656] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.179 UTC [4176656] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.179 UTC [4176656] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.179 UTC [4176656] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.183 UTC [4168327] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.183 UTC [4168327] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.183 UTC [4168327] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.193 UTC [4167779] WARNING:  terminating connection because of crash of another server process
+2025-03-28 18:13:16.193 UTC [4167779] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2025-03-28 18:13:16.193 UTC [4167779] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2025-03-28 18:13:16.742 UTC [4122654] LOG:  all server processes terminated; reinitializing
+2025-03-28 18:13:17.399 UTC [4176670] LOG:  database system was interrupted; last known up at 2025-03-28 18:07:13 UTC
+2025-03-28 18:13:18.148 UTC [4176670] LOG:  database system was not properly shut down; automatic recovery in progress
+2025-03-28 18:13:18.154 UTC [4176670] LOG:  redo starts at 26A/A7AF9F28
