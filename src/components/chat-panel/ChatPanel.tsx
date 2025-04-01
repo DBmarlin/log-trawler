@@ -24,6 +24,7 @@ interface Message {
 interface ChatPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  initialPrompt?: string | null; // Add the new prop
 }
 
 // Custom markdown renderer using marked
@@ -67,7 +68,11 @@ const renderMarkdown = (content: string) => {
   }
 };
 
-const ChatPanel: React.FC<ChatPanelProps> = ({ isOpen, onClose }) => {
+const ChatPanel: React.FC<ChatPanelProps> = ({
+  isOpen,
+  onClose,
+  initialPrompt, // Destructure the new prop here
+}) => {
   // Function to set chat panel open state from outside
   const setChatPanelOpen = (open: boolean) => {
     if (open && !isOpen) {
@@ -182,6 +187,17 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ isOpen, onClose }) => {
       }, 300); // Small delay to ensure the panel is fully visible
     }
   }, [isOpen, apiKey]);
+
+  // Effect to handle the initial prompt
+  useEffect(() => {
+    if (isOpen && initialPrompt && textareaRef.current) {
+      setInput(initialPrompt);
+      // Optionally auto-submit here if desired, but requires careful handling
+      // For now, just pre-fill the input
+      textareaRef.current.focus(); // Focus after setting value
+    }
+    // We only want this effect to run when initialPrompt changes or isOpen becomes true
+  }, [isOpen, initialPrompt]);
 
   const saveApiKey = () => {
     localStorage.setItem("openai_api_key", apiKey);

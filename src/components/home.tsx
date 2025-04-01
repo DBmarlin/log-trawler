@@ -72,6 +72,8 @@ const Home = () => {
     {},
   );
   const [chatPanelOpen, setChatPanelOpen] = useState(false);
+  // Remove summarizationPrompt state - we'll use an event instead
+  // const [summarizationPrompt, setSummarizationPrompt] = useState<string | null>(null);
   const [chartVisible, setChartVisible] = useState(true);
   const [showUrlDialog, setShowUrlDialog] = useState(false);
   const [urlInputValue, setUrlInputValue] = useState("");
@@ -1303,6 +1305,33 @@ const Home = () => {
     }
   };
 
+  const handleSummarizeClick = useCallback(() => {
+    if (!activeFile || !visibleEntries.length) {
+      console.log("No visible log lines to summarize.");
+      return;
+    }
+
+    const visibleLinesText = visibleEntries
+      .map((entry) => activeFile.content[entry.lineNumber - 1])
+      .join("\n");
+
+    console.log("Summarizing the following lines:");
+    // console.log("Summarizing the following lines:");
+    // console.log(visibleLinesText);
+
+    const prompt = `Summarize the following log lines:\n\n\`\`\`\n${visibleLinesText}\n\`\`\``;
+
+    // Dispatch custom event to open chat panel and auto-submit
+    const event = new CustomEvent("openChatWithPrompt", {
+      detail: { prompt, autoSubmit: true },
+    });
+    document.dispatchEvent(event);
+
+    // No longer need to set state or manually open panel here
+    // setSummarizationPrompt(prompt);
+    // setChatPanelOpen(true);
+  }, [activeFile, visibleEntries]);
+
   return (
     <div
       className="min-h-screen bg-background flex flex-col relative"
@@ -1337,11 +1366,17 @@ const Home = () => {
         }}
       />
       <div className="p-4 flex flex-col gap-4 flex-grow">
+        {/* Remove initialPrompt prop */}
         <ChatPanel
           isOpen={chatPanelOpen}
-          onClose={() => setChatPanelOpen(false)}
+          onClose={() => {
+            setChatPanelOpen(false);
+            // No prompt state to clear anymore
+            // setSummarizationPrompt(null);
+          }}
         />
         <div className="fixed bottom-4 right-4 flex items-center gap-2 text-muted-foreground z-10">
+          {/* This is the floating chat icon, separate from the Summarize button */}
           <Button
             variant="outline"
             size="icon"
@@ -1405,15 +1440,17 @@ const Home = () => {
                   </div>
                   {activeFile && (
                     <div className="flex items-center gap-4">
-                      <Button
-                        variant="default"
-                        size="sm"
-                        className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1 px-2 py-1 rounded-md text-xs"
-                        onClick={() => setChatPanelOpen(true)}
-                      >
-                        <Bot className="h-3 w-3" />
-                        Ask AI
-                      </Button>
+                      <div className="flex items-center gap-4 order-first">
+                        <Button
+                          variant="default"
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1 px-2 py-1 rounded-md text-xs"
+                          onClick={handleSummarizeClick}
+                        >
+                          <Bot className="h-3 w-3" />
+                          Summarize with AI
+                        </Button>
+                      </div>
                       <ExportButton
                         fileName={activeFile.name}
                         content={visibleEntries.map(
