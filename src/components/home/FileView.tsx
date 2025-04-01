@@ -59,6 +59,8 @@ interface FileViewProps {
   onUpdateShowOnlyMarked: (fileId: string, showOnly: boolean) => void;
   onSaveNotes: (fileId: string, notes: string) => void; // Added for NotesPanel
   onSaveTags: (fileId: string, tags: string[]) => void; // Added for TagsPanel
+  updateFileState: (fileId: string, updates: Partial<LogFile>) => void; // Added previously
+  handleLoadPreset: (preset: FilterPreset) => void; // Add the preset load handler prop
 }
 
 const FileView: React.FC<FileViewProps> = ({
@@ -91,6 +93,7 @@ const FileView: React.FC<FileViewProps> = ({
   onUpdateShowOnlyMarked,
   onSaveNotes,
   onSaveTags,
+  handleLoadPreset, // Destructure the new prop
 }) => {
   if (!activeFile) {
     // Should ideally not happen if FileView is rendered correctly, but good practice
@@ -435,12 +438,7 @@ const FileView: React.FC<FileViewProps> = ({
                          // Pass the new complete array instead of using functional update
                          setPresets([...presets, newPreset]);
                        }}
-                       onLoadPreset={(preset) => {
-                      if (!activeFile) return;
-                      // This needs to update the file state in the parent component
-                      // Maybe pass a specific handler like `handleLoadPreset`
-                      console.warn("Load preset needs implementation via callback");
-                       }}
+                       onLoadPreset={handleLoadPreset} // Use the passed handler directly
                        onDeletePreset={(presetId) => {
                          // Pass the new complete array instead of using functional update
                          setPresets(presets.filter((p) => p.id !== presetId));
