@@ -1,6 +1,13 @@
 import React from "react";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import RecentFiles, { RecentFile } from "../log-viewer/RecentFiles";
 import { LogFile } from "../home"; // Assuming LogFile type is exported from home.tsx or moved
 
@@ -97,21 +104,32 @@ const InitialView: React.FC<InitialViewProps> = ({
             {/* Hidden input remains in home.tsx */}
           </div>
           {files.length === 0 && (
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center justify-center gap-2 mt-4">
               <p className="text-sm text-muted-foreground">
-                Or try a sample log file:
+                Or try example:
               </p>
-              <Button
-                variant="link"
-                className="text-blue-500 hover:text-blue-700"
-                onClick={() =>
-                  fetchLogFromUrl(
-                    "https://raw.githubusercontent.com/logpai/loghub/refs/heads/master/Apache/Apache_2k.log",
-                  )
-                }
+              <Select
+                onValueChange={(url) => {
+                  if (url) {
+                    fetchLogFromUrl(url);
+                  }
+                }}
               >
-                Apache Sample Log
-              </Button>
+                <SelectTrigger className="w-[220px]">
+                  <SelectValue placeholder="Select a sample file" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="https://raw.githubusercontent.com/DBmarlin/log-trawler/refs/heads/main/log_examples/tomcat_log_example.log">
+                    tomcat_log_example.log
+                  </SelectItem>
+                  <SelectItem value="https://raw.githubusercontent.com/DBmarlin/log-trawler/refs/heads/main/log_examples/mysql_error_log.log">
+                    mysql_error_log.log
+                  </SelectItem>
+                  <SelectItem value="https://raw.githubusercontent.com/DBmarlin/log-trawler/refs/heads/main/log_examples/postgresql_log_example.log">
+                    postgresql_log_example.log
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           )}
         </div>
