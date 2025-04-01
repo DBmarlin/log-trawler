@@ -389,6 +389,10 @@ const Home = () => {
                 onSaveNotes={handleSaveNotes}
                 onSaveTags={handleSaveTags}
                 handleLoadPreset={handleLoadPreset} // Pass down preset load handler
+                // Pass down context menu handlers from the hook
+                handleCloseOtherFiles={handleCloseOtherTabs}
+                handleCloseFilesToLeft={handleCloseTabsToLeft}
+                handleCloseFilesToRight={handleCloseTabsToRight}
               />
             )
           )}

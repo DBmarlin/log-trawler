@@ -62,6 +62,9 @@ interface FileViewProps {
   onSaveTags: (fileId: string, tags: string[]) => void; // Added for TagsPanel
   updateFileState: (fileId: string, updates: Partial<LogFile>) => void; // Added previously
   handleLoadPreset: (preset: FilterPreset) => void; // Add the preset load handler prop
+  handleCloseOtherFiles: (id: string) => void; // Callback to close other files
+  handleCloseFilesToLeft: (id: string) => void; // Callback to close files to the left
+  handleCloseFilesToRight: (id: string) => void; // Callback to close files to the right
 }
 
 const FileView: React.FC<FileViewProps> = ({
@@ -96,6 +99,9 @@ const FileView: React.FC<FileViewProps> = ({
   onSaveNotes,
   onSaveTags,
   handleLoadPreset, // Destructure the new prop
+  handleCloseOtherFiles, // Destructure new prop
+  handleCloseFilesToLeft, // Destructure new prop
+  handleCloseFilesToRight, // Destructure new prop
 }) => {
   if (!activeFile) {
     // Should ideally not happen if FileView is rendered correctly, but good practice
@@ -156,9 +162,7 @@ const FileView: React.FC<FileViewProps> = ({
                 // Close other tabs
                 contextMenu.appendChild(
                   createMenuItem("Close other tabs", () => {
-                    // Need access to setFiles here, or pass a specific handler
-                    // For now, this action might need to stay in home.tsx or be handled via callback
-                    console.warn("Close other tabs needs implementation via callback");
+                    handleCloseOtherFiles(file.id);
                     document.body.removeChild(contextMenu);
                   }),
                 );
@@ -166,8 +170,7 @@ const FileView: React.FC<FileViewProps> = ({
                 // Close tabs to the left
                 contextMenu.appendChild(
                   createMenuItem("Close tabs to the left", () => {
-                    // Need access to setFiles here, or pass a specific handler
-                    console.warn("Close tabs to the left needs implementation via callback");
+                    handleCloseFilesToLeft(file.id);
                     document.body.removeChild(contextMenu);
                   }),
                 );
@@ -175,8 +178,7 @@ const FileView: React.FC<FileViewProps> = ({
                 // Close tabs to the right
                 contextMenu.appendChild(
                   createMenuItem("Close tabs to the right", () => {
-                    // Need access to setFiles here, or pass a specific handler
-                    console.warn("Close tabs to the right needs implementation via callback");
+                    handleCloseFilesToRight(file.id);
                     document.body.removeChild(contextMenu);
                   }),
                 );
