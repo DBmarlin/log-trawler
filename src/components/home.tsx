@@ -442,7 +442,7 @@ const Home = () => {
       {/* URL Dialog - Uses state/handlers from useFileManagement */}
       {showUrlDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-backgrounounded-lg p-6 w-full max-w-md">
+          <div className="bg-background rounded-lg p-6 w-full max-w-md shadow-lg"> {/* Corrected typo and added shadow */}
             <h3 className="text-lg font-semibold mb-4">
               Open Log File from URL
             </h3>
