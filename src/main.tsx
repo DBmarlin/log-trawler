@@ -5,15 +5,11 @@ window.addEventListener('unhandledrejection', function(event) {
   console.error('Unhandled promise rejection:', event.reason);
 });
 
-console.log("main.tsx: App entrypoint loaded");
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { HashRouter } from "react-router-dom";
-
-console.log("src/main.tsx: Before ReactDOM.render");
 
 // Add more detailed error logging
 window.addEventListener('error', (event) => {
@@ -28,21 +24,19 @@ window.addEventListener('error', (event) => {
 
 try {
   const root = document.getElementById("root");
-  console.log("Root element found:", root);
   
   if (!root) {
     throw new Error("Root element not found");
   }
 
   const reactRoot = ReactDOM.createRoot(root);
-  console.log("React root created");
 
   reactRoot.render(
     <HashRouter>
       <App />
     </HashRouter>
   );
-  console.log("Render called");
+
 } catch (error) {
   console.error("Detailed error during React rendering:", {
     error,

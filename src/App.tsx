@@ -1,4 +1,3 @@
-console.log("App.tsx: App component loaded");
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Home from "./components/home";

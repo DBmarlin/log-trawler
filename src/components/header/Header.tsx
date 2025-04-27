@@ -34,22 +34,20 @@ export default function Header({
       className="sticky top-0 w-full text-white px-6 flex justify-between items-center h-[79px] z-50"
       style={{ backgroundColor: "#02203E", color: "white" }}
     >
-      {/* Split drag regions to allow interaction with header elements */}
-      {/* Three drag regions: left side, middle empty space, and right side */}
-      <div className="drag-region absolute left-0 top-0 w-[180px] h-full" />
-      <div className="drag-region absolute left-[250px] w-[600px] h-full" />
-      <div className="drag-region absolute right-[400px] w-[200px] h-full" />
+      {/* Two drag regions: full width at top and space between controls */}
+      <div className="drag-region absolute left-0 right-0 top-0 h-[30px]" />
+      <div className="drag-region absolute left-[200px] right-[500px] top-[30px] bottom-0" />
       <div className="flex items-center gap-4 z-10">
         <div
           className="flex items-center gap-2 cursor-pointer"
           onClick={onLogoClick}
           title="Return to home screen"
         >
-          <img
+          {/* <img
             src="/fish-icon2-white.svg"
             alt="LogTrawler logo"
             className="w-6 h-6"
-          />
+          /> */}
           <img
             src="/log-trawler-badge.svg"
             alt="LogTrawler badge"
