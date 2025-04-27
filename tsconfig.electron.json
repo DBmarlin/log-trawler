@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "Node16", // Update module to match moduleResolution
+    "moduleResolution": "node16", // Update module resolution
+    "esModuleInterop": true, // Add this line
+    "skipLibCheck": false, // Add this line to force checking library types
+    "allowImportingTsExtensions": false,
+    "outDir": "dist-electron",
+    "noEmit": false,
+    "types": ["vite/client"] // Add Vite client types here
+  },
+  "include": ["electron-main.ts"]
+}

@@ -36,6 +36,7 @@ export interface LogFile {
 }
 
 const Home = () => {
+  
   // --- Hooks ---
   const {
     isDragging,

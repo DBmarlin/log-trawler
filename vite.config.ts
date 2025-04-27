@@ -12,9 +12,20 @@ if (process.env.TEMPO === "true") {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.VITE_BASE_PATH || "/",
+  // Use relative base for Electron production build to ensure all assets resolve correctly
+  base: process.env.VITE_ELECTRON === "true" || process.env.NODE_ENV === "production" ? "./" : (process.env.VITE_BASE_PATH || "/"),
   optimizeDeps: {
     entries: ["src/main.tsx", "src/tempobook/**/*"],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // format: "iife", // Remove iife format
+        entryFileNames: "assets/[name]-[hash].js",
+        chunkFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash][extname]",
+      },
+    },
   },
   plugins: [
     react({

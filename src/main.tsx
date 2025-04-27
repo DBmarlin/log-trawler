@@ -1,18 +1,52 @@
+window.onerror = function (message, source, lineno, colno, error) {
+  console.error("Global error handler:", message, source, lineno, colno, error);
+};
+window.addEventListener('unhandledrejection', function(event) {
+  console.error('Unhandled promise rejection:', event.reason);
+});
+
+console.log("main.tsx: App entrypoint loaded");
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
-import { TempoDevtools } from "tempo-devtools";
-TempoDevtools.init();
+console.log("src/main.tsx: Before ReactDOM.render");
 
-const basename = import.meta.env.BASE_URL;
+// Add more detailed error logging
+window.addEventListener('error', (event) => {
+  console.error('Global error:', {
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    colno: event.colno,
+    error: event.error
+  });
+});
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter basename={basename}>
+try {
+  const root = document.getElementById("root");
+  console.log("Root element found:", root);
+  
+  if (!root) {
+    throw new Error("Root element not found");
+  }
+
+  const reactRoot = ReactDOM.createRoot(root);
+  console.log("React root created");
+
+  reactRoot.render(
+    <HashRouter>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-);
+    </HashRouter>
+  );
+  console.log("Render called");
+} catch (error) {
+  console.error("Detailed error during React rendering:", {
+    error,
+    stack: error instanceof Error ? error.stack : undefined,
+    type: error instanceof Error ? error.constructor.name : typeof error
+  });
+}

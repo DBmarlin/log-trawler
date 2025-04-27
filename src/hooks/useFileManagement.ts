@@ -267,6 +267,8 @@ export function useFileManagement() {
   }, []); // Removed activeFileId dependency
 
   const handleDrop = useCallback(async (e: React.DragEvent) => {
+    console.log("Drop event triggered");
+    console.log("Files received:", e.dataTransfer.files);
     e.preventDefault();
     setIsDragging(false);
     await processFilesInternal(Array.from(e.dataTransfer.files));

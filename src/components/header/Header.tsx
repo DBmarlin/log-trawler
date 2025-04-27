@@ -14,7 +14,7 @@ interface HeaderProps {
 }
 
 export default function Header({
-  title = "Red Snapper",
+  title = "Log Trawler",
   onFileInputClick = () => {},
   onLogoClick = () => {},
   showDateControls = false,
@@ -31,10 +31,15 @@ export default function Header({
     endDate instanceof Date && !isNaN(endDate.getTime()) ? endDate : undefined;
   return (
     <header
-      className="w-full text-white px-6 flex justify-between items-center h-[79px]"
+      className="sticky top-0 w-full text-white px-6 flex justify-between items-center h-[79px] z-50"
       style={{ backgroundColor: "#02203E", color: "white" }}
     >
-      <div className="flex items-center gap-4">
+      {/* Split drag regions to allow interaction with header elements */}
+      {/* Three drag regions: left side, middle empty space, and right side */}
+      <div className="drag-region absolute left-0 top-0 w-[180px] h-full" />
+      <div className="drag-region absolute left-[250px] w-[600px] h-full" />
+      <div className="drag-region absolute right-[400px] w-[200px] h-full" />
+      <div className="flex items-center gap-4 z-10">
         <div
           className="flex items-center gap-2 cursor-pointer"
           onClick={onLogoClick}
@@ -53,7 +58,7 @@ export default function Header({
         </div>
         <ThemeToggle />
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 z-10">
         {showDateControls && (
           <TimeRangeFilter
             startDate={validStartDate}
