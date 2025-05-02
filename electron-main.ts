@@ -20,7 +20,7 @@ function createWindow() {
     icon: path.join(__dirname, '..', 'public', 'LogTrawler-MacOS-AppIcon.png'),
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'customButtonsOnHover',
     titleBarOverlay: true,
     vibrancy: 'under-window',
     backgroundColor: '#1e1e1e',

@@ -1,7 +1,9 @@
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../theme-toggle";
-import { Upload } from "lucide-react";
+import { Upload, Download } from "lucide-react";
 import TimeRangeFilter from "../log-viewer/TimeRangeFilter";
+import { isElectron } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
   title?: string;
@@ -22,6 +24,13 @@ export default function Header({
   endDate,
   onRangeChange = () => {},
 }: HeaderProps) {
+  const [isRunningInElectron, setIsRunningInElectron] = useState(true);
+  
+  // Check if running in Electron on component mount
+  useEffect(() => {
+    setIsRunningInElectron(isElectron());
+  }, []);
+  
   // Ensure dates are valid before passing to TimeRangeFilter
   const validStartDate =
     startDate instanceof Date && !isNaN(startDate.getTime())
@@ -63,6 +72,18 @@ export default function Header({
             endDate={validEndDate}
             onRangeChange={onRangeChange}
           />
+        )}
+        {/* Show download button only when running in browser (not in Electron) */}
+        {!isRunningInElectron && (
+          <Button 
+            variant="default" 
+            size="sm" 
+            className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-1"
+            onClick={() => window.open("https://github.com/DBmarlin/log-trawler/releases", "_blank")}
+          >
+            <Download className="h-4 w-4" />
+            Download for macOS
+          </Button>
         )}
         {/* Open Log File button moved to home component */}
       </div>

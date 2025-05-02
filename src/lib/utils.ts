@@ -296,3 +296,14 @@ export const getFilterIndex = (filters: any[], id: string) => {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/**
+ * Detects if the application is running in Electron
+ * @returns {boolean} True if running in Electron, false if running in a browser
+ */
+export function isElectron(): boolean {
+  // Check if the process object exists and has an electron version
+  return typeof window !== 'undefined' && 
+         typeof window.process === 'object' && 
+         !!window.process?.versions?.electron;
+}
