@@ -54,6 +54,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.5",
+    "js-tiktoken": "^1.0.20",
     "lucide-react": "^0.394.0",
     "marked": "^15.0.7",
     "react": "^18.2.0",
@@ -90,7 +91,7 @@
     "vite": "^5.2.0",
     "wait-on": "^8.0.3"
   },
-"build": {
+  "build": {
     "appId": "com.example.logtrawler",
     "productName": "Log Trawler",
     "files": [
