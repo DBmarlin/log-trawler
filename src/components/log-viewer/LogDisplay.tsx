@@ -3,6 +3,7 @@ const openUrl = (url: string) => {
   window.open(url, "_blank");
 };
 import React, { useRef, useEffect, useState, forwardRef, memo } from "react";
+import { FixedSizeList as List } from "react-window";
 import { getFilterColor, getFilterIndex, parseTimestamp } from "@/lib/utils";
 import {
   Plus,
@@ -13,6 +14,7 @@ import {
   ChevronsUp,
   ChevronsDown,
   BookmarkIcon,
+  AlignJustify,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -85,50 +87,66 @@ interface LogEntryRowProps {
   onContextMenu: (e: React.MouseEvent) => void;
   isInteresting?: boolean;
   onMarkInteresting?: (lineNumber: number) => void;
+  compact: boolean;
 }
 
 // Memoized log entry component for better performance
-const LogEntryRow = memo<LogEntryRowProps>(
-  ({
-    entry,
-    index,
+const LogEntryRow = memo<any>(({ index, style, data }) => {
+  const {
+    filteredEntries,
     wrapText,
     highlightText,
-    onContextMenu,
-    isInteresting,
-    onMarkInteresting,
-  }) => {
-    return (
-      <div
-        className={`flex gap-4 py-3 px-4 ${index % 2 === 0 ? "bg-muted/50" : "bg-background"}`}
-        onContextMenu={onContextMenu}
-      >
-        <div className="w-12 text-right text-muted-foreground shrink-0 flex items-center justify-end gap-1 relative">
-          {isInteresting && (
-            <span className="absolute left-0 flex items-center justify-center">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-500"></span>
-            </span>
-          )}
-          <span
-            className="cursor-pointer hover:text-primary transition-colors"
-            onClick={() => onMarkInteresting?.(entry.lineNumber)}
-            title="Click to mark as interesting"
-          >
-            {entry.lineNumber}
+    handleContextMenu,
+    interestingLines,
+    compact,
+    setInterestingLines,
+  } = data;
+  const entry = filteredEntries[index];
+  const isInteresting = interestingLines.has(entry.lineNumber);
+
+  const onMarkInteresting = (lineNumber: number) => {
+    setInterestingLines((prev: any) => {
+      const newSet = new Set(prev);
+      if (newSet.has(lineNumber)) {
+        newSet.delete(lineNumber);
+      } else {
+        newSet.add(lineNumber);
+      }
+      return newSet;
+    });
+  };
+
+  return (
+    <div
+      style={style}
+      className={`flex gap-4 px-4 ${compact ? "py-1" : "py-3"} ${index % 2 === 0 ? "bg-muted/50" : "bg-background"}`}
+      onContextMenu={(e) => handleContextMenu(e, entry)}
+    >
+      <div className="w-12 text-right text-muted-foreground shrink-0 flex items-center justify-end gap-1 relative">
+        {isInteresting && (
+          <span className="absolute left-0 flex items-center justify-center">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500"></span>
           </span>
-        </div>
-        <span className="w-[200px] text-muted-foreground shrink-0 font-mono">
-          {entry.timestamp}
-        </span>
+        )}
         <span
-          className={`flex-1 font-mono select-text ${wrapText ? "whitespace-pre-wrap break-words" : "whitespace-pre"}`}
+          className="cursor-pointer hover:text-primary transition-colors"
+          onClick={() => onMarkInteresting?.(entry.lineNumber)}
+          title="Click to mark as interesting"
         >
-          {highlightText(entry.message)}
+          {entry.lineNumber}
         </span>
       </div>
-    );
-  },
-);
+      <span className="w-[200px] text-muted-foreground shrink-0 font-mono whitespace-nowrap overflow-hidden text-ellipsis">
+        {entry.timestamp}
+      </span>
+      <span
+        className={`flex-1 font-mono select-text ${wrapText ? "whitespace-pre-wrap break-words" : "whitespace-pre"}`}
+      >
+        {highlightText(entry.message)}
+      </span>
+    </div>
+  );
+});
 
 const LogDisplay = ({
   entries = DEFAULT_ENTRIES,
@@ -151,12 +169,11 @@ const LogDisplay = ({
     y: number;
     selection: string;
   } | null>(null);
-  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 100 });
-  const [scrolling, setScrolling] = useState(false);
   const [interestingLines, setInterestingLines] = useState<Set<number>>(
     new Set(initialInterestingLines),
   );
   const [showOnlyMarked, setShowOnlyMarked] = useState(initialShowOnlyMarked);
+  const [compact, setCompact] = useState(false);
 
   // Handle context menu closing
   useEffect(() => {
@@ -169,61 +186,6 @@ const LogDisplay = ({
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [contextMenu]);
-
-  // Handle virtual scrolling with optimizations
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!scrollContainerRef.current || entries.length === 0) return;
-
-      const { scrollTop, clientHeight, scrollHeight } =
-        scrollContainerRef.current;
-      const buffer = entries.length > 50000 ? 5 : 10; // Reduced buffer size
-
-      // Calculate visible range based on scroll position
-      const itemHeight = 40; // Approximate height of each log entry
-      const startIndex = Math.max(
-        0,
-        Math.floor(scrollTop / itemHeight) - buffer,
-      );
-      const visibleItems = Math.ceil(clientHeight / itemHeight) + buffer * 2;
-      const endIndex = Math.min(entries.length, startIndex + visibleItems);
-
-      // Only update state if the range has changed significantly (increased threshold)
-      if (
-        Math.abs(startIndex - visibleRange.start) > 5 ||
-        Math.abs(endIndex - visibleRange.end) > 5
-      ) {
-        setVisibleRange({ start: startIndex, end: endIndex });
-      }
-    };
-
-    // Use throttled scroll handler for more responsive updates
-    let lastScrollTime = 0;
-    const throttleInterval = 16; // ~60fps
-
-    const throttledScrollHandler = () => {
-      const now = Date.now();
-      if (now - lastScrollTime >= throttleInterval) {
-        lastScrollTime = now;
-        handleScroll();
-      } else {
-        // Schedule next check
-        window.requestAnimationFrame(throttledScrollHandler);
-      }
-    };
-
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", throttledScrollHandler);
-      handleScroll(); // Initial calculation
-    }
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("scroll", throttledScrollHandler);
-      }
-    };
-  }, [entries.length, visibleRange]); // Added visibleRange dependency
 
   const getHighlights = (message: string) => {
     // Skip processing if no filters
@@ -409,52 +371,25 @@ const LogDisplay = ({
     }
   };
 
+  const listRef = useRef<List>(null);
+
   const scrollToTop = () => {
-    if (scrollContainerRef.current) {
-      setScrolling(true);
-      scrollContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-      setTimeout(() => {
-        setScrolling(false);
-        // Force recalculation of visible range after scrolling completes
-        setVisibleRange({
-          start: 0,
-          end: Math.min(100, filteredEntries.length),
-        });
-      }, 500);
+    if (listRef.current) {
+      listRef.current.scrollTo(0);
     }
   };
 
   const scrollToBottom = () => {
-    if (scrollContainerRef.current) {
-      setScrolling(true);
-      // Calculate the total height based on filtered entries
-      const itemHeight = 40;
-      const totalHeight = filteredEntries.length * itemHeight;
-      scrollContainerRef.current.scrollTo({
-        top: totalHeight,
-        behavior: "smooth",
-      });
-      setTimeout(() => {
-        setScrolling(false);
-        // Force recalculation of visible range after scrolling completes
-        const maxStart = Math.max(0, filteredEntries.length - 100);
-        setVisibleRange({
-          start: maxStart,
-          end: filteredEntries.length,
-        });
-      }, 500);
+    if (listRef.current) {
+      listRef.current.scrollToItem(filteredEntries.length - 1, "end");
     }
   };
 
   const scrollPageUp = () => {
     if (scrollContainerRef.current) {
-      setScrolling(true);
       const currentScroll = scrollContainerRef.current.scrollTop;
       const pageHeight = scrollContainerRef.current.clientHeight;
-      const itemHeight = 40; // Approximate height of each log entry
+      const itemHeight = compact ? 28 : 40;
       const visibleItems = Math.ceil(pageHeight / itemHeight);
       const currentIndex = Math.floor(currentScroll / itemHeight);
       const targetIndex = Math.max(0, currentIndex - visibleItems);
@@ -463,32 +398,14 @@ const LogDisplay = ({
         top: targetIndex * itemHeight,
         behavior: "smooth",
       });
-      setTimeout(() => {
-        setScrolling(false);
-        // Force recalculation of visible range after scrolling completes
-        if (scrollContainerRef.current) {
-          const { scrollTop } = scrollContainerRef.current;
-          const startIndex = Math.max(
-            0,
-            Math.floor(scrollTop / itemHeight) - 10,
-          );
-          const visibleItems = Math.ceil(pageHeight / itemHeight) + 20;
-          const endIndex = Math.min(
-            filteredEntries.length,
-            startIndex + visibleItems,
-          );
-          setVisibleRange({ start: startIndex, end: endIndex });
-        }
-      }, 500);
     }
   };
 
   const scrollPageDown = () => {
     if (scrollContainerRef.current) {
-      setScrolling(true);
       const currentScroll = scrollContainerRef.current.scrollTop;
       const pageHeight = scrollContainerRef.current.clientHeight;
-      const itemHeight = 40; // Approximate height of each log entry
+      const itemHeight = compact ? 28 : 40;
       const visibleItems = Math.ceil(pageHeight / itemHeight);
       const currentIndex = Math.floor(currentScroll / itemHeight);
       const targetIndex = Math.min(
@@ -500,23 +417,6 @@ const LogDisplay = ({
         top: targetIndex * itemHeight,
         behavior: "smooth",
       });
-      setTimeout(() => {
-        setScrolling(false);
-        // Force recalculation of visible range after scrolling completes
-        if (scrollContainerRef.current) {
-          const { scrollTop } = scrollContainerRef.current;
-          const startIndex = Math.max(
-            0,
-            Math.floor(scrollTop / itemHeight) - 10,
-          );
-          const visibleItems = Math.ceil(pageHeight / itemHeight) + 20;
-          const endIndex = Math.min(
-            filteredEntries.length,
-            startIndex + visibleItems,
-          );
-          setVisibleRange({ start: startIndex, end: endIndex });
-        }
-      }, 500);
     }
   };
 
@@ -540,16 +440,7 @@ const LogDisplay = ({
     ? entries.filter((entry) => interestingLines.has(entry.lineNumber))
     : entries;
 
-  // Only render visible entries for better performance
-  const visibleEntries = filteredEntries.slice(
-    visibleRange.start,
-    visibleRange.end,
-  );
-
-  // Calculate total height to maintain proper scrollbar
-  const itemHeight = 40; // Approximate height of each entry
-  const totalHeight = filteredEntries.length * itemHeight;
-  const topPadding = visibleRange.start * itemHeight;
+  const itemHeight = compact ? 28 : 40;
 
   return (
     <div
@@ -564,7 +455,7 @@ const LogDisplay = ({
               Line #
             </span>
           </span>
-          <span className="w-[200px] text-muted-foreground shrink-0">
+          <span className="w-[200px] text-muted-foreground shrink-0 whitespace-nowrap">
             Timestamp
           </span>
           <div className="flex-1 flex justify-between items-center">
@@ -580,7 +471,6 @@ const LogDisplay = ({
                         size="icon"
                         onClick={scrollToTop}
                         className="h-8 w-8"
-                        disabled={scrolling}
                       >
                         <ChevronsUp className="h-4 w-4" />
                       </ButtonWithRef>
@@ -599,7 +489,6 @@ const LogDisplay = ({
                         size="icon"
                         onClick={scrollToBottom}
                         className="h-8 w-8"
-                        disabled={scrolling}
                       >
                         <ChevronsDown className="h-4 w-4" />
                       </ButtonWithRef>
@@ -652,53 +541,48 @@ const LogDisplay = ({
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <ButtonWithRef
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setCompact(!compact)}
+                      className={
+                        compact ? "text-primary" : "text-muted-foreground"
+                      }
+                    >
+                      <AlignJustify className="h-4 w-4" />
+                    </ButtonWithRef>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Toggle compact view</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>
-        <div
-          ref={scrollContainerRef}
-          className="h-[calc(100%-48px)] overflow-auto"
-        >
-          <div
-            className={wrapText ? "" : "min-w-[1200px] w-full"}
-            style={{
-              height: `${totalHeight}px`,
-              position: "relative",
-              minHeight: "100%",
+        <div className="h-[calc(100%-48px)] overflow-auto">
+          <List
+            ref={listRef}
+            height={782}
+            itemCount={filteredEntries.length}
+            itemSize={itemHeight}
+            width="100%"
+            itemData={{
+              filteredEntries,
+              wrapText,
+              highlightText,
+              handleContextMenu,
+              interestingLines,
+              compact,
+              setInterestingLines,
             }}
           >
-            <div
-              style={{
-                position: "absolute",
-                top: `${topPadding}px`,
-                width: "100%",
-                minHeight: visibleEntries.length === 0 ? "100%" : "auto",
-              }}
-            >
-              {visibleEntries.map((entry, index) => (
-                <LogEntryRow
-                  key={entry.lineNumber}
-                  entry={entry}
-                  index={index + visibleRange.start}
-                  wrapText={wrapText}
-                  highlightText={highlightText}
-                  onContextMenu={(e) => handleContextMenu(e, entry)}
-                  isInteresting={interestingLines.has(entry.lineNumber)}
-                  onMarkInteresting={(lineNumber) => {
-                    setInterestingLines((prev) => {
-                      const newSet = new Set(prev);
-                      if (newSet.has(lineNumber)) {
-                        newSet.delete(lineNumber);
-                      } else {
-                        newSet.add(lineNumber);
-                      }
-                      return newSet;
-                    });
-                  }}
-                />
-              ))}
-            </div>
-          </div>
+            {LogEntryRow}
+          </List>
         </div>
       </div>
 
