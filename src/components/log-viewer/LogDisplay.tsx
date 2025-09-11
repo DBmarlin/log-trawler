@@ -2,15 +2,13 @@
 const openUrl = (url: string) => {
   window.open(url, "_blank");
 };
-import React, { useRef, useEffect, useState, forwardRef, memo } from "react";
-import { FixedSizeList as List } from "react-window";
-import { getFilterColor, getFilterIndex, parseTimestamp } from "@/lib/utils";
+import React, { useRef, useEffect, useState, forwardRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { getFilterColor, getFilterIndex } from "@/lib/utils";
 import {
   Plus,
   Minus,
   WrapText,
-  ChevronUp,
-  ChevronDown,
   ChevronsUp,
   ChevronsDown,
   BookmarkIcon,
@@ -43,7 +41,6 @@ interface LogDisplayProps {
   filters?: FilterItem[];
   searchTerm?: string;
   className?: string;
-  timeRange?: { startDate?: Date; endDate?: Date };
   onAddInclude?: (term: string) => void;
   onAddExclude?: (term: string) => void;
   fileId?: string;
@@ -66,87 +63,10 @@ const DEFAULT_ENTRIES: LogEntry[] = [
   },
 ];
 
-const MIN_ROW_HEIGHT = 48;
-const LINE_HEIGHT = 28;
-const BASE_PADDING = 16;
-const EXTRA_PADDING = 8;
-const CHAR_PER_LINE = 120;
-const TIMESTAMP_WIDTH = 200;
-const PAGE_SIZE = 100;
-
 const ButtonWithRef = forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
 >((props, ref) => <Button ref={ref} {...props} />);
-
-interface LogEntryRowProps {
-  entry: LogEntry;
-  index: number;
-  wrapText: boolean;
-  highlightText: (text: string) => React.ReactNode;
-  onContextMenu: (e: React.MouseEvent) => void;
-  isInteresting?: boolean;
-  onMarkInteresting?: (lineNumber: number) => void;
-  compact: boolean;
-}
-
-// Memoized log entry component for better performance
-const LogEntryRow = memo<any>(({ index, style, data }) => {
-  const {
-    filteredEntries,
-    wrapText,
-    highlightText,
-    handleContextMenu,
-    interestingLines,
-    compact,
-    setInterestingLines,
-  } = data;
-  const entry = filteredEntries[index];
-  const isInteresting = interestingLines.has(entry.lineNumber);
-
-  const onMarkInteresting = (lineNumber: number) => {
-    setInterestingLines((prev: any) => {
-      const newSet = new Set(prev);
-      if (newSet.has(lineNumber)) {
-        newSet.delete(lineNumber);
-      } else {
-        newSet.add(lineNumber);
-      }
-      return newSet;
-    });
-  };
-
-  return (
-    <div
-      style={style}
-      className={`flex gap-4 px-4 ${compact ? "py-1" : "py-3"} ${index % 2 === 0 ? "bg-muted/50" : "bg-background"}`}
-      onContextMenu={(e) => handleContextMenu(e, entry)}
-    >
-      <div className="w-12 text-right text-muted-foreground shrink-0 flex items-center justify-end gap-1 relative">
-        {isInteresting && (
-          <span className="absolute left-0 flex items-center justify-center">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-500"></span>
-          </span>
-        )}
-        <span
-          className="cursor-pointer hover:text-primary transition-colors"
-          onClick={() => onMarkInteresting?.(entry.lineNumber)}
-          title="Click to mark as interesting"
-        >
-          {entry.lineNumber}
-        </span>
-      </div>
-      <span className="w-[200px] text-muted-foreground shrink-0 font-mono whitespace-nowrap overflow-hidden text-ellipsis">
-        {entry.timestamp}
-      </span>
-      <span
-        className={`flex-1 font-mono select-text ${wrapText ? "whitespace-pre-wrap break-words" : "whitespace-pre"}`}
-      >
-        {highlightText(entry.message)}
-      </span>
-    </div>
-  );
-});
 
 const LogDisplay = ({
   entries = DEFAULT_ENTRIES,
@@ -162,8 +82,7 @@ const LogDisplay = ({
   onUpdateShowOnlyMarked = () => {},
 }: LogDisplayProps) => {
   const [wrapText, setWrapText] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
   const [contextMenu, setContextMenu] = useState<{
     x: number;
     y: number;
@@ -188,15 +107,11 @@ const LogDisplay = ({
   }, [contextMenu]);
 
   const getHighlights = (message: string) => {
-    // Skip processing if no filters
     if (filters.length === 0) return [];
-
     const matches = [];
     const messageLower = message.toLowerCase();
-
     for (let i = 0; i < filters.length; i++) {
       const filter = filters[i];
-      // Handle regex filters
       if (filter.isRegex) {
         try {
           const regex = new RegExp(filter.term, "g");
@@ -204,7 +119,6 @@ const LogDisplay = ({
           while ((match = regex.exec(message)) !== null) {
             const colorIndex = getFilterIndex(filters, filter.id);
             const colors = getFilterColor(filter.type, colorIndex);
-
             matches.push({
               start: match.index,
               end: match.index + match[0].length,
@@ -218,20 +132,12 @@ const LogDisplay = ({
           continue;
         }
       }
-
-      // Standard text search
       const term = filter.term.toLowerCase();
-
-      // Skip empty terms
       if (!term) continue;
-
-      // Use a more efficient approach for finding all occurrences
       let index = messageLower.indexOf(term);
-      if (index === -1) continue; // Skip if no match at all
-
+      if (index === -1) continue;
       const colorIndex = getFilterIndex(filters, filter.id);
       const colors = getFilterColor(filter.type, colorIndex);
-
       while (index !== -1) {
         matches.push({
           start: index,
@@ -242,63 +148,40 @@ const LogDisplay = ({
         index = messageLower.indexOf(term, index + term.length);
       }
     }
-
-    // Only sort if we have multiple matches
     return matches.length > 1
       ? matches.sort((a, b) => a.start - b.start)
       : matches;
   };
 
-  // Memoize the highlight function for better performance
   const highlightText = React.useMemo(() => {
-    // Return a function that does the actual highlighting
     return (text: string) => {
-      // Quick return for empty text
       if (!text) return text;
-
-      // Skip processing if no filters and no search term
       if (filters.length === 0 && !searchTerm) return text;
-
       const highlights = getHighlights(text);
       if (highlights.length === 0) {
         if (!searchTerm) return text;
-
-        // Optimize search term highlighting
-        if (searchTerm.length < 2) return text; // Skip very short search terms
-
+        if (searchTerm.length < 2) return text;
         try {
-          // Check if searchTerm is a valid regex
           let searchRegex;
           try {
-            // Try to create a regex from the search term directly
             searchRegex = new RegExp(searchTerm, "gi");
           } catch (e) {
-            // If that fails, escape the search term and use it as a literal string
             searchRegex = new RegExp(
               `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
               "gi",
             );
           }
-
-          // Use match instead of split for regex to properly handle groups
           const matches = Array.from(text.matchAll(searchRegex));
           if (matches.length === 0) return text;
-
-          // Build the highlighted text
           let lastIndex = 0;
           const result = [];
-
           for (let i = 0; i < matches.length; i++) {
             const match = matches[i];
             const matchIndex = match.index;
             const matchText = match[0];
-
-            // Add text before the match
             if (matchIndex > lastIndex) {
               result.push(text.substring(lastIndex, matchIndex));
             }
-
-            // Add the highlighted match
             result.push(
               <span
                 key={i}
@@ -307,31 +190,23 @@ const LogDisplay = ({
                 {matchText}
               </span>,
             );
-
             lastIndex = matchIndex + matchText.length;
           }
-
-          // Add any remaining text
           if (lastIndex < text.length) {
             result.push(text.substring(lastIndex));
           }
-
           return result;
         } catch (e) {
-          // Fallback if regex fails
           return text;
         }
       }
-
-      // Optimize highlight rendering for large text
       let lastIndex = 0;
       const result = [];
-      const maxHighlights = 50; // Limit number of highlights for very long messages
+      const maxHighlights = 50;
       const highlightsToProcess =
         highlights.length > maxHighlights
           ? highlights.slice(0, maxHighlights)
           : highlights;
-
       for (let i = 0; i < highlightsToProcess.length; i++) {
         const highlight = highlightsToProcess[i];
         if (highlight.start > lastIndex) {
@@ -344,9 +219,7 @@ const LogDisplay = ({
         );
         lastIndex = highlight.end;
       }
-
       if (lastIndex < text.length) {
-        // For very long text, truncate the end if needed
         const remainingText = text.slice(lastIndex);
         result.push(
           remainingText.length > 10000
@@ -354,7 +227,6 @@ const LogDisplay = ({
             : remainingText,
         );
       }
-
       return result;
     };
   }, [filters, searchTerm]);
@@ -371,80 +243,51 @@ const LogDisplay = ({
     }
   };
 
-  const listRef = useRef<List>(null);
+  const filteredEntries = showOnlyMarked
+    ? entries.filter((entry) => interestingLines.has(entry.lineNumber))
+    : entries;
+
+  const rowVirtualizer = useVirtualizer({
+    count: filteredEntries.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => (compact ? 28 : 40),
+    overscan: 5,
+  });
 
   const scrollToTop = () => {
-    if (listRef.current) {
-      listRef.current.scrollTo(0);
-    }
+    rowVirtualizer.scrollToIndex(0);
   };
 
   const scrollToBottom = () => {
-    if (listRef.current) {
-      listRef.current.scrollToItem(filteredEntries.length - 1, "end");
-    }
+    rowVirtualizer.scrollToIndex(filteredEntries.length - 1);
   };
 
-  const scrollPageUp = () => {
-    if (scrollContainerRef.current) {
-      const currentScroll = scrollContainerRef.current.scrollTop;
-      const pageHeight = scrollContainerRef.current.clientHeight;
-      const itemHeight = compact ? 28 : 40;
-      const visibleItems = Math.ceil(pageHeight / itemHeight);
-      const currentIndex = Math.floor(currentScroll / itemHeight);
-      const targetIndex = Math.max(0, currentIndex - visibleItems);
-
-      scrollContainerRef.current.scrollTo({
-        top: targetIndex * itemHeight,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollPageDown = () => {
-    if (scrollContainerRef.current) {
-      const currentScroll = scrollContainerRef.current.scrollTop;
-      const pageHeight = scrollContainerRef.current.clientHeight;
-      const itemHeight = compact ? 28 : 40;
-      const visibleItems = Math.ceil(pageHeight / itemHeight);
-      const currentIndex = Math.floor(currentScroll / itemHeight);
-      const targetIndex = Math.min(
-        filteredEntries.length - visibleItems,
-        currentIndex + visibleItems,
-      );
-
-      scrollContainerRef.current.scrollTo({
-        top: targetIndex * itemHeight,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  // Update IndexedDB when interesting lines change
   useEffect(() => {
     if (fileId && interestingLines.size > 0) {
       onUpdateInterestingLines(fileId, Array.from(interestingLines));
     }
   }, [interestingLines, fileId, onUpdateInterestingLines]);
 
-  // Update IndexedDB when showOnlyMarked changes
   useEffect(() => {
     if (fileId) {
       onUpdateShowOnlyMarked(fileId, showOnlyMarked);
     }
   }, [showOnlyMarked, fileId, onUpdateShowOnlyMarked]);
 
-  // Apply filters from parent component - entries should already be filtered
-  // Just apply the marked lines filter here
-  const filteredEntries = showOnlyMarked
-    ? entries.filter((entry) => interestingLines.has(entry.lineNumber))
-    : entries;
-
-  const itemHeight = compact ? 28 : 40;
+  const onMarkInteresting = (lineNumber: number) => {
+    setInterestingLines((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(lineNumber)) {
+        newSet.delete(lineNumber);
+      } else {
+        newSet.add(lineNumber);
+      }
+      return newSet;
+    });
+  };
 
   return (
     <div
-      ref={containerRef}
       className={`bg-background h-[830px] w-full border rounded-md ${className}`}
       tabIndex={0}
     >
@@ -461,7 +304,6 @@ const LogDisplay = ({
           <div className="flex-1 flex justify-between items-center">
             <span className="text-muted-foreground">Event Detail</span>
             <div className="flex items-center gap-2">
-              {/* Scroll Controls */}
               <div className="flex items-center gap-1">
                 <TooltipProvider>
                   <Tooltip>
@@ -564,25 +406,58 @@ const LogDisplay = ({
             </div>
           </div>
         </div>
-        <div className="h-[calc(100%-48px)] overflow-auto">
-          <List
-            ref={listRef}
-            height={782}
-            itemCount={filteredEntries.length}
-            itemSize={itemHeight}
-            width="100%"
-            itemData={{
-              filteredEntries,
-              wrapText,
-              highlightText,
-              handleContextMenu,
-              interestingLines,
-              compact,
-              setInterestingLines,
+        <div ref={parentRef} className="h-full overflow-auto">
+          <div
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              width: "100%",
+              position: "relative",
             }}
           >
-            {LogEntryRow}
-          </List>
+            {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+              const entry = filteredEntries[virtualItem.index];
+              const isInteresting = interestingLines.has(entry.lineNumber);
+              return (
+                <div
+                  key={virtualItem.key}
+                  data-index={virtualItem.index}
+                  ref={rowVirtualizer.measureElement}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    transform: `translateY(${virtualItem.start}px)`,
+                  }}
+                  className={`flex gap-4 px-4 ${compact ? "py-1" : "py-3"} ${virtualItem.index % 2 === 0 ? "bg-muted/50" : "bg-background"}`}
+                  onContextMenu={(e) => handleContextMenu(e, entry)}
+                >
+                  <div className="w-12 text-right text-muted-foreground shrink-0 flex items-center justify-end gap-1 relative">
+                    {isInteresting && (
+                      <span className="absolute left-0 flex items-center justify-center">
+                        <span className="h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                      </span>
+                    )}
+                    <span
+                      className="cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => onMarkInteresting(entry.lineNumber)}
+                      title="Click to mark as interesting"
+                    >
+                      {entry.lineNumber}
+                    </span>
+                  </div>
+                  <span className="w-[200px] text-muted-foreground shrink-0 font-mono whitespace-nowrap overflow-hidden text-ellipsis">
+                    {entry.timestamp}
+                  </span>
+                  <span
+                    className={`flex-1 font-mono select-text ${wrapText ? "whitespace-pre-wrap break-words" : "whitespace-pre"}`}
+                  >
+                    {highlightText(entry.message)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -616,7 +491,6 @@ const LogDisplay = ({
             <button
               className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground gap-2"
               onClick={() => {
-                // Create a custom event to open the chat panel with a prompt
                 const event = new CustomEvent("openChatWithPrompt", {
                   detail: {
                     prompt: `My log file contains log message "${contextMenu.selection}" - what does it mean and what can I do about it?`,
@@ -652,7 +526,6 @@ const LogDisplay = ({
               className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground gap-2"
               onClick={() => {
                 const url = `https://www.google.com/search?q=${encodeURIComponent(contextMenu.selection)}`;
-                // Use the simple URL opener function
                 openUrl(url);
                 setContextMenu(null);
               }}
