@@ -54,7 +54,9 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.5",
+    "fflate": "^0.8.2",
     "js-tiktoken": "^1.0.20",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.394.0",
     "marked": "^15.0.7",
     "react": "^18.2.0",
@@ -70,6 +72,8 @@
     "react-syntax-highlighter": "^15.6.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "tar-js": "^0.3.0",
+    "untar.js": "^0.3.0",
     "vaul": "^0.9.1",
     "zod": "^3.23.8"
   },
