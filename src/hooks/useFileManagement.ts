@@ -112,36 +112,21 @@ export function useFileManagement() {
           let loadedChunks = 0;
           let processedLines: string[] = [];
 
-          if (isVeryLargeFile) {
-            const maxChunksToProcess = 10;
-            const chunksToProcess = Math.min(totalChunks, maxChunksToProcess);
-            for (let i = 0; i < chunksToProcess; i++) {
-              let chunkIndex = i < 4 ? i : (i < 7 ? Math.floor(totalChunks / 2) + (i - 4) : totalChunks - (10 - i));
-              const start = chunkIndex * chunkSize;
-              const chunk = file.slice(start, start + chunkSize);
-              const chunkText = await chunk.text();
-              processedLines.push(...chunkText.split("\n"));
-              loadedChunks++;
-              setLoadingFiles((prev) => ({ ...prev, [fileId]: Math.round((loadedChunks / chunksToProcess) * 100) }));
+          for (let start = 0; start < file.size; start += chunkSize) {
+            const chunk = file.slice(start, start + chunkSize);
+            const chunkText = await chunk.text();
+            const chunkLines = chunkText.split("\n");
+            if (start > 0 && processedLines.length > 0 && chunkLines.length > 0) {
+              processedLines[processedLines.length - 1] += chunkLines[0];
+              processedLines.push(...chunkLines.slice(1));
+            } else {
+              processedLines.push(...chunkLines);
             }
-            processedLines.unshift(`[NOTICE] Very large file (${(file.size / (1024 * 1024)).toFixed(1)}MB). Showing sample.`);
-          } else {
-            for (let start = 0; start < file.size; start += chunkSize) {
-              const chunk = file.slice(start, start + chunkSize);
-              const chunkText = await chunk.text();
-              const chunkLines = chunkText.split("\n");
-              if (start > 0 && processedLines.length > 0 && chunkLines.length > 0) {
-                processedLines[processedLines.length - 1] += chunkLines[0];
-                processedLines.push(...chunkLines.slice(1));
-              } else {
-                processedLines.push(...chunkLines);
-              }
-              loadedChunks++;
-              setLoadingFiles((prev) => ({ ...prev, [fileId]: Math.round((loadedChunks / totalChunks) * 100) }));
-            }
+            loadedChunks++;
+            setLoadingFiles((prev) => ({ ...prev, [fileId]: Math.round((loadedChunks / totalChunks) * 100) }));
           }
 
-          const maxLines = isVeryLargeFile ? 200000 : 500000;
+          const maxLines = isVeryLargeFile ? 2500000 : 500000;
           if (processedLines.length > maxLines) {
             const samplingRate = Math.ceil(processedLines.length / maxLines);
             lines = processedLines.filter((_, i) => i % samplingRate === 0);
