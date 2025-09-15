@@ -47,6 +47,9 @@ interface ChatPanelProps {
 
 // List of some popular OpenRouter models
 const openRouterModels = [
+  "openai/gpt-5",
+  "openai/gpt-5-mini",
+  "openai/gpt-5-nano",
   "openai/gpt-3.5-turbo",
   "openai/gpt-4o",
   "openai/gpt-4-turbo",
@@ -61,6 +64,9 @@ const openRouterModels = [
 
 // List of common OpenAI models
 const openaiModels = [
+  "gpt-5",
+  "gpt-5-mini",
+  "gpt-5-nano",
   "gpt-4o",
   "gpt-4-turbo",
   "gpt-4.1",
@@ -292,12 +298,16 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
         }
 
         const modelToUse = aiProvider === "openai" ? selectedOpenaiModel : selectedOpenRouterModel;
-        const body = JSON.stringify({
+        const payload: any = {
           model: modelToUse,
           messages: messagesToSend,
-          temperature: 0.7,
-          stream: true
-        });
+          stream: true,
+        };
+
+        if (!modelToUse.includes("gpt-5")) {
+          payload.temperature = 0.7;
+        }
+        const body = JSON.stringify(payload);
 
         setIsLoading(true);
         
@@ -480,12 +490,16 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
     }
 
     const modelToUse = aiProvider === "openai" ? selectedOpenaiModel : selectedOpenRouterModel;
-    const body = JSON.stringify({
+    const payload: any = {
       model: modelToUse,
       messages: messagesToSend,
-      temperature: 0.7,
-      stream: true
-    });
+      stream: true,
+    };
+
+    if (!modelToUse.includes("gpt-5")) {
+      payload.temperature = 0.7;
+    }
+    const body = JSON.stringify(payload);
 
     try {
       const abortController = new AbortController();
