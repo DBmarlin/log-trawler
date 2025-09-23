@@ -44,3 +44,9 @@ In the Log view you can filter by time, by log level or on any text in the file 
 ## License
 
 DBmarlin/log-trawler is licensed under the [Apache License 2.0](https://github.com/DBmarlin/log-trawler/blob/main/LICENSE)
+
+## Building
+
+1. Install dependencies with `npm install`
+2. In your IDE you can run `npm run dev` to run locally. To test Electron app run `npm run electron-dev`
+3. To build for deployment to a web server run `npm run electron-build`.
