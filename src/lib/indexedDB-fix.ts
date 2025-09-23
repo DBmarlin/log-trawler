@@ -60,24 +60,18 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
         const existingItem = existingItems.find((f) => f.name === logItem.name && f.parentId === logItem.parentId);
 
         if (existingItem) {
-          // Use the existing ID to ensure we update rather than create a new entry
           logItem.id = existingItem.id;
         }
 
-        // Convert Date objects to strings for storage
-        // Make sure content is included and not undefined for files
         const itemToStore = {
           ...logItem,
-          content: logItem.type === 'file' ? (logItem.content || []) : undefined, // Ensure content is defined only for files
+          startDate: logItem.startDate instanceof Date ? logItem.startDate.toISOString() : logItem.startDate,
+          endDate: logItem.endDate instanceof Date ? logItem.endDate.toISOString() : logItem.endDate,
           lastOpened: Date.now(),
           timeRange: logItem.timeRange
             ? {
-                startDate: logItem.timeRange.startDate
-                  ? new Date(logItem.timeRange.startDate).toISOString()
-                  : undefined,
-                endDate: logItem.timeRange.endDate
-                  ? new Date(logItem.timeRange.endDate).toISOString()
-                  : undefined,
+                startDate: logItem.timeRange.startDate instanceof Date ? logItem.timeRange.startDate.toISOString() : logItem.timeRange.startDate,
+                endDate: logItem.timeRange.endDate instanceof Date ? logItem.timeRange.endDate.toISOString() : logItem.timeRange.endDate,
               }
             : undefined,
         };
@@ -85,7 +79,7 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
         const request = store.put(itemToStore);
 
         request.onsuccess = () => {
-          resolve(logItem.id);
+          // Wait for transaction to complete before resolving
         };
 
         request.onerror = (event) => {
@@ -94,6 +88,7 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
 
         transaction.oncomplete = () => {
           db.close();
+          resolve(logItem.id);
         };
       };
 
@@ -118,10 +113,14 @@ export const getAllLogFiles = async (): Promise<FileItem[]> => {
       const request = store.getAll();
 
       request.onsuccess = (event) => {
-        const logItems = (event.target as IDBRequest).result || [];
-        // Sort by lastOpened in descending order
+        const results = (event.target as IDBRequest).result || [];
+        const logItems: FileItem[] = results.map((item: any) => ({
+          ...item,
+          startDate: item.startDate ? new Date(item.startDate) : undefined,
+          endDate: item.endDate ? new Date(item.endDate) : undefined,
+        }));
         logItems.sort((a, b) => b.lastOpened - a.lastOpened);
-        resolve(logItems);
+        resolve(logItems as FileItem[]);
       };
 
       request.onerror = (event) => {
@@ -153,10 +152,12 @@ export const getLogFilesMetadata = async (): Promise<
       request.onsuccess = (event) => {
         const items = (event.target as IDBRequest).result || [];
         // Process all items at once instead of one by one
-        const metadataItems = items.map((item) => {
+        const metadataItems: Omit<FileItem, "content">[] = items.map((item: any) => {
           const { content, ...metadata } = item;
           return {
             ...metadata,
+            startDate: metadata.startDate ? new Date(metadata.startDate) : undefined,
+            endDate: metadata.endDate ? new Date(metadata.endDate) : undefined,
             lines: content?.length || 0,
           };
         });
@@ -205,12 +206,17 @@ export const getLogFileById = async (
         request.onsuccess = (event) => {
           const result = (event.target as IDBRequest).result;
           if (result) {
+            const fileItem: FileItem = {
+              ...result,
+              startDate: result.startDate ? new Date(result.startDate) : undefined,
+              endDate: result.endDate ? new Date(result.endDate) : undefined,
+            };
             // Update lastOpened time
             const updateTx = db.transaction([LOG_FILES_STORE], "readwrite");
             const updateStore = updateTx.objectStore(LOG_FILES_STORE);
             result.lastOpened = Date.now();
             updateStore.put(result);
-            resolve(result);
+            resolve(fileItem);
           } else {
             // Try with a different ID format (for backward compatibility)
             // Extract the name from the ID
@@ -241,7 +247,11 @@ export const getLogFileById = async (
               });
 
               if (matchingItem) {
-                resolve(matchingItem);
+                resolve({
+                  ...matchingItem,
+                  startDate: matchingItem.startDate ? new Date(matchingItem.startDate) : undefined,
+                  endDate: matchingItem.endDate ? new Date(matchingItem.endDate) : undefined,
+                } as FileItem);
                 return;
               }
             }
@@ -270,60 +280,54 @@ export const getLogFileById = async (
 // Delete a log item by ID (with cascading delete for folders)
 export const deleteLogFile = async (id: string): Promise<boolean> => {
   try {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readwrite");
+    // First, get the item to check if it's a folder
+    const db1 = await initDB();
+    const item = await new Promise<any>((resolve, reject) => {
+      const transaction = db1.transaction([LOG_FILES_STORE], "readonly");
       const store = transaction.objectStore(LOG_FILES_STORE);
-      
-      // First, get the item to check if it's a folder
-      const getRequest = store.get(id);
-      
-      getRequest.onsuccess = (event) => {
-        const item = (event.target as IDBRequest).result;
-        
-        if (!item) {
-          resolve(false);
-          return;
+      const request = store.get(id);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject("Failed to get item");
+      transaction.oncomplete = () => db1.close();
+    });
+
+    if (!item) {
+      return false;
+    }
+
+    // If it's a folder, delete all children recursively
+    if (item.type === 'folder' && item.children && item.children.length > 0) {
+      await Promise.all(item.children.map((childId: string) => deleteLogFile(childId)));
+    }
+
+    // Now delete the item itself
+    const db2 = await initDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db2.transaction([LOG_FILES_STORE], "readwrite");
+      const store = transaction.objectStore(LOG_FILES_STORE);
+      const deleteRequest = store.delete(id);
+
+      deleteRequest.onsuccess = () => {
+        // If the item has a parent, update the parent's children list
+        if (item.parentId) {
+          const parentRequest = store.get(item.parentId);
+          parentRequest.onsuccess = (e) => {
+            const parent = (e.target as IDBRequest).result;
+            if (parent && parent.children) {
+              parent.children = parent.children.filter((childId: string) => childId !== id);
+              store.put(parent);
+            }
+          };
         }
-        
-        // If it's a folder, delete all children recursively
-        if (item.type === 'folder' && item.children && item.children.length > 0) {
-          item.children.forEach((childId: string) => {
-            store.delete(childId);
-          });
-        }
-        
-        // Delete the item itself
-        const deleteRequest = store.delete(id);
-        
-        deleteRequest.onsuccess = () => {
-          // If the item has a parent, update the parent's children list
-          if (item.parentId) {
-            const parentRequest = store.get(item.parentId);
-            
-            parentRequest.onsuccess = (e) => {
-              const parent = (e.target as IDBRequest).result;
-              if (parent && parent.children) {
-                parent.children = parent.children.filter((childId: string) => childId !== id);
-                store.put(parent);
-              }
-            };
-          }
-          
-          resolve(true);
-        };
-        
-        deleteRequest.onerror = (event) => {
-          reject("Failed to delete log item");
-        };
+        resolve(true);
       };
-      
-      getRequest.onerror = (event) => {
-        reject("Failed to get log item for deletion");
+
+      deleteRequest.onerror = (event) => {
+        reject("Failed to delete log item");
       };
-      
+
       transaction.oncomplete = () => {
-        db.close();
+        db2.close();
       };
     });
   } catch (error) {
@@ -352,18 +356,35 @@ export const updateLogFile = async (
           return;
         }
 
-        // Update the item with new values
+        // Create a clone to avoid side effects and convert dates to strings for storage
+        const updatesForDB: any = { ...updates };
+
+        // Convert dates to strings for storage
+        if (updatesForDB.startDate instanceof Date) {
+          updatesForDB.startDate = updatesForDB.startDate.toISOString();
+        }
+        if (updatesForDB.endDate instanceof Date) {
+          updatesForDB.endDate = updatesForDB.endDate.toISOString();
+        }
+        if (updatesForDB.timeRange) {
+          if (updatesForDB.timeRange.startDate instanceof Date) {
+            updatesForDB.timeRange.startDate = updatesForDB.timeRange.startDate.toISOString();
+          }
+          if (updatesForDB.timeRange.endDate instanceof Date) {
+            updatesForDB.timeRange.endDate = updatesForDB.timeRange.endDate.toISOString();
+          }
+        }
+
         const updatedItem = {
           ...existingItem,
-          ...updates,
+          ...updatesForDB,
           lastOpened: Date.now(),
         };
 
-        // Save the updated item
         const putRequest = store.put(updatedItem);
 
         putRequest.onsuccess = () => {
-          resolve(true);
+          // Wait for transaction to complete
         };
 
         putRequest.onerror = (event) => {
@@ -377,6 +398,7 @@ export const updateLogFile = async (
 
       transaction.oncomplete = () => {
         db.close();
+        resolve(true);
       };
     });
   } catch (error) {

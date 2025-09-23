@@ -16,7 +16,7 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
 
   // Effect to process raw lines into structured entries
   useEffect(() => {
-    if (!activeFile) {
+    if (!activeFile || activeFile.type === 'folder') {
       setProcessedEntries([]);
       return;
     }
@@ -28,7 +28,7 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
 
     const processAllLines = async () => {
       try {
-        const lines = activeFile.content;
+        const lines = activeFile.content || [];
         if (lines.length > 10000 && typeof Worker !== 'undefined') {
           // --- Web Worker Processing ---
           const initialBatch = lines.slice(0, 1000).map((line, i) => ({
@@ -155,7 +155,7 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
 
   // Effect to filter processed entries into visible entries
   useEffect(() => {
-    if (!processedEntries.length || !activeFile) {
+    if (!processedEntries.length || !activeFile || activeFile.type === 'folder') {
       setVisibleEntries([]);
       return;
     }

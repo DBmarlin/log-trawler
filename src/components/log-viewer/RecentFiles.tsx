@@ -35,13 +35,11 @@ import {
 
 import { FileItem } from "@/types/fileSystem";
 
-export interface RecentFile extends FileItem {
-  // Maintaining compatibility with existing code
-}
 
 interface RecentFilesProps {
   onFileSelect: (file: FileItem) => void;
   onMultipleFilesSelect?: (files: FileItem[]) => void;
+  renameItem: (itemId: string, newName: string) => Promise<boolean>;
 }
 
 type SortField =
@@ -56,6 +54,7 @@ type SortDirection = "asc" | "desc";
 const RecentFiles: React.FC<RecentFilesProps> = ({
   onFileSelect,
   onMultipleFilesSelect,
+  renameItem,
 }) => {
   const [recentItems, setRecentItems] = useState<FileItem[]>([]);
   const [sortField, setSortField] = useState<SortField>("lastOpened");
@@ -69,82 +68,73 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [newFolderName, setNewFolderName] = useState("");
   const [createFolderMode, setCreateFolderMode] = useState(false);
   const [parentFolderId, setParentFolderId] = useState<string | null>(null);
+  const [renamingItemId, setRenamingItemId] = useState<string | null>(null);
+  const [renameValue, setRenameValue] = useState("");
+
+
+  // Load recent files from IndexedDB on mount and when files change
+  const loadRecentFiles = async () => {
+    try {
+      const { getLogFilesMetadata } = await import("@/lib/indexedDB-fix");
+      const recentFiles = await getLogFilesMetadata();
+      setRecentItems(recentFiles);
+
+      // Clean up expanded folders - remove any that no longer exist
+      setExpandedFolders((prev) => {
+        const existingFolderIds = new Set(
+          recentFiles.filter(item => item.type === 'folder').map(item => item.id)
+        );
+        const cleaned = new Set([...prev].filter(id => existingFolderIds.has(id)));
+        return cleaned;
+      });
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Failed to load recent files:", error);
+      setLoadError("Failed to load recent files");
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    let isMounted = true;
-    setIsLoading(true);
+    loadRecentFiles();
+  }, []);
 
-    // First try to load from localStorage for immediate display
-    const storedItems = localStorage.getItem("logTrawler_recentItems");
-    if (storedItems) {
-      try {
-        // Immediately show localStorage items
-        const parsedItems = JSON.parse(storedItems);
-        // Only show the 20 most recent items for faster initial render
-        if (isMounted) {
-          setRecentItems(parsedItems.slice(0, 20));
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Failed to parse recent items from localStorage", error);
-        if (isMounted) {
-          setRecentItems([]);
-          setIsLoading(false);
-        }
-      }
-    } else {
-      if (isMounted) {
-        setIsLoading(false);
-      }
-    }
+  // Listen for file changes
+  useEffect(() => {
+    const handleFilesChanged = () => {
+      loadRecentFiles();
+    };
 
-    // Preload the IndexedDB module to avoid delay when actually using it
-    const preloadModule = import("@/lib/indexedDB-fix");
+    document.addEventListener("filesChanged", handleFilesChanged);
 
-    // Load IndexedDB data immediately without delay
-    (async () => {
-      try {
-        // Wait for the module to be loaded
-        const { initDB, getLogFilesMetadata } = await preloadModule;
-        await initDB();
-
-        // Use a more efficient query that only fetches metadata
-        const indexedDBItems = await getLogFilesMetadata();
-
-        if (isMounted) {
-          if (indexedDBItems && indexedDBItems.length > 0) {
-            // Use a more efficient merge algorithm
-            setRecentItems((prev) => {
-              // Create a map of existing items by ID for quick lookup
-              const itemMap = new Map(prev.map((item) => [item.id, item]));
-
-              // Add or update items from IndexedDB
-              indexedDBItems.forEach((item) => {
-                itemMap.set(item.id, item);
-              });
-
-              // Convert map back to array and sort by lastOpened
-              return Array.from(itemMap.values()).sort(
-                (a, b) => b.lastOpened - a.lastOpened,
-              );
-            });
-          } else {
-            setRecentItems([]);
-          }
-        }
-      } catch (error) {
-        setLoadError("Failed to load items from IndexedDB. " + (error?.toString() || ""));
-        setRecentItems([]);
-        setIsLoading(false);
-        console.error("Failed to load items from IndexedDB", error);
-      }
-    })();
-
-    // Clean up function
     return () => {
-      isMounted = false;
+      document.removeEventListener("filesChanged", handleFilesChanged);
     };
   }, []);
+
+  // Load expanded folders from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("logTrawler_expandedFolders");
+      if (stored) {
+        const expandedArray = JSON.parse(stored);
+        setExpandedFolders(new Set(expandedArray));
+      }
+    } catch (error) {
+      console.error("Failed to load expanded folders from localStorage:", error);
+    }
+  }, []);
+
+  // Save expanded folders to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      const expandedArray = Array.from(expandedFolders);
+      localStorage.setItem("logTrawler_expandedFolders", JSON.stringify(expandedArray));
+    } catch (error) {
+      console.error("Failed to save expanded folders to localStorage:", error);
+    }
+  }, [expandedFolders]);
 
   const handleSort = (field: SortField) => {
     if (field === sortField) {
@@ -291,7 +281,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       // Refresh the list
       setRecentItems((prev) => {
         const updatedItems = [...prev, newFolder];
-        localStorage.setItem("logTrawler_recentItems", JSON.stringify(updatedItems));
+        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(updatedItems));
         return updatedItems;
       });
       setNewFolderName("");
@@ -310,19 +300,29 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     e.dataTransfer.setData("itemId", itemId);
   };
 
-  const handleDrop = async (e: React.DragEvent, folderId: string) => {
+  const handleDrop = async (e: React.DragEvent, folderId?: string) => {
     e.preventDefault();
     setDragOverId(null);
     const itemId = e.dataTransfer.getData("itemId");
     if (!itemId || itemId === folderId) return;
 
     const item = recentItems.find(i => i.id === itemId);
-    const targetFolder = recentItems.find(i => i.id === folderId);
+    if (!item) return;
 
-    if (!item || !targetFolder || targetFolder.type !== 'folder') return;
+    // If dropping to root and item is already at root, do nothing
+    if (!folderId && !item.parentId) return;
+
+    // If dropping to same folder, do nothing
+    if (folderId && item.parentId === folderId) return;
+
+    let targetFolder: FileItem | undefined;
+    if (folderId) {
+      targetFolder = recentItems.find(i => i.id === folderId);
+      if (!targetFolder || targetFolder.type !== 'folder') return;
+    }
 
     // Prevent moving a folder into itself or its children (to avoid circular references)
-    if (item.type === 'folder') {
+    if (item.type === 'folder' && folderId) {
       const checkCircular = (currentId: string, targetId: string): boolean => {
         if (currentId === targetId) return true;
         const currentFolder = recentItems.find(i => i.id === currentId);
@@ -339,13 +339,16 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     }
 
     try {
-      // Update the item's parentId
       const { updateLogFile } = await import("@/lib/indexedDB-fix");
-      await updateLogFile(itemId, { parentId: folderId });
 
-      // Update the target folder's children
-      const updatedChildren = [...(targetFolder.children || []), itemId];
-      await updateLogFile(folderId, { children: updatedChildren });
+      // Update the item's parentId
+      await updateLogFile(itemId, { parentId: folderId || undefined });
+
+      // Update the target folder's children if dropping into a folder
+      if (folderId && targetFolder) {
+        const updatedChildren = [...(targetFolder.children || []), itemId];
+        await updateLogFile(folderId, { children: updatedChildren });
+      }
 
       // If the item had a previous parent, remove it from that parent's children
       if (item.parentId && item.parentId !== folderId) {
@@ -360,15 +363,15 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       setRecentItems((prev) => {
         const updatedItems = prev.map(i => {
           if (i.id === itemId) {
-            return { ...i, parentId: folderId };
-          } else if (i.id === folderId && i.type === 'folder') {
+            return { ...i, parentId: folderId || undefined };
+          } else if (folderId && i.id === folderId && i.type === 'folder') {
             return { ...i, children: [...(i.children || []), itemId] };
           } else if (item.parentId && i.id === item.parentId && i.type === 'folder') {
             return { ...i, children: (i.children || []).filter(id => id !== itemId) };
           }
           return i;
         });
-        localStorage.setItem("logTrawler_recentItems", JSON.stringify(updatedItems));
+        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(updatedItems));
         return updatedItems;
       });
     } catch (error) {
@@ -402,7 +405,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     // Highlight drop target for folders
     const dropHighlight =
       isFolder && dragOverId === item.id
-        ? "ring-2 ring-blue-500 ring-offset-2"
+        ? "bg-blue-500/20 border-blue-500"
         : "";
 
     return (
@@ -414,6 +417,52 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           onDrop={(e) => isFolder && handleDrop(e, item.id)}
           onDragOver={(e) => isFolder && handleDragOver(e, item.id)}
           onDragLeave={(e) => isFolder && handleDragLeave(e, item.id)}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const contextMenu = document.createElement("div");
+            contextMenu.className =
+              "fixed z-50 bg-popover text-popover-foreground rounded-md border shadow-md p-1 min-w-[12rem]";
+            contextMenu.style.left = `${e.clientX}px`;
+            contextMenu.style.top = `${e.clientY}px`;
+
+            const createMenuItem = (text: string, onClick: () => void) => {
+              const item = document.createElement("button");
+              item.className =
+                "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground";
+              item.textContent = text;
+              item.onclick = onClick;
+              return item;
+            };
+
+            // Rename option
+            contextMenu.appendChild(
+              createMenuItem("Rename", () => {
+                setRenamingItemId(item.id);
+                setRenameValue(item.name);
+                document.body.removeChild(contextMenu);
+              }),
+            );
+
+            // Delete option
+            contextMenu.appendChild(
+              createMenuItem("Delete", () => {
+                handleRemoveItem(item.id);
+                document.body.removeChild(contextMenu);
+              }),
+            );
+
+            document.body.appendChild(contextMenu);
+
+            // Remove the context menu when clicking outside
+            const removeContextMenu = () => {
+              if (document.body.contains(contextMenu)) {
+                document.body.removeChild(contextMenu);
+              }
+              document.removeEventListener("click", removeContextMenu);
+            };
+
+            document.addEventListener("click", removeContextMenu);
+          }}
         >
           <td className="py-2" style={indentStyle}>
             <div className="flex items-center">
@@ -456,47 +505,79 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   className="mr-2"
                 />
               )}
-              <button
-                className="flex items-center gap-2 text-primary hover:underline"
-                onClick={(e) => {
-                  if (!selectionMode) {
-                    if (isFolder) {
-                      toggleFolder(item.id);
-                    } else {
-                      onFileSelect(item);
+              {renamingItemId === item.id ? (
+                <div className="flex items-center gap-2">
+                  {isFolder ? <Folder className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                  <input
+                    type="text"
+                    value={renameValue}
+                    onChange={(e) => setRenameValue(e.target.value)}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        if (renameValue.trim() && renameValue.trim() !== item.name) {
+                          await renameItem(item.id, renameValue.trim());
+                        }
+                        setRenamingItemId(null);
+                        setRenameValue("");
+                      } else if (e.key === "Escape") {
+                        setRenamingItemId(null);
+                        setRenameValue("");
+                      }
+                    }}
+                    onBlur={async () => {
+                      if (renameValue.trim() && renameValue.trim() !== item.name) {
+                        await renameItem(item.id, renameValue.trim());
+                      }
+                      setRenamingItemId(null);
+                      setRenameValue("");
+                    }}
+                    className="flex-1 px-1 py-0.5 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary bg-background text-foreground"
+                    autoFocus
+                  />
+                </div>
+              ) : (
+                <button
+                  className="flex items-center gap-2 text-primary hover:underline"
+                  onClick={(e) => {
+                    if (!selectionMode) {
+                      if (isFolder) {
+                        toggleFolder(item.id);
+                      } else {
+                        onFileSelect(item);
+                      }
                     }
-                  }
-                  e.stopPropagation();
-                }}
-                tabIndex={0}
-              >
-                {isFolder ? <Folder className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
-                {item.name}
-                {item.notes && item.notes.trim() !== "" && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <StickyNote
-                          className="h-3 w-3 text-blue-500 ml-1 cursor-help"
-                          aria-label="Has notes"
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <div className="max-w-xs">
-                          <p className="font-semibold text-xs mb-1">
-                            Notes:
-                          </p>
-                          <p className="text-xs">
-                            {item.notes.length > 200
-                              ? `${item.notes.substring(0, 200)}...`
-                              : item.notes}
-                          </p>
-                        </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )}
-              </button>
+                    e.stopPropagation();
+                  }}
+                  tabIndex={0}
+                >
+                  {isFolder ? <Folder className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                  {item.name}
+                  {item.notes && item.notes.trim() !== "" && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <StickyNote
+                            className="h-3 w-3 text-blue-500 ml-1 cursor-help"
+                            aria-label="Has notes"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <div className="max-w-xs">
+                            <p className="font-semibold text-xs mb-1">
+                              Notes:
+                            </p>
+                            <p className="text-xs">
+                              {item.notes.length > 200
+                                ? `${item.notes.substring(0, 200)}...`
+                                : item.notes}
+                            </p>
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                </button>
+              )}
               
               {/* "+" button for creating subfolder removed as per user request */}
               
@@ -543,7 +624,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
 
   const clearAllHistory = () => {
     // Clear localStorage
-    localStorage.removeItem("logTrawler_recentItems");
+    localStorage.removeItem("logTrawler_recentFiles");
     setRecentItems([]);
 
     // Also clear IndexedDB
@@ -572,6 +653,19 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     }
   };
 
+  // Helper function to get all descendant IDs recursively
+  const getAllDescendantIds = (itemId: string, items: FileItem[]): string[] => {
+    const item = items.find(i => i.id === itemId);
+    if (!item) return [];
+    const ids = [itemId];
+    if (item.type === 'folder' && item.children) {
+      for (const childId of item.children) {
+        ids.push(...getAllDescendantIds(childId, items));
+      }
+    }
+    return ids;
+  };
+
   const handleRemoveItem = (id: string) => {
     // Check if the item exists before removing
     const itemToRemove = recentItems.find((item) => item.id === id);
@@ -579,19 +673,32 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
 
     console.log("Removing item:", itemToRemove.name, "with ID:", id);
 
-    const updatedItems = recentItems.filter((item) => item.id !== id);
-    setRecentItems(updatedItems);
-    localStorage.setItem(
-      "logTrawler_recentItems",
-      JSON.stringify(updatedItems),
-    );
+    // Get all IDs to remove (item and descendants)
+    const idsToRemove = getAllDescendantIds(id, recentItems);
 
-    // Also remove from IndexedDB if it exists there
+    const updatedItems = recentItems.filter((item) => !idsToRemove.includes(item.id));
+    setRecentItems(updatedItems);
+
+    // Update localStorage recent files by removing the IDs
+    try {
+      const stored = localStorage.getItem("logTrawler_recentFiles");
+      if (stored) {
+        let recentFilesList: FileItem[] = JSON.parse(stored);
+        recentFilesList = recentFilesList.filter(f => !idsToRemove.includes(f.id));
+        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList));
+      }
+    } catch (error) {
+      console.error("Failed to update localStorage:", error);
+    }
+
+    // Remove from IndexedDB
     try {
       import("@/lib/indexedDB-fix").then(({ deleteLogFile }) => {
-        deleteLogFile(id).catch((err) =>
-          console.error("Failed to delete from IndexedDB:", err),
-        );
+        idsToRemove.forEach(idToDelete => {
+          deleteLogFile(idToDelete).catch((err) =>
+            console.error(`Failed to delete ${idToDelete} from IndexedDB:`, err),
+          );
+        });
       });
     } catch (error) {
       console.error("Error importing IndexedDB module:", error);
@@ -607,10 +714,10 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
   };
 
-  const formatDate = (dateStr?: string) => {
-    if (!dateStr) return "Unknown";
+  const formatDate = (date?: Date) => {
+    if (!date) return "Unknown";
     try {
-      return format(new Date(dateStr), "dd MMM yyyy HH:mm:ss");
+      return format(date, "dd MMM yyyy HH:mm:ss");
     } catch (e) {
       return "Invalid date";
     }
@@ -698,6 +805,11 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   placeholder="Folder name..."
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleCreateFolder();
+                    }
+                  }}
                   className="h-8 w-40"
                   autoFocus
                 />
@@ -856,7 +968,18 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                 <th className="text-right py-2 font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody
+              onDrop={(e) => handleDrop(e)}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setDragOverId('root');
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setDragOverId((prev) => (prev === 'root' ? null : prev));
+              }}
+              className={dragOverId === 'root' ? "bg-blue-500/20" : ""}
+            >
               {rootItems.map((item) => renderTreeItem(item.id))}
             </tbody>
           </table>

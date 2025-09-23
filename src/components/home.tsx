@@ -10,29 +10,14 @@ import InitialView from "./home/InitialView";
 import FileView from "./home/FileView";
 import { useFileManagement } from "@/hooks/useFileManagement"; // Import file management hook
 import { useLogProcessing } from "@/hooks/useLogProcessing"; // Import log processing hook
+import { FileItem } from "@/types/fileSystem";
 
-// Export the interface so hooks can use it
-export interface LogFile {
-  id: string;
-  name: string;
-  content: string[];
+// Create a new LogFile type for the in-memory state
+export interface LogFile extends Omit<FileItem, 'startDate' | 'endDate' | 'timeRange'> {
   startDate?: Date;
   endDate?: Date;
-  filters?: Array<{
-    id: string;
-    type: "include" | "exclude";
-    term: string;
-    isRegex?: boolean;
-    operator?: "AND" | "OR";
-  }>;
-  filterLogic?: "AND" | "OR";
-  bucketSize?: string;
   timeRange?: { startDate?: Date; endDate?: Date };
-  isLoading?: boolean;
-  notes?: string;
-  tags?: string[];
-  interestingLines?: number[];
-  showOnlyMarked?: boolean;
+  isLoading?: boolean; // Add isLoading to the in-memory type
 }
 
 const Home = () => {
@@ -60,6 +45,8 @@ const Home = () => {
     handleCloseOtherTabs,
     handleCloseTabsToLeft,
     handleCloseTabsToRight,
+    handleCloseAllFiles,
+    renameItem, // Get rename function from hook
     processFiles // Get processFiles from hook
   } = useFileManagement();
 
@@ -77,7 +64,10 @@ const Home = () => {
   // activeFile is now provided by useFileManagement hook
   // Chart entries calculation depends on activeFile content
   const chartEntries = useMemo(() => {
-    if (!activeFile?.content) return []; // Use activeFile from hook
+    if (!activeFile || activeFile.type === 'folder') return []; // No chart for folders
+
+    // For single files
+    if (!activeFile.content) return [];
     const content = activeFile.content;
     const sampleSize = Math.min(2000, content.length);
     const step = Math.max(1, Math.floor(content.length / sampleSize));
@@ -98,7 +88,11 @@ const Home = () => {
         setChatPanelOpen(true);
       }
     };
+
+
     document.addEventListener("setChatPanelOpen", handleSetChatPanelOpen as EventListener);
+
+
     return () => {
       document.removeEventListener("setChatPanelOpen", handleSetChatPanelOpen as EventListener);
     };
@@ -185,7 +179,7 @@ const Home = () => {
    const handleLoadPreset = useCallback((preset: FilterPreset) => {
       if (!activeFile) return;
       // Presets only define filters based on the interface
-      const updates: Partial<LogFile> = { filters: preset.filters };
+      const updates: Partial<LogFile> = { filters: preset.filters as any };
       // Do not attempt to set filterLogic from preset
       updateFileState(activeFile.id, updates);
    }, [activeFile, updateFileState]);
@@ -224,9 +218,9 @@ const Home = () => {
         onFileInputClick={() => document.getElementById("fileInput")?.click()}
         onLogoClick={() => setActiveFileId(null)} // Use setActiveFileId from hook
         showDateControls={!!activeFileId}
-        startDate={activeFile?.timeRange?.startDate || activeFile?.startDate} // Use activeFile from hook
-        endDate={activeFile?.timeRange?.endDate || activeFile?.endDate} // Use activeFile from hook
-        onRangeChange={handleTimeRangeSelect} // Pass handler directly
+        startDate={activeFile?.timeRange?.startDate || activeFile?.startDate}
+        endDate={activeFile?.timeRange?.endDate || activeFile?.endDate}
+        onRangeChange={handleTimeRangeSelect}
       />
       {/* Moved file input here so it's always available */}
       <input
@@ -345,6 +339,8 @@ const Home = () => {
                 }
               }}
               setActiveFileId={setActiveFileId} // From hook
+              handleCloseAllFiles={handleCloseAllFiles} // From hook
+              renameItem={renameItem} // From hook
             />
           ) : (
             // Ensure activeFile is not undefined before rendering FileView
@@ -435,7 +431,7 @@ const Home = () => {
               <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
               <path d="M9 18c-4.51 2-5-2-7-2" />
             </svg>
-            <span>v0.5.0</span>
+            <span>v0.6.0</span>
           </a>
         </div>
       </footer>

@@ -8,8 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import RecentFiles, { RecentFile } from "../log-viewer/RecentFiles";
+import RecentFiles from "../log-viewer/RecentFiles";
 import { LogFile } from "../home"; // Assuming LogFile type is exported from home.tsx or moved
+import { FileItem } from "@/types/fileSystem";
 
 interface InitialViewProps {
   isDragging: boolean;
@@ -17,9 +18,11 @@ interface InitialViewProps {
   onFileInputClick: () => void;
   onUrlInputClick: () => void;
   fetchLogFromUrl: (url: string) => Promise<void>;
-  handleRecentFileSelect: (file: RecentFile) => Promise<void>;
-  onMultipleFilesSelect: (files: RecentFile[]) => Promise<void>;
+  handleRecentFileSelect: (file: FileItem) => Promise<void>;
+  onMultipleFilesSelect: (files: FileItem[]) => Promise<void>;
   setActiveFileId: (id: string | null) => void; // To return to files if some are open
+  handleCloseAllFiles: () => void;
+  renameItem: (itemId: string, newName: string) => Promise<boolean>;
 }
 
 const InitialView: React.FC<InitialViewProps> = ({
@@ -31,6 +34,8 @@ const InitialView: React.FC<InitialViewProps> = ({
   handleRecentFileSelect,
   onMultipleFilesSelect,
   setActiveFileId,
+  handleCloseAllFiles,
+  renameItem,
 }) => {
   return (
     <div className="flex flex-col gap-4">
@@ -40,17 +45,25 @@ const InitialView: React.FC<InitialViewProps> = ({
             <h3 className="font-semibold text-lg">
               You have {files.length} file{files.length !== 1 ? "s" : ""} open
             </h3>
-            <Button
-              variant="outline"
-              onClick={() => {
-                // Return to the first file in the list
-                if (files.length > 0) {
-                  setActiveFileId(files[0].id);
-                }
-              }}
-            >
-              Return to Files
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  // Return to the first file in the list
+                  if (files.length > 0) {
+                    setActiveFileId(files[0].id);
+                  }
+                }}
+              >
+                Return to Files
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleCloseAllFiles}
+              >
+                Close open files
+              </Button>
+            </div>
           </div>
         </div>
       )}
@@ -137,6 +150,7 @@ const InitialView: React.FC<InitialViewProps> = ({
       <RecentFiles
         onFileSelect={handleRecentFileSelect}
         onMultipleFilesSelect={onMultipleFilesSelect}
+        renameItem={renameItem}
       />
     </div>
   );

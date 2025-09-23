@@ -6,8 +6,8 @@ export interface FileItem {
   lastOpened: number; // timestamp
   size?: number; // in bytes
   lines?: number;
-  startDate?: string; // ISO string
-  endDate?: string; // ISO string
+  startDate?: Date;
+  endDate?: Date;
   tags?: string[];
   notes?: string;
   parentId?: string; // ID of the parent folder, if any
@@ -20,10 +20,11 @@ export interface FileItem {
   }>;
   filterLogic?: "AND" | "OR";
   bucketSize?: string;
-  timeRange?: { startDate?: string; endDate?: string };
+  timeRange?: { startDate?: Date; endDate?: Date };
   interestingLines?: number[];
   showOnlyMarked?: boolean;
   children?: string[]; // Array of child item IDs (files or subfolders), only for folders
+  isLoading?: boolean;
 }
 
 export interface FolderItem extends Omit<FileItem, 'content' | 'filters' | 'filterLogic' | 'bucketSize' | 'timeRange' | 'interestingLines' | 'showOnlyMarked'> {

@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { LogFile } from "@/components/home"; // Assuming LogFile is exported from home.tsx or moved
-import { RecentFile } from "@/components/log-viewer/RecentFiles";
+import { FileItem } from "@/types/fileSystem";
 import { parseLogLine, parseTimestamp } from "@/lib/utils";
-import { getLogFileById, saveLogFile, updateLogFile } from "@/lib/indexedDB-fix"; // Assuming these are correctly exported
+import { getLogFileById, saveLogFile, updateLogFile, deleteLogFile } from "@/lib/indexedDB-fix";
+
+type RecentFile = Omit<FileItem, 'content'> & { lines?: number };
+type LogFile = FileItem & { isLoading?: boolean };
 
 export function useFileManagement() {
   const [isDragging, setIsDragging] = useState(false);
-  const [files, setFiles] = useState<LogFile[]>([]);
+  const [files, setFiles] = useState<FileItem[]>([]);
   const [activeFileId, setActiveFileId] = useState<string | null>(null);
   const [loadingFiles, setLoadingFiles] = useState<{ [key: string]: number }>({});
   const [showUrlDialog, setShowUrlDialog] = useState(false);
@@ -24,49 +26,15 @@ export function useFileManagement() {
     setIsDragging(false);
   }, []);
 
-  const updateFileState = useCallback((fileId: string, updates: Partial<LogFile>) => {
+  const updateFileState = useCallback((fileId: string, updates: Partial<FileItem>) => {
     setFiles(prevFiles => {
         const newFiles = prevFiles.map(file =>
             file.id === fileId ? { ...file, ...updates } : file
         );
         // Persist change to IndexedDB
         try {
-            // Convert Date objects back to strings/undefined for storage
-            const updatesForDB: Partial<any> = { ...updates };
-
-            if ('startDate' in updates && updates.startDate instanceof Date) {
-                updatesForDB.startDate = updates.startDate.toISOString();
-            } else if ('startDate' in updates && updates.startDate === undefined) {
-                 updatesForDB.startDate = undefined;
-            }
-
-            if ('endDate' in updates && updates.endDate instanceof Date) {
-                updatesForDB.endDate = updates.endDate.toISOString();
-            } else if ('endDate' in updates && updates.endDate === undefined) {
-                 updatesForDB.endDate = undefined;
-            }
-
-            if ('timeRange' in updates) {
-                if (updates.timeRange) {
-                    updatesForDB.timeRange = {
-                        startDate: updates.timeRange.startDate instanceof Date
-                            ? updates.timeRange.startDate.toISOString()
-                            : updates.timeRange.startDate,
-                        endDate: updates.timeRange.endDate instanceof Date
-                            ? updates.timeRange.endDate.toISOString()
-                            : updates.timeRange.endDate,
-                    };
-                } else {
-                     updatesForDB.timeRange = undefined;
-                }
-            }
-
-            const finalUpdatesForDB = Object.fromEntries(
-              Object.entries(updatesForDB).filter(([key, value]) => !(value instanceof Date))
-            );
-
-            updateLogFile(fileId, finalUpdatesForDB).catch(err =>
-                console.error(`Failed to update ${Object.keys(finalUpdatesForDB).join(', ')} in IndexedDB:`, err)
+            updateLogFile(fileId, updates).catch(err =>
+                console.error(`Failed to update in IndexedDB:`, err)
             );
         } catch (error) {
             console.error("Error preparing update for IndexedDB:", error);
@@ -115,7 +83,7 @@ export function useFileManagement() {
     }
 
     // Gather all log files to process (direct or extracted)
-    let logFilesToProcess: { name: string, content: string | Uint8Array }[] = [];
+    let logFilesToProcess: { name: string, content: string | Uint8Array, folderId?: string, children?: string[] }[] = [];
 
     for (const file of droppedFiles) {
       if (file.name.endsWith(".zip") || file.name.endsWith(".tar.gz")) {
@@ -132,7 +100,7 @@ export function useFileManagement() {
           lastOpened: Date.now(),
           children: [],
         };
-        await saveLogFile(folder);
+        await saveLogFile(folder as FileItem);
 
         let extractedEntries: { name: string; content: Uint8Array }[] = [];
         if (isZip) {
@@ -164,6 +132,8 @@ export function useFileManagement() {
           const decoder = new TextDecoder("utf-8");
           const lines = decoder.decode(entry.content).split("\n");
           // Parse startDate and endDate from lines (same logic as main processing)
+          parseLogLine(undefined); // Reset timestamp parser state
+          parseLogLine("-"); // Initialize parser state if needed
           let startDate: Date | undefined = undefined;
           let endDate: Date | undefined = undefined;
           const dates: Date[] = [];
@@ -189,6 +159,30 @@ export function useFileManagement() {
           const validDates = dates.filter(d => d instanceof Date && !isNaN(d.getTime()));
           if (!startDate && validDates.length > 0) startDate = new Date(Math.min(...validDates.map(d => d.getTime())));
           if (!endDate && validDates.length > 0) endDate = new Date(Math.max(...validDates.map(d => d.getTime())));
+
+          // Calculate bucket size (same logic as single files)
+          let bucketSize = "5m";
+          if (startDate && endDate) {
+            const diffMinutes = (endDate.getTime() - startDate.getTime()) / 60000;
+            if (diffMinutes <= 1) bucketSize = "5s";
+            else if (diffMinutes <= 60) bucketSize = "30s";
+            else {
+              const idealBucketSizeMinutes = Math.max(1, Math.ceil(diffMinutes / 120));
+              if (idealBucketSizeMinutes <= 0.08) bucketSize = "5s";
+              else if (idealBucketSizeMinutes <= 0.17) bucketSize = "10s";
+              else if (idealBucketSizeMinutes <= 0.5) bucketSize = "30s";
+              else if (idealBucketSizeMinutes <= 1) bucketSize = "1m";
+              else if (idealBucketSizeMinutes <= 5) bucketSize = "5m";
+              else if (idealBucketSizeMinutes <= 10) bucketSize = "10m";
+              else if (idealBucketSizeMinutes <= 30) bucketSize = "30m";
+              else if (idealBucketSizeMinutes <= 60) bucketSize = "60m";
+              else if (idealBucketSizeMinutes <= 360) bucketSize = "360m";
+              else if (idealBucketSizeMinutes <= 720) bucketSize = "720m";
+              else if (idealBucketSizeMinutes <= 1440) bucketSize = "1440m";
+              else bucketSize = "10080m";
+            }
+          }
+
           const logFile = {
             id: logFileId,
             name: entry.name,
@@ -198,17 +192,29 @@ export function useFileManagement() {
             content: lines,
             size: entry.content.length,
             lines: lines.length,
-            startDate,
-            endDate,
+            startDate: startDate,
+            endDate: endDate,
+            bucketSize: bucketSize,
           };
-          await saveLogFile(logFile);
+          await saveLogFile(logFile as FileItem);
           fileIds.push(logFileId);
         }
-        // Update folder with children
+        // Update folder with children (no startDate/endDate for folders)
         await updateLogFile(folderId, { children: fileIds });
 
-        // Add folder to logFilesToProcess (for UI state)
-        logFilesToProcess.push({ name: baseName, content: [], folderId, children: fileIds });
+        // Add folder to localStorage recent files
+        try {
+          const stored = localStorage.getItem("logTrawler_recentFiles");
+          let recentFilesList: RecentFile[] = stored ? JSON.parse(stored) : [];
+          recentFilesList = recentFilesList.filter(f => f.name !== baseName);
+          recentFilesList.unshift({
+            id: folderId,
+            name: baseName,
+            lastOpened: Date.now(),
+            type: 'folder',
+          });
+          localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList.slice(0, 20)));
+        } catch (error) { console.error("Failed to update recent files", error); }
       } else if (file.name.endsWith(".log")) {
         // Direct log file
         logFilesToProcess.push({ name: file.name, content: await file.text() });
@@ -231,7 +237,7 @@ export function useFileManagement() {
     setFiles((prev) => [
       ...prev,
       ...loadingFileIds.map((file) => ({
-        id: file.id, name: file.name, content: [], isLoading: true,
+        id: file.id, name: file.name, content: [], type: "file" as const, lastOpened: Date.now(), isLoading: true,
       })),
     ]);
 
@@ -306,8 +312,28 @@ export function useFileManagement() {
 
       const recentFileEntry: RecentFile = {
         id: fileId, name: logFile.name, lastOpened: Date.now(), size: lines.length, lines: lines.length,
-        startDate: startDate?.toISOString(), endDate: endDate?.toISOString(),
+        startDate: startDate, endDate: endDate, type: 'file',
       };
+
+      const processedFile: LogFile = {
+        id: fileId,
+        name: logFile.name,
+        content: lines,
+        startDate,
+        endDate,
+        bucketSize,
+        isLoading: false,
+        notes: "",
+        tags: [],
+        interestingLines: [],
+        showOnlyMarked: false,
+        filters: [],
+        filterLogic: "OR",
+        timeRange: undefined,
+        type: 'file',
+        lastOpened: Date.now(),
+      };
+
       try {
         const stored = localStorage.getItem("logTrawler_recentFiles");
         let recentFilesList: RecentFile[] = stored ? JSON.parse(stored) : [];
@@ -316,20 +342,15 @@ export function useFileManagement() {
         localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList.slice(0, 20)));
       } catch (error) { console.error("Failed to update recent files", error); }
 
-      const processedFile: LogFile = {
-        id: fileId, name: logFile.name, content: lines, startDate, endDate, bucketSize, isLoading: false,
-        notes: "", tags: [], interestingLines: [], showOnlyMarked: false, filters: [], filterLogic: "OR", timeRange: undefined,
-      };
-
       try {
           const fileToSaveForDB = {
+            type: 'file',
             id: processedFile.id,
             name: processedFile.name,
             content: processedFile.content,
-            startDate: processedFile.startDate?.toISOString(),
-            endDate: processedFile.endDate?.toISOString(),
+            startDate: processedFile.startDate,
+            endDate: processedFile.endDate,
             bucketSize: processedFile.bucketSize,
-            isLoading: processedFile.isLoading,
             lastOpened: Date.now(),
             size: lines.length,
             notes: processedFile.notes || "",
@@ -340,7 +361,7 @@ export function useFileManagement() {
             filterLogic: processedFile.filterLogic || "OR",
             timeRange: { startDate: undefined, endDate: undefined }
           };
-          saveLogFile(fileToSaveForDB as any).catch(console.error);
+          saveLogFile(fileToSaveForDB as FileItem).catch(console.error);
       } catch (error) { console.error("Error saving to IndexedDB:", error); }
 
       return processedFile;
@@ -365,9 +386,11 @@ export function useFileManagement() {
     e.preventDefault();
     setIsDragging(false);
     await processFilesInternal(Array.from(e.dataTransfer.files));
+    // Dispatch event after a delay to ensure IndexedDB transactions are committed
+    setTimeout(() => document.dispatchEvent(new CustomEvent("filesChanged")), 200);
   }, [processFilesInternal]);
 
-  const handleRemoveFile = useCallback((fileId: string) => {
+  const handleRemoveFile = useCallback(async (fileId: string) => {
     const fileToRemove = files.find((f) => f.id === fileId);
     if (fileToRemove?.filters?.length || fileToRemove?.notes || fileToRemove?.tags?.length || fileToRemove?.interestingLines?.length || fileToRemove?.timeRange) {
       try {
@@ -380,8 +403,8 @@ export function useFileManagement() {
           if (fileToRemove.showOnlyMarked) updatesForDB.showOnlyMarked = fileToRemove.showOnlyMarked;
           if (fileToRemove.timeRange) {
               updatesForDB.timeRange = {
-                  startDate: fileToRemove.timeRange.startDate?.toISOString(),
-                  endDate: fileToRemove.timeRange.endDate?.toISOString()
+                  startDate: fileToRemove.timeRange.startDate,
+                  endDate: fileToRemove.timeRange.endDate
               };
           }
           if (Object.keys(updatesForDB).length > 0) {
@@ -390,21 +413,46 @@ export function useFileManagement() {
       } catch (error) { console.error("Error saving state before close:", error); }
     }
 
+    // Only delete from IndexedDB if it's a folder (and its children)
+    if (fileToRemove?.type === "folder") {
+      const idsToRemove = fileToRemove.children?.length
+        ? [fileId, ...fileToRemove.children]
+        : [fileId];
+      for (const id of idsToRemove) {
+        await deleteLogFile(id);
+      }
+    }
+
+    // Remove from UI state
     setFiles((prev) => prev.filter((f) => f.id !== fileId));
     if (activeFileId === fileId) {
       setActiveFileId(files.find((f) => f.id !== fileId)?.id || null);
     }
 
+    // Update localStorage recent files by removing the deleted items
     try {
       const stored = localStorage.getItem("logTrawler_recentFiles");
       if (stored) {
-        const recent = JSON.parse(stored).filter((f: RecentFile) => f.id !== fileId);
-        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recent));
+        let recentFilesList: any[] = JSON.parse(stored);
+        if (fileToRemove?.type === "folder") {
+          const idsToRemove = fileToRemove.children?.length
+            ? [fileId, ...fileToRemove.children]
+            : [fileId];
+          recentFilesList = recentFilesList.filter(f => !idsToRemove.includes(f.id));
+        } else {
+          recentFilesList = recentFilesList.filter(f => f.id !== fileId);
+        }
+        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList));
       }
-    } catch (error) { console.error("Error updating localStorage on remove:", error); }
+    } catch (error) {
+      console.error("Failed to update localStorage recent files:", error);
+    }
+
+    // Dispatch event to notify other components of file changes
+    document.dispatchEvent(new CustomEvent("filesChanged"));
   }, [files, activeFileId]);
 
-  const handleRecentFileSelect = useCallback(async (recentFile: RecentFile) => {
+  const handleRecentFileSelect = useCallback(async (recentFile: FileItem) => {
     if (recentFile.id.match(/^0\.[0-9]+$/)) {
       recentFile.id = recentFile.name.replace(/[^a-z0-9]/gi, "_") + "_" + recentFile.lastOpened;
     }
@@ -425,20 +473,8 @@ export function useFileManagement() {
       if (logFile?.content?.length > 0) {
         const processedFile: LogFile = {
           ...logFile,
-          // Ensure dates are Date objects when loading into state
-          startDate: logFile.startDate ? new Date(logFile.startDate) : undefined,
-          endDate: logFile.endDate ? new Date(logFile.endDate) : undefined,
-          timeRange: logFile.timeRange ? {
-            startDate: logFile.timeRange.startDate ? new Date(logFile.timeRange.startDate) : undefined,
-            endDate: logFile.timeRange.endDate ? new Date(logFile.timeRange.endDate) : undefined,
-          } : undefined,
-          notes: logFile.notes || "",
-          tags: logFile.tags || [],
-          interestingLines: logFile.interestingLines || [],
-          showOnlyMarked: logFile.showOnlyMarked || false,
-          filters: logFile.filters || [],
-          filterLogic: logFile.filterLogic || "OR",
-          isLoading: false, // Ensure isLoading is false
+          content: logFile.content || [],
+          isLoading: false,
         };
         setFiles((prev) => {
           const existingIndex = prev.findIndex((f) => f.id === processedFile.id);
@@ -534,6 +570,46 @@ export function useFileManagement() {
     }
   }, [files]);
 
+  const handleCloseAllFiles = useCallback(() => {
+    setFiles([]);
+    setActiveFileId(null);
+  }, []);
+
+  const renameItem = useCallback(async (itemId: string, newName: string) => {
+    if (!newName.trim()) return false;
+
+    try {
+      // Update in IndexedDB
+      await updateLogFile(itemId, { name: newName.trim() });
+
+      // Update in local state
+      setFiles(prevFiles => prevFiles.map(file =>
+        file.id === itemId ? { ...file, name: newName.trim() } : file
+      ));
+
+      // Update localStorage recent files
+      try {
+        const stored = localStorage.getItem("logTrawler_recentFiles");
+        if (stored) {
+          let recentFilesList: any[] = JSON.parse(stored);
+          recentFilesList = recentFilesList.map(f =>
+            f.id === itemId ? { ...f, name: newName.trim() } : f
+          );
+          localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList));
+        }
+      } catch (error) {
+        console.error("Failed to update localStorage:", error);
+      }
+
+      // Dispatch event to notify other components
+      document.dispatchEvent(new CustomEvent("filesChanged"));
+
+      return true;
+    } catch (error) {
+      console.error("Failed to rename item:", error);
+      return false;
+    }
+  }, []);
 
   return {
     isDragging,
@@ -557,6 +633,8 @@ export function useFileManagement() {
     handleCloseOtherTabs,
     handleCloseTabsToLeft,
     handleCloseTabsToRight,
+    handleCloseAllFiles,
+    renameItem, // Expose the rename function
     processFiles: processFilesInternal // Expose the processing function
   };
 }
