@@ -66,8 +66,8 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
   const onTimeRangeSelect = props.onTimeRangeSelect || (() => {});
   const bucketSize = props.bucketSize || "5m";
   const onBucketSizeChange = props.onBucketSizeChange || (() => {});
-  const fileStartDate = props.fileStartDate;
-  const fileEndDate = props.fileEndDate;
+  const fileStartDate = props.fileStartDate instanceof Date && !isNaN(props.fileStartDate.getTime()) ? props.fileStartDate : undefined;
+  const fileEndDate = props.fileEndDate instanceof Date && !isNaN(props.fileEndDate.getTime()) ? props.fileEndDate : undefined;
   const [isLoading, setIsLoading] = React.useState(false);
 
   // Initialize with cached data if available
@@ -541,7 +541,7 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
 
   // Calculate optimal bucket size for a given time range
   const calculateOptimalBucketSize = (startDate?: Date, endDate?: Date) => {
-    if (!startDate || !endDate) return bucketSize;
+    if (!startDate || !endDate || !(startDate instanceof Date) || !(endDate instanceof Date) || isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return bucketSize;
 
     const diffMs = endDate.getTime() - startDate.getTime();
     const diffMinutes = diffMs / (1000 * 60);

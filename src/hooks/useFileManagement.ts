@@ -452,13 +452,15 @@ export function useFileManagement() {
     document.dispatchEvent(new CustomEvent("filesChanged"));
   }, [files, activeFileId]);
 
-  const handleRecentFileSelect = useCallback(async (recentFile: FileItem) => {
+  const handleRecentFileSelect = useCallback(async (recentFile: FileItem, setAsActive: boolean = true) => {
     if (recentFile.id.match(/^0\.[0-9]+$/)) {
       recentFile.id = recentFile.name.replace(/[^a-z0-9]/gi, "_") + "_" + recentFile.lastOpened;
     }
     const existingFile = files.find((f) => f.id === recentFile.id);
     if (existingFile) {
-      setActiveFileId(existingFile.id);
+      if (setAsActive) {
+        setActiveFileId(existingFile.id);
+      }
       return;
     }
 
@@ -485,7 +487,9 @@ export function useFileManagement() {
           }
           return [...prev, processedFile];
         });
-        setActiveFileId(processedFile.id);
+        if (setAsActive) {
+          setActiveFileId(processedFile.id);
+        }
         notification.innerHTML = `Successfully loaded <strong>${recentFile.name}</strong>`;
         notification.className = "fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-md z-50";
         setTimeout(() => {
@@ -507,8 +511,8 @@ export function useFileManagement() {
       document.getElementById("fileInput")?.click();
       setTimeout(() => {
         notification.classList.add("opacity-0", "transition-opacity", "duration-500");
-        setTimeout(() => document.body.removeChild(notification), 500);
-      }, 5000);
+          setTimeout(() => document.body.removeChild(notification), 500);
+        }, 5000);
     }
   }, [files]); // Dependency on files to check existing
 

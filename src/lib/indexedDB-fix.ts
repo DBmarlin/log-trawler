@@ -6,6 +6,17 @@ interface LogFileData extends FileItem {
   // Maintaining backward compatibility with existing data
 }
 
+// Helper function to safely parse dates from IndexedDB
+const parseDate = (dateValue: any): Date | undefined => {
+  if (!dateValue) return undefined;
+  if (dateValue instanceof Date) return dateValue;
+  if (typeof dateValue === 'string') {
+    const d = new Date(dateValue);
+    return isNaN(d.getTime()) ? undefined : d;
+  }
+  return undefined;
+};
+
 const DB_NAME = "logTrawlerDB";
 const DB_VERSION = 2;
 const LOG_FILES_STORE = "logFiles";
@@ -116,8 +127,12 @@ export const getAllLogFiles = async (): Promise<FileItem[]> => {
         const results = (event.target as IDBRequest).result || [];
         const logItems: FileItem[] = results.map((item: any) => ({
           ...item,
-          startDate: item.startDate ? new Date(item.startDate) : undefined,
-          endDate: item.endDate ? new Date(item.endDate) : undefined,
+          startDate: parseDate(item.startDate),
+          endDate: parseDate(item.endDate),
+          timeRange: item.timeRange ? {
+            startDate: parseDate(item.timeRange.startDate),
+            endDate: parseDate(item.timeRange.endDate),
+          } : undefined,
         }));
         logItems.sort((a, b) => b.lastOpened - a.lastOpened);
         resolve(logItems as FileItem[]);
@@ -156,8 +171,12 @@ export const getLogFilesMetadata = async (): Promise<
           const { content, ...metadata } = item;
           return {
             ...metadata,
-            startDate: metadata.startDate ? new Date(metadata.startDate) : undefined,
-            endDate: metadata.endDate ? new Date(metadata.endDate) : undefined,
+            startDate: parseDate(metadata.startDate),
+            endDate: parseDate(metadata.endDate),
+            timeRange: metadata.timeRange ? {
+              startDate: parseDate(metadata.timeRange.startDate),
+              endDate: parseDate(metadata.timeRange.endDate),
+            } : undefined,
             lines: content?.length || 0,
           };
         });
@@ -208,8 +227,12 @@ export const getLogFileById = async (
           if (result) {
             const fileItem: FileItem = {
               ...result,
-              startDate: result.startDate ? new Date(result.startDate) : undefined,
-              endDate: result.endDate ? new Date(result.endDate) : undefined,
+              startDate: parseDate(result.startDate),
+              endDate: parseDate(result.endDate),
+              timeRange: result.timeRange ? {
+                startDate: parseDate(result.timeRange.startDate),
+                endDate: parseDate(result.timeRange.endDate),
+              } : undefined,
             };
             // Update lastOpened time
             const updateTx = db.transaction([LOG_FILES_STORE], "readwrite");
@@ -249,8 +272,12 @@ export const getLogFileById = async (
               if (matchingItem) {
                 resolve({
                   ...matchingItem,
-                  startDate: matchingItem.startDate ? new Date(matchingItem.startDate) : undefined,
-                  endDate: matchingItem.endDate ? new Date(matchingItem.endDate) : undefined,
+                  startDate: parseDate(matchingItem.startDate),
+                  endDate: parseDate(matchingItem.endDate),
+                  timeRange: matchingItem.timeRange ? {
+                    startDate: parseDate(matchingItem.timeRange.startDate),
+                    endDate: parseDate(matchingItem.timeRange.endDate),
+                  } : undefined,
                 } as FileItem);
                 return;
               }

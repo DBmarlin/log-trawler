@@ -12,6 +12,7 @@ import {
   Check,
   Folder,
   Plus,
+  Eye,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -40,6 +41,8 @@ interface RecentFilesProps {
   onFileSelect: (file: FileItem) => void;
   onMultipleFilesSelect?: (files: FileItem[]) => void;
   renameItem: (itemId: string, newName: string) => Promise<boolean>;
+  loadedFileIds?: string[];
+  onFileClose?: (fileId: string) => void;
 }
 
 type SortField =
@@ -55,6 +58,8 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   onFileSelect,
   onMultipleFilesSelect,
   renameItem,
+  loadedFileIds,
+  onFileClose,
 }) => {
   const [recentItems, setRecentItems] = useState<FileItem[]>([]);
   const [sortField, setSortField] = useState<SortField>("lastOpened");
@@ -70,6 +75,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [parentFolderId, setParentFolderId] = useState<string | null>(null);
   const [renamingItemId, setRenamingItemId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState("");
+  const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
 
 
   // Load recent files from IndexedDB on mount and when files change
@@ -150,19 +156,16 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     const itemMap = new Map<string, FileItem>();
     const rootItems: FileItem[] = [];
 
-    // Initialize map with all items
+    // Initialize map with all items, clearing children arrays to rebuild from parentId
     items.forEach((item) => {
-      itemMap.set(item.id, { ...item, children: item.type === 'folder' ? (item.children || []) : undefined });
+      itemMap.set(item.id, { ...item, children: item.type === 'folder' ? [] : undefined });
     });
 
-    // Connect children to parents
+    // Connect children to parents based on parentId relationships
     items.forEach((item) => {
       if (item.parentId && itemMap.has(item.parentId)) {
         const parent = itemMap.get(item.parentId);
         if (parent && parent.type === 'folder') {
-          if (!parent.children) {
-            parent.children = [];
-          }
           if (!parent.children.includes(item.id)) {
             parent.children.push(item.id);
           }
@@ -177,10 +180,11 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
 
   // Memoize filtered items to avoid recalculating on every render
   const filteredItems = React.useMemo(() => {
-    if (!searchTerm) return recentItems;
+    let items = recentItems;
+    if (!searchTerm) return items;
 
     const searchLower = searchTerm.toLowerCase();
-    return recentItems.filter((item) => {
+    return items.filter((item) => {
       // Match on name
       if (item.name.toLowerCase().includes(searchLower)) return true;
 
@@ -195,45 +199,62 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     });
   }, [recentItems, searchTerm]);
 
+  // Comparator function for sorting items
+  const getComparator = (field: SortField, direction: SortDirection) => {
+    return (a: FileItem, b: FileItem) => {
+      let comparison = 0;
+      switch (field) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "lastOpened":
+          comparison = a.lastOpened - b.lastOpened;
+          break;
+        case "size":
+          comparison = (a.size || 0) - (b.size || 0);
+          break;
+        case "lines":
+          comparison = (a.lines || 0) - (b.lines || 0);
+          break;
+        case "startDate":
+          if (!a.startDate && !b.startDate) comparison = 0;
+          else if (!a.startDate) comparison = 1; // undefined dates sort to end
+          else if (!b.startDate) comparison = -1;
+          else comparison = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+          break;
+        case "endDate":
+          if (!a.endDate && !b.endDate) comparison = 0;
+          else if (!a.endDate) comparison = 1; // undefined dates sort to end
+          else if (!b.endDate) comparison = -1;
+          else comparison = new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+          break;
+      }
+      return direction === "asc" ? comparison : -comparison;
+    };
+  };
+
   // Memoize sorted items to avoid recalculating on every render
   const sortedItems = React.useMemo(
-    () =>
-      [...filteredItems].sort((a, b) => {
-        let comparison = 0;
-        switch (sortField) {
-          case "name":
-            comparison = a.name.localeCompare(b.name);
-            break;
-          case "lastOpened":
-            comparison = a.lastOpened - b.lastOpened;
-            break;
-          case "size":
-            comparison = (a.size || 0) - (b.size || 0);
-            break;
-          case "lines":
-            comparison = (a.lines || 0) - (b.lines || 0);
-            break;
-          case "startDate":
-            comparison =
-              a.startDate && b.startDate
-                ? new Date(a.startDate).getTime() -
-                  new Date(b.startDate).getTime()
-                : 0;
-            break;
-          case "endDate":
-            comparison =
-              a.endDate && b.endDate
-                ? new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
-                : 0;
-            break;
-        }
-        return sortDirection === "asc" ? comparison : -comparison;
-      }),
+    () => [...filteredItems].sort(getComparator(sortField, sortDirection)),
     [filteredItems, sortField, sortDirection],
   );
 
   // Build tree structure for rendering
-  const { itemMap, rootItems } = React.useMemo(() => buildTree(sortedItems), [sortedItems]);
+  const { itemMap, rootItems } = React.useMemo(() => {
+    const { itemMap: map, rootItems: roots } = buildTree(sortedItems);
+    // Sort children of each folder based on current sort criteria
+    map.forEach((item) => {
+      if (item.type === 'folder' && item.children) {
+        item.children.sort((idA, idB) => {
+          const a = map.get(idA);
+          const b = map.get(idB);
+          if (!a || !b) return 0;
+          return getComparator(sortField, sortDirection)(a, b);
+        });
+      }
+    });
+    return { itemMap: map, rootItems: roots };
+  }, [sortedItems, sortField, sortDirection]);
 
   // Handle folder expansion
   const toggleFolder = (folderId: string) => {
@@ -251,7 +272,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   // Handle creating a new folder
   const handleCreateFolder = async () => {
     if (!newFolderName.trim()) return;
-    
+
     try {
       const { saveLogFile } = await import("@/lib/indexedDB-fix");
       const newFolder: FileItem = {
@@ -262,9 +283,9 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         parentId: parentFolderId || undefined,
         children: [],
       };
-      
+
       await saveLogFile(newFolder);
-      
+
       // Update the parent folder's children if applicable
       if (parentFolderId) {
         const parent = recentItems.find(item => item.id === parentFolderId);
@@ -277,13 +298,9 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           await updateLogFile(parentFolderId, updatedParent);
         }
       }
-      
-      // Refresh the list
-      setRecentItems((prev) => {
-        const updatedItems = [...prev, newFolder];
-        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(updatedItems));
-        return updatedItems;
-      });
+
+      // Dispatch event to refresh the list
+      document.dispatchEvent(new CustomEvent("filesChanged"));
       setNewFolderName("");
       setCreateFolderMode(false);
       setParentFolderId(null);
@@ -346,8 +363,11 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
 
       // Update the target folder's children if dropping into a folder
       if (folderId && targetFolder) {
-        const updatedChildren = [...(targetFolder.children || []), itemId];
-        await updateLogFile(folderId, { children: updatedChildren });
+        const currentChildren = targetFolder.children || [];
+        if (!currentChildren.includes(itemId)) {
+          const updatedChildren = [...currentChildren, itemId];
+          await updateLogFile(folderId, { children: updatedChildren });
+        }
       }
 
       // If the item had a previous parent, remove it from that parent's children
@@ -359,21 +379,8 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         }
       }
 
-      // Refresh the list
-      setRecentItems((prev) => {
-        const updatedItems = prev.map(i => {
-          if (i.id === itemId) {
-            return { ...i, parentId: folderId || undefined };
-          } else if (folderId && i.id === folderId && i.type === 'folder') {
-            return { ...i, children: [...(i.children || []), itemId] };
-          } else if (item.parentId && i.id === item.parentId && i.type === 'folder') {
-            return { ...i, children: (i.children || []).filter(id => id !== itemId) };
-          }
-          return i;
-        });
-        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(updatedItems));
-        return updatedItems;
-      });
+      // Dispatch event to refresh the list
+      document.dispatchEvent(new CustomEvent("filesChanged"));
     } catch (error) {
       console.error("Failed to move item:", error);
     }
@@ -536,22 +543,73 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   />
                 </div>
               ) : (
-                <button
-                  className="flex items-center gap-2 text-primary hover:underline"
-                  onClick={(e) => {
-                    if (!selectionMode) {
-                      if (isFolder) {
-                        toggleFolder(item.id);
-                      } else {
-                        onFileSelect(item);
+                <>
+                  <button
+                    className="flex items-center gap-2 text-primary hover:underline"
+                    onClick={(e) => {
+                      if (!selectionMode) {
+                        if (isFolder) {
+                          toggleFolder(item.id);
+                        } else {
+                          onFileSelect(item);
+                        }
                       }
-                    }
-                    e.stopPropagation();
-                  }}
-                  tabIndex={0}
-                >
-                  {isFolder ? <Folder className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
-                  {item.name}
+                      e.stopPropagation();
+                    }}
+                    tabIndex={0}
+                  >
+                    {isFolder ? <Folder className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                    {!isFolder && loadedFileIds && loadedFileIds.includes(item.id) && (
+                      <Eye className="h-3 w-3 ml-1 text-green-500" />
+                    )}
+                    {item.name}
+                  </button>
+                  {item.tags && item.tags.length > 0 && (() => {
+                    const displayTags = item.tags.slice(0, 5);
+                    const hasMore = item.tags.length > 5;
+                    return hasMore ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="flex items-center gap-1 ml-2">
+                              {displayTags.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded-sm"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                              <span className="text-xs text-muted-foreground">..</span>
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <div className="flex flex-wrap gap-1 max-w-xs">
+                              {item.tags.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded-sm"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      <span className="flex items-center gap-1 ml-2">
+                        {displayTags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded-sm"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </span>
+                    );
+                  })()}
                   {item.notes && item.notes.trim() !== "" && (
                     <TooltipProvider>
                       <Tooltip>
@@ -576,24 +634,12 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                       </Tooltip>
                     </TooltipProvider>
                   )}
-                </button>
+                </>
               )}
               
               {/* "+" button for creating subfolder removed as per user request */}
-              
+
             </div>
-            {item.tags && item.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-1">
-                {item.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
           </td>
           <td className="py-2">
             {format(new Date(item.lastOpened), "dd MMM yyyy HH:mm")}
@@ -667,38 +713,37 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   };
 
   const handleRemoveItem = (id: string) => {
+    setDeletingItemId(id);
+  };
+
+  const performDelete = (id: string) => {
     // Check if the item exists before removing
     const itemToRemove = recentItems.find((item) => item.id === id);
     if (!itemToRemove) return;
 
     console.log("Removing item:", itemToRemove.name, "with ID:", id);
 
+    // Close the file if it's open
+    if (itemToRemove.type === 'file' && loadedFileIds?.includes(id) && onFileClose) {
+      onFileClose(id);
+    }
+
     // Get all IDs to remove (item and descendants)
     const idsToRemove = getAllDescendantIds(id, recentItems);
 
-    const updatedItems = recentItems.filter((item) => !idsToRemove.includes(item.id));
-    setRecentItems(updatedItems);
-
-    // Update localStorage recent files by removing the IDs
-    try {
-      const stored = localStorage.getItem("logTrawler_recentFiles");
-      if (stored) {
-        let recentFilesList: FileItem[] = JSON.parse(stored);
-        recentFilesList = recentFilesList.filter(f => !idsToRemove.includes(f.id));
-        localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList));
-      }
-    } catch (error) {
-      console.error("Failed to update localStorage:", error);
-    }
-
     // Remove from IndexedDB
     try {
-      import("@/lib/indexedDB-fix").then(({ deleteLogFile }) => {
-        idsToRemove.forEach(idToDelete => {
-          deleteLogFile(idToDelete).catch((err) =>
-            console.error(`Failed to delete ${idToDelete} from IndexedDB:`, err),
-          );
-        });
+      import("@/lib/indexedDB-fix").then(async ({ deleteLogFile }) => {
+        // Wait for all deletions to complete
+        await Promise.all(
+          idsToRemove.map(idToDelete =>
+            deleteLogFile(idToDelete).catch((err) =>
+              console.error(`Failed to delete ${idToDelete} from IndexedDB:`, err),
+            )
+          )
+        );
+        // Dispatch event to refresh the list after all deletions are complete
+        document.dispatchEvent(new CustomEvent("filesChanged"));
       });
     } catch (error) {
       console.error("Error importing IndexedDB module:", error);
@@ -775,9 +820,11 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   size="sm"
                   onClick={() => {
                     if (selectedItems.size > 0 && onMultipleFilesSelect) {
-                      const itemsToOpen = recentItems.filter((item) =>
-                        selectedItems.has(item.id) && item.type === 'file',
-                      );
+                      const itemsToOpen = recentItems.filter((item) => {
+                        const isSelected = selectedItems.has(item.id);
+                        const isFile = item.type === 'file' || (!item.type && item.name); // Treat items without type as files if they have a name
+                        return isSelected && isFile;
+                      });
                       onMultipleFilesSelect(itemsToOpen);
                       setSelectionMode(false);
                       setSelectedItems(new Set());
@@ -911,59 +958,41 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("name")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("name")}>
+                  <div className="flex items-center gap-1">
                     Name
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("lastOpened")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("lastOpened")}>
+                  <div className="flex items-center gap-1">
                     Last Opened
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("size")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("size")}>
+                  <div className="flex items-center gap-1">
                     Size
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("lines")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("lines")}>
+                  <div className="flex items-center gap-1">
                     Lines
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("startDate")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("startDate")}>
+                  <div className="flex items-center gap-1">
                     Start Date
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
-                <th className="text-left py-2 font-medium">
-                  <button
-                    className="flex items-center gap-1 hover:text-primary"
-                    onClick={() => handleSort("endDate")}
-                  >
+                <th className="text-left py-2 font-medium cursor-pointer hover:text-primary" onClick={() => handleSort("endDate")}>
+                  <div className="flex items-center gap-1">
                     End Date
                     <ArrowUpDown className="h-3 w-3" />
-                  </button>
+                  </div>
                 </th>
                 <th className="text-right py-2 font-medium">Actions</th>
               </tr>
@@ -985,6 +1014,34 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           </table>
         </div>
       </CardContent>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!deletingItemId} onOpenChange={() => setDeletingItemId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Item</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{recentItems.find(item => item.id === deletingItemId)?.name}"?
+              {recentItems.find(item => item.id === deletingItemId)?.type === 'folder' ? ' This will also delete all files and subfolders inside it.' : ''}
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (deletingItemId) {
+                  performDelete(deletingItemId);
+                  setDeletingItemId(null);
+                }
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 };

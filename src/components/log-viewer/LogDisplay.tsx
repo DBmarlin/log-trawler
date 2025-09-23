@@ -5,6 +5,7 @@ const openUrl = (url: string) => {
 import React, { useRef, useEffect, useState, forwardRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { getFilterColor, getFilterIndex } from "@/lib/utils";
+import { useGlobalSettings } from "@/hooks/useGlobalSettings";
 import {
   Plus,
   Minus,
@@ -81,7 +82,9 @@ const LogDisplay = ({
   initialShowOnlyMarked = false,
   onUpdateShowOnlyMarked = () => {},
 }: LogDisplayProps) => {
-  const [wrapText, setWrapText] = useState(true);
+  const { settings, updateSettings } = useGlobalSettings();
+  const wrapText = settings.wrapText;
+  const compact = settings.compact;
   const parentRef = useRef<HTMLDivElement>(null);
   const [contextMenu, setContextMenu] = useState<{
     x: number;
@@ -92,7 +95,6 @@ const LogDisplay = ({
     new Set(initialInterestingLines),
   );
   const [showOnlyMarked, setShowOnlyMarked] = useState(initialShowOnlyMarked);
-  const [compact, setCompact] = useState(false);
 
   // Handle context menu closing
   useEffect(() => {
@@ -370,7 +372,7 @@ const LogDisplay = ({
                     <ButtonWithRef
                       variant="ghost"
                       size="icon"
-                      onClick={() => setWrapText(!wrapText)}
+                      onClick={() => updateSettings({ wrapText: !wrapText })}
                       className={
                         wrapText ? "text-primary" : "text-muted-foreground"
                       }
@@ -390,7 +392,7 @@ const LogDisplay = ({
                     <ButtonWithRef
                       variant="ghost"
                       size="icon"
-                      onClick={() => setCompact(!compact)}
+                      onClick={() => updateSettings({ compact: !compact })}
                       className={
                         compact ? "text-primary" : "text-muted-foreground"
                       }
