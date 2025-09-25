@@ -75,7 +75,8 @@ app.whenReady().then(() => {
           "style-src 'self' 'unsafe-inline';" +
           "img-src 'self' data: app: https:;" +
           "font-src 'self' data:;" +
-          "connect-src 'self' app: https: http:;"
+          "connect-src 'self' app: https: http:;" +
+          "worker-src 'self' blob:;"
         ]
       }
     });
@@ -133,9 +134,10 @@ app.whenReady().then(() => {
 
       // Read file as buffer
       const buffer = await fs.promises.readFile(filePath);
-      
+
       // Create and return response with appropriate headers
-      return new Response(buffer, {
+      const uint8Array = new Uint8Array(buffer);
+      return new Response(uint8Array, {
         status: 200,
         headers: {
           'Content-Type': mimeType,
