@@ -496,6 +496,19 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
               }),
             );
 
+            // Open all files option (folders only)
+            if (isFolder) {
+              contextMenu.appendChild(
+                createMenuItem("Open all files", () => {
+                  const filesToOpen = getAllFilesFromFolder(item.id, recentItems);
+                  if (filesToOpen.length > 0 && onMultipleFilesSelect) {
+                    onMultipleFilesSelect(filesToOpen);
+                  }
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+            }
+
             // Delete option
             contextMenu.appendChild(
               createMenuItem("Delete", () => {
@@ -714,34 +727,22 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     );
   };
 
-  const clearAllHistory = () => {
+  const clearAllHistory = async () => {
     // Clear localStorage
     localStorage.removeItem("logTrawler_recentFiles");
     setRecentItems([]);
 
     // Also clear IndexedDB
     try {
-      import("@/lib/indexedDB-fix").then(
-        ({ getAllLogFiles, deleteLogFile }) => {
-          // Get all items first
-          getAllLogFiles().then((items) => {
-            // Delete each item from IndexedDB
-            items.forEach((item) => {
-              deleteLogFile(item.id).catch((err) =>
-                console.error(
-                  `Failed to delete item ${item.id} from IndexedDB:`,
-                  err,
-                ),
-              );
-            });
-            console.log(
-              "Cleared all items from both localStorage and IndexedDB",
-            );
-          });
-        },
-      );
+      const { clearAllData } = await import("@/lib/indexedDB-fix");
+      const success = await clearAllData();
+      if (success) {
+        console.log("Cleared all items from both localStorage and IndexedDB");
+      } else {
+        console.error("Failed to clear IndexedDB data");
+      }
     } catch (error) {
-      console.error("Error importing IndexedDB module:", error);
+      console.error("Error clearing IndexedDB data:", error);
     }
   };
 
@@ -756,6 +757,34 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       }
     }
     return ids;
+  };
+
+  // Helper function to get all file items recursively from a folder
+  const getAllFilesFromFolder = (folderId: string, items: FileItem[]): FileItem[] => {
+    const folder = items.find(i => i.id === folderId);
+    if (!folder || folder.type !== 'folder') return [];
+
+    const files: FileItem[] = [];
+    const collectFiles = (itemId: string) => {
+      const item = items.find(i => i.id === itemId);
+      if (!item) return;
+
+      if (item.type === 'file') {
+        files.push(item);
+      } else if (item.type === 'folder' && item.children) {
+        for (const childId of item.children) {
+          collectFiles(childId);
+        }
+      }
+    };
+
+    if (folder.children) {
+      for (const childId of folder.children) {
+        collectFiles(childId);
+      }
+    }
+
+    return files;
   };
 
   const handleRemoveItem = (id: string) => {

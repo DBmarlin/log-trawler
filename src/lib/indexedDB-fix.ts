@@ -18,8 +18,9 @@ const parseDate = (dateValue: any): Date | undefined => {
 };
 
 const DB_NAME = "logTrawlerDB";
-const DB_VERSION = 2;
-const LOG_FILES_STORE = "logFiles";
+const DB_VERSION = 4;
+const METADATA_STORE = "metadata";
+const CONTENT_STORE = "content";
 
 export const initDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
@@ -41,14 +42,64 @@ export const initDB = (): Promise<IDBDatabase> => {
 
     request.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result;
+      const oldVersion = (event as any).oldVersion || 0;
 
-      // Create object store for log files
-      if (!db.objectStoreNames.contains(LOG_FILES_STORE)) {
-        const store = db.createObjectStore(LOG_FILES_STORE, {
-          keyPath: "id",
-        });
-        store.createIndex("name", "name", { unique: false });
-        store.createIndex("lastOpened", "lastOpened", { unique: false });
+      // Migration from version 1 or 2 to version 3
+      if (oldVersion < 3) {
+        // Create metadata store
+        if (!db.objectStoreNames.contains(METADATA_STORE)) {
+          const metadataStore = db.createObjectStore(METADATA_STORE, {
+            keyPath: "id",
+          });
+          metadataStore.createIndex("name", "name", { unique: false });
+          metadataStore.createIndex("lastOpened", "lastOpened", { unique: false });
+        }
+
+        // Create content store
+        if (!db.objectStoreNames.contains(CONTENT_STORE)) {
+          const contentStore = db.createObjectStore(CONTENT_STORE, {
+            keyPath: "id",
+          });
+        }
+
+        // Migrate data from old single table if it exists
+        if (db.objectStoreNames.contains("logFiles")) {
+          const oldStore = (event.target as any).transaction.objectStore("logFiles");
+          const request = oldStore.openCursor();
+
+          request.onsuccess = (event) => {
+            const cursor = (event.target as IDBRequest).result;
+            if (cursor) {
+              const item = cursor.value;
+              // Extract content and store separately
+              const { content, ...metadata } = item;
+
+              // Store metadata (add lines count)
+              const metadataWithLines = {
+                ...metadata,
+                lines: content ? content.length : 0,
+              };
+
+              // Use the upgrade transaction to store data
+              const metadataStore = (event.target as any).transaction.objectStore(METADATA_STORE);
+              metadataStore.put(metadataWithLines);
+
+              // Store content if it exists
+              if (content) {
+                const contentStore = (event.target as any).transaction.objectStore(CONTENT_STORE);
+                contentStore.put({ id: item.id, content });
+              }
+
+              cursor.continue();
+            }
+          };
+        }
+      }
+
+      // Clean up old table in version 4
+      if (oldVersion < 4 && db.objectStoreNames.contains("logFiles")) {
+        db.deleteObjectStore("logFiles");
+        console.log("Old logFiles table deleted - migration to optimized schema complete");
       }
     };
   });
@@ -59,11 +110,11 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
   try {
     const db = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readwrite");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db.transaction([METADATA_STORE, CONTENT_STORE], "readwrite");
+      const metadataStore = transaction.objectStore(METADATA_STORE);
 
       // First check if an item with this name already exists
-      const nameIndex = store.index("name");
+      const nameIndex = metadataStore.index("name");
       const nameRequest = nameIndex.getAll();
 
       nameRequest.onsuccess = (e) => {
@@ -74,32 +125,49 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
           logItem.id = existingItem.id;
         }
 
-        const itemToStore = {
-          ...logItem,
-          startDate: logItem.startDate instanceof Date ? logItem.startDate.toISOString() : logItem.startDate,
-          endDate: logItem.endDate instanceof Date ? logItem.endDate.toISOString() : logItem.endDate,
+        // Separate content from metadata
+        const { content, ...metadata } = logItem;
+
+        const metadataToStore = {
+          ...metadata,
+          lines: content ? content.length : 0, // Store lines count in metadata
+          startDate: metadata.startDate instanceof Date ? metadata.startDate.toISOString() : metadata.startDate,
+          endDate: metadata.endDate instanceof Date ? metadata.endDate.toISOString() : metadata.endDate,
           lastOpened: Date.now(),
-          timeRange: logItem.timeRange
+          timeRange: metadata.timeRange
             ? {
-                startDate: logItem.timeRange.startDate instanceof Date ? logItem.timeRange.startDate.toISOString() : logItem.timeRange.startDate,
-                endDate: logItem.timeRange.endDate instanceof Date ? logItem.timeRange.endDate.toISOString() : logItem.timeRange.endDate,
+                startDate: metadata.timeRange.startDate instanceof Date ? metadata.timeRange.startDate.toISOString() : metadata.timeRange.startDate,
+                endDate: metadata.timeRange.endDate instanceof Date ? metadata.timeRange.endDate.toISOString() : metadata.timeRange.endDate,
               }
             : undefined,
         };
 
-        const request = store.put(itemToStore);
+        const metadataRequest = metadataStore.put(metadataToStore);
 
-        request.onsuccess = () => {
-          // Wait for transaction to complete before resolving
+        metadataRequest.onsuccess = () => {
+          // If there's content, store it separately
+          if (content && content.length > 0) {
+            const contentStore = transaction.objectStore(CONTENT_STORE);
+            const contentToStore = { id: logItem.id, content };
+            const contentRequest = contentStore.put(contentToStore);
+
+            contentRequest.onerror = (event) => {
+              reject("Failed to save content");
+            };
+          }
         };
 
-        request.onerror = (event) => {
-          reject("Failed to save log item");
+        metadataRequest.onerror = (event) => {
+          reject("Failed to save metadata");
         };
 
         transaction.oncomplete = () => {
           db.close();
           resolve(logItem.id);
+        };
+
+        transaction.onerror = (event) => {
+          reject("Transaction failed");
         };
       };
 
@@ -112,34 +180,79 @@ export const saveLogFile = async (logItem: FileItem): Promise<string> => {
   }
 };
 
-// Get all log items from IndexedDB
+// Get all log items from IndexedDB (with content)
 export const getAllLogFiles = async (): Promise<FileItem[]> => {
   try {
     const db = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readonly");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db.transaction([METADATA_STORE, CONTENT_STORE], "readonly");
+      const metadataStore = transaction.objectStore(METADATA_STORE);
+      const contentStore = transaction.objectStore(CONTENT_STORE);
 
-      // Use getAll instead of cursor for more reliable results
-      const request = store.getAll();
+      // Get all metadata
+      const metadataRequest = metadataStore.getAll();
 
-      request.onsuccess = (event) => {
-        const results = (event.target as IDBRequest).result || [];
-        const logItems: FileItem[] = results.map((item: any) => ({
-          ...item,
-          startDate: parseDate(item.startDate),
-          endDate: parseDate(item.endDate),
-          timeRange: item.timeRange ? {
-            startDate: parseDate(item.timeRange.startDate),
-            endDate: parseDate(item.timeRange.endDate),
-          } : undefined,
-        }));
-        logItems.sort((a, b) => b.lastOpened - a.lastOpened);
-        resolve(logItems as FileItem[]);
+      metadataRequest.onsuccess = (event) => {
+        const metadataResults = (event.target as IDBRequest).result || [];
+        const logItems: FileItem[] = [];
+
+        // Get content for each item
+        let processedCount = 0;
+        const totalItems = metadataResults.length;
+
+        if (totalItems === 0) {
+          resolve([]);
+          return;
+        }
+
+        metadataResults.forEach((metadata: any) => {
+          const contentRequest = contentStore.get(metadata.id);
+
+          contentRequest.onsuccess = () => {
+            const contentResult = contentRequest.result;
+            const logItem: FileItem = {
+              ...metadata,
+              startDate: parseDate(metadata.startDate),
+              endDate: parseDate(metadata.endDate),
+              timeRange: metadata.timeRange ? {
+                startDate: parseDate(metadata.timeRange.startDate),
+                endDate: parseDate(metadata.timeRange.endDate),
+              } : undefined,
+              content: contentResult ? contentResult.content : undefined,
+            };
+            logItems.push(logItem);
+
+            processedCount++;
+            if (processedCount === totalItems) {
+              logItems.sort((a, b) => b.lastOpened - a.lastOpened);
+              resolve(logItems);
+            }
+          };
+
+          contentRequest.onerror = () => {
+            // Content not found, add item without content
+            const logItem: FileItem = {
+              ...metadata,
+              startDate: parseDate(metadata.startDate),
+              endDate: parseDate(metadata.endDate),
+              timeRange: metadata.timeRange ? {
+                startDate: parseDate(metadata.timeRange.startDate),
+                endDate: parseDate(metadata.timeRange.endDate),
+              } : undefined,
+            };
+            logItems.push(logItem);
+
+            processedCount++;
+            if (processedCount === totalItems) {
+              logItems.sort((a, b) => b.lastOpened - a.lastOpened);
+              resolve(logItems);
+            }
+          };
+        });
       };
 
-      request.onerror = (event) => {
-        reject("Failed to get log items");
+      metadataRequest.onerror = (event) => {
+        reject("Failed to get metadata items");
       };
 
       transaction.oncomplete = () => {
@@ -158,8 +271,8 @@ export const getLogFilesMetadata = async (): Promise<
   try {
     const db = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readonly");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db.transaction([METADATA_STORE], "readonly");
+      const store = transaction.objectStore(METADATA_STORE);
 
       // Use getAll directly instead of cursor for better performance
       const request = store.getAll();
@@ -167,19 +280,16 @@ export const getLogFilesMetadata = async (): Promise<
       request.onsuccess = (event) => {
         const items = (event.target as IDBRequest).result || [];
         // Process all items at once instead of one by one
-        const metadataItems: Omit<FileItem, "content">[] = items.map((item: any) => {
-          const { content, ...metadata } = item;
-          return {
-            ...metadata,
-            startDate: parseDate(metadata.startDate),
-            endDate: parseDate(metadata.endDate),
-            timeRange: metadata.timeRange ? {
-              startDate: parseDate(metadata.timeRange.startDate),
-              endDate: parseDate(metadata.timeRange.endDate),
-            } : undefined,
-            lines: content?.length || 0,
-          };
-        });
+        const metadataItems: (Omit<FileItem, "content"> & { lines?: number })[] = items.map((item: any) => ({
+          ...item,
+          startDate: parseDate(item.startDate),
+          endDate: parseDate(item.endDate),
+          timeRange: item.timeRange ? {
+            startDate: parseDate(item.timeRange.startDate),
+            endDate: parseDate(item.timeRange.endDate),
+          } : undefined,
+          lines: item.lines || 0, // lines is now stored in metadata
+        }));
 
         // Sort by lastOpened in descending order
         metadataItems.sort((a, b) => b.lastOpened - a.lastOpened);
@@ -210,50 +320,73 @@ export const getLogFileById = async (
   try {
     const db = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readonly");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db.transaction([METADATA_STORE, CONTENT_STORE], "readwrite");
+      const metadataStore = transaction.objectStore(METADATA_STORE);
+      const contentStore = transaction.objectStore(CONTENT_STORE);
 
-      // First try to get all items to see what's in the database
-      const allRequest = store.getAll();
+      // First try to get the metadata
+      const metadataRequest = metadataStore.get(id);
 
-      allRequest.onsuccess = (event) => {
-        const allItems = (event.target as IDBRequest).result || [];
+      metadataRequest.onsuccess = (event) => {
+        const metadata = (event.target as IDBRequest).result;
+        if (metadata) {
+          // Get the content
+          const contentRequest = contentStore.get(id);
 
-        // Now try to get the specific item
-        const request = store.get(id);
-
-        request.onsuccess = (event) => {
-          const result = (event.target as IDBRequest).result;
-          if (result) {
+          contentRequest.onsuccess = () => {
+            const contentResult = contentRequest.result;
             const fileItem: FileItem = {
-              ...result,
-              startDate: parseDate(result.startDate),
-              endDate: parseDate(result.endDate),
-              timeRange: result.timeRange ? {
-                startDate: parseDate(result.timeRange.startDate),
-                endDate: parseDate(result.timeRange.endDate),
+              ...metadata,
+              startDate: parseDate(metadata.startDate),
+              endDate: parseDate(metadata.endDate),
+              timeRange: metadata.timeRange ? {
+                startDate: parseDate(metadata.timeRange.startDate),
+                endDate: parseDate(metadata.timeRange.endDate),
+              } : undefined,
+              content: contentResult ? contentResult.content : undefined,
+            };
+
+            // Update lastOpened time in metadata
+            metadata.lastOpened = Date.now();
+            metadataStore.put(metadata);
+
+            resolve(fileItem);
+          };
+
+          contentRequest.onerror = () => {
+            // Content not found, return item without content
+            const fileItem: FileItem = {
+              ...metadata,
+              startDate: parseDate(metadata.startDate),
+              endDate: parseDate(metadata.endDate),
+              timeRange: metadata.timeRange ? {
+                startDate: parseDate(metadata.timeRange.startDate),
+                endDate: parseDate(metadata.timeRange.endDate),
               } : undefined,
             };
-            // Update lastOpened time
-            const updateTx = db.transaction([LOG_FILES_STORE], "readwrite");
-            const updateStore = updateTx.objectStore(LOG_FILES_STORE);
-            result.lastOpened = Date.now();
-            updateStore.put(result);
+
+            // Update lastOpened time in metadata
+            metadata.lastOpened = Date.now();
+            metadataStore.put(metadata);
+
             resolve(fileItem);
-          } else {
-            // Try with a different ID format (for backward compatibility)
+          };
+        } else {
+          // Try fallback search for backward compatibility
+          const allMetadataRequest = metadataStore.getAll();
+
+          allMetadataRequest.onsuccess = () => {
+            const allItems = allMetadataRequest.result || [];
+
             // Extract the name from the ID
             const nameParts = id.split("_");
             if (nameParts.length > 1) {
-              // Try to extract the actual name without the timestamp
-              const itemName = nameParts[0]; // Just use the first part as the name
+              const itemName = nameParts[0];
 
               // Look for any item with a similar name
               const matchingItem = allItems.find((f) => {
-                // Try exact name match
                 if (f.name === itemName) return true;
 
-                // Try normalized name match
                 const normalizedName = itemName
                   .replace(/[^a-z0-9]/gi, "")
                   .toLowerCase();
@@ -262,7 +395,6 @@ export const getLogFileById = async (
                   .toLowerCase();
                 if (normalizedName === normalizedItemName) return true;
 
-                // Try substring match
                 return (
                   f.name.toLowerCase().includes(itemName.toLowerCase()) ||
                   itemName.toLowerCase().includes(f.name.toLowerCase())
@@ -270,29 +402,60 @@ export const getLogFileById = async (
               });
 
               if (matchingItem) {
-                resolve({
-                  ...matchingItem,
-                  startDate: parseDate(matchingItem.startDate),
-                  endDate: parseDate(matchingItem.endDate),
-                  timeRange: matchingItem.timeRange ? {
-                    startDate: parseDate(matchingItem.timeRange.startDate),
-                    endDate: parseDate(matchingItem.timeRange.endDate),
-                  } : undefined,
-                } as FileItem);
+                // Get content for the matching item
+                const contentRequest = contentStore.get(matchingItem.id);
+
+                contentRequest.onsuccess = () => {
+                  const contentResult = contentRequest.result;
+                  const fileItem: FileItem = {
+                    ...matchingItem,
+                    startDate: parseDate(matchingItem.startDate),
+                    endDate: parseDate(matchingItem.endDate),
+                    timeRange: matchingItem.timeRange ? {
+                      startDate: parseDate(matchingItem.timeRange.startDate),
+                      endDate: parseDate(matchingItem.timeRange.endDate),
+                    } : undefined,
+                    content: contentResult ? contentResult.content : undefined,
+                  };
+
+                  // Update lastOpened time
+                  matchingItem.lastOpened = Date.now();
+                  metadataStore.put(matchingItem);
+
+                  resolve(fileItem);
+                };
+
+                contentRequest.onerror = () => {
+                  const fileItem: FileItem = {
+                    ...matchingItem,
+                    startDate: parseDate(matchingItem.startDate),
+                    endDate: parseDate(matchingItem.endDate),
+                    timeRange: matchingItem.timeRange ? {
+                      startDate: parseDate(matchingItem.timeRange.startDate),
+                      endDate: parseDate(matchingItem.timeRange.endDate),
+                    } : undefined,
+                  };
+
+                  // Update lastOpened time
+                  matchingItem.lastOpened = Date.now();
+                  metadataStore.put(matchingItem);
+
+                  resolve(fileItem);
+                };
                 return;
               }
             }
             resolve(null);
-          }
-        };
+          };
 
-        request.onerror = (event) => {
-          reject("Failed to get log item");
-        };
+          allMetadataRequest.onerror = () => {
+            resolve(null);
+          };
+        }
       };
 
-      allRequest.onerror = (event) => {
-        reject("Failed to get all items");
+      metadataRequest.onerror = (event) => {
+        reject("Failed to get log item");
       };
 
       transaction.oncomplete = () => {
@@ -310,8 +473,8 @@ export const deleteLogFile = async (id: string): Promise<boolean> => {
     // First, get the item to check if it's a folder
     const db1 = await initDB();
     const item = await new Promise<any>((resolve, reject) => {
-      const transaction = db1.transaction([LOG_FILES_STORE], "readonly");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db1.transaction([METADATA_STORE], "readonly");
+      const store = transaction.objectStore(METADATA_STORE);
       const request = store.get(id);
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject("Failed to get item");
@@ -327,29 +490,35 @@ export const deleteLogFile = async (id: string): Promise<boolean> => {
       await Promise.all(item.children.map((childId: string) => deleteLogFile(childId)));
     }
 
-    // Now delete the item itself
+    // Now delete the item from both stores
     const db2 = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db2.transaction([LOG_FILES_STORE], "readwrite");
-      const store = transaction.objectStore(LOG_FILES_STORE);
-      const deleteRequest = store.delete(id);
+      const transaction = db2.transaction([METADATA_STORE, CONTENT_STORE], "readwrite");
+      const metadataStore = transaction.objectStore(METADATA_STORE);
+      const contentStore = transaction.objectStore(CONTENT_STORE);
 
-      deleteRequest.onsuccess = () => {
+      // Delete from metadata store
+      const deleteMetadataRequest = metadataStore.delete(id);
+
+      deleteMetadataRequest.onsuccess = () => {
+        // Delete from content store (ignore if not found)
+        contentStore.delete(id);
+
         // If the item has a parent, update the parent's children list
         if (item.parentId) {
-          const parentRequest = store.get(item.parentId);
+          const parentRequest = metadataStore.get(item.parentId);
           parentRequest.onsuccess = (e) => {
             const parent = (e.target as IDBRequest).result;
             if (parent && parent.children) {
               parent.children = parent.children.filter((childId: string) => childId !== id);
-              store.put(parent);
+              metadataStore.put(parent);
             }
           };
         }
         resolve(true);
       };
 
-      deleteRequest.onerror = (event) => {
+      deleteMetadataRequest.onerror = (event) => {
         reject("Failed to delete log item");
       };
 
@@ -370,11 +539,11 @@ export const updateLogFile = async (
   try {
     const db = await initDB();
     return new Promise((resolve, reject) => {
-      const transaction = db.transaction([LOG_FILES_STORE], "readwrite");
-      const store = transaction.objectStore(LOG_FILES_STORE);
+      const transaction = db.transaction([METADATA_STORE, CONTENT_STORE], "readwrite");
+      const metadataStore = transaction.objectStore(METADATA_STORE);
 
-      // First get the existing item
-      const getRequest = store.get(id);
+      // First get the existing metadata
+      const getRequest = metadataStore.get(id);
 
       getRequest.onsuccess = (event) => {
         const existingItem = (event.target as IDBRequest).result;
@@ -383,8 +552,11 @@ export const updateLogFile = async (
           return;
         }
 
+        // Separate content from metadata updates
+        const { content, ...metadataUpdates } = updates;
+
         // Create a clone to avoid side effects and convert dates to strings for storage
-        const updatesForDB: any = { ...updates };
+        const updatesForDB: any = { ...metadataUpdates };
 
         // Convert dates to strings for storage
         if (updatesForDB.startDate instanceof Date) {
@@ -402,16 +574,30 @@ export const updateLogFile = async (
           }
         }
 
+        // Update lines count if content is being updated
+        if (content) {
+          updatesForDB.lines = content.length;
+        }
+
         const updatedItem = {
           ...existingItem,
           ...updatesForDB,
           lastOpened: Date.now(),
         };
 
-        const putRequest = store.put(updatedItem);
+        const putRequest = metadataStore.put(updatedItem);
 
         putRequest.onsuccess = () => {
-          // Wait for transaction to complete
+          // If content is being updated, store it separately
+          if (content !== undefined) {
+            const contentStore = transaction.objectStore(CONTENT_STORE);
+            if (content && content.length > 0) {
+              contentStore.put({ id, content });
+            } else {
+              // Delete content if it's being set to empty
+              contentStore.delete(id);
+            }
+          }
         };
 
         putRequest.onerror = (event) => {
@@ -426,6 +612,34 @@ export const updateLogFile = async (
       transaction.oncomplete = () => {
         db.close();
         resolve(true);
+      };
+    });
+  } catch (error) {
+    return false;
+  }
+};
+
+// Clear all data from the database (for "Clear History" functionality)
+export const clearAllData = async (): Promise<boolean> => {
+  try {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([METADATA_STORE, CONTENT_STORE], "readwrite");
+
+      // Clear both stores
+      const metadataStore = transaction.objectStore(METADATA_STORE);
+      const contentStore = transaction.objectStore(CONTENT_STORE);
+
+      metadataStore.clear();
+      contentStore.clear();
+
+      transaction.oncomplete = () => {
+        db.close();
+        resolve(true);
+      };
+
+      transaction.onerror = (event) => {
+        reject("Failed to clear database");
       };
     });
   } catch (error) {
