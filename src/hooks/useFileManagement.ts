@@ -14,6 +14,7 @@ export function useFileManagement() {
   const [showUrlDialog, setShowUrlDialog] = useState(false);
   const [urlInputValue, setUrlInputValue] = useState("");
   const [isUrlLoading, setIsUrlLoading] = useState(false);
+  const [isExtractingArchive, setIsExtractingArchive] = useState(false);
 
   const activeFile = useMemo(() => files.find((f) => f.id === activeFileId), [files, activeFileId]);
 
@@ -41,6 +42,8 @@ export function useFileManagement() {
         }
         return newFiles;
     });
+    // Dispatch event to notify other components of file changes
+    setTimeout(() => document.dispatchEvent(new CustomEvent("filesChanged")), 100);
   }, []);
 
 
@@ -87,20 +90,22 @@ export function useFileManagement() {
 
     for (const file of droppedFiles) {
       if (file.name.endsWith(".zip") || file.name.endsWith(".tar.gz")) {
-        // Group extracted files into a folder named after the archive (extension stripped)
-        const isZip = file.name.endsWith(".zip");
-        const baseName = isZip
-          ? file.name.replace(/\.zip$/i, "")
-          : file.name.replace(/\.tar\.gz$/i, "");
-        const folderId = `folder_${baseName.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}`;
-        const folder = {
-          id: folderId,
-          name: baseName,
-          type: "folder" as const,
-          lastOpened: Date.now(),
-          children: [],
-        };
-        await saveLogFile(folder as FileItem);
+        setIsExtractingArchive(true);
+        try {
+          // Group extracted files into a folder named after the archive (extension stripped)
+          const isZip = file.name.endsWith(".zip");
+          const baseName = isZip
+            ? file.name.replace(/\.zip$/i, "")
+            : file.name.replace(/\.tar\.gz$/i, "");
+          const folderId = `folder_${baseName.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}`;
+          const folder = {
+            id: folderId,
+            name: baseName,
+            type: "folder" as const,
+            lastOpened: Date.now(),
+            children: [],
+          };
+          await saveLogFile(folder as FileItem);
 
         let extractedEntries: { name: string; content: Uint8Array }[] = [];
         if (isZip) {
@@ -215,6 +220,9 @@ export function useFileManagement() {
           });
           localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList.slice(0, 20)));
         } catch (error) { console.error("Failed to update recent files", error); }
+        } finally {
+          setIsExtractingArchive(false);
+        }
       } else if (file.name.endsWith(".log")) {
         // Direct log file
         logFilesToProcess.push({ name: file.name, content: await file.text() });
@@ -624,6 +632,7 @@ export function useFileManagement() {
     showUrlDialog,
     urlInputValue,
     isUrlLoading,
+    isExtractingArchive,
     handleDragOver,
     handleDragLeave,
     handleDrop,

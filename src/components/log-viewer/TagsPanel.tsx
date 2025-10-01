@@ -6,13 +6,13 @@ import { Tag, Plus, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface TagsPanelProps {
-  fileId: string;
+  itemId: string;
   initialTags?: string[];
   onSaveTags: (tags: string[]) => void;
 }
 
 const TagsPanel = ({
-  fileId,
+  itemId,
   initialTags = [],
   onSaveTags,
 }: TagsPanelProps) => {
@@ -22,11 +22,11 @@ const TagsPanel = ({
     "idle" | "saving" | "saved" | "error"
   >("idle");
 
-  // Update tags when fileId or initialTags changes
+  // Update tags when itemId or initialTags changes
   useEffect(() => {
     setTags(initialTags);
     setSaveStatus("idle");
-  }, [fileId, initialTags]);
+  }, [itemId, initialTags]);
 
   const handleAddTag = () => {
     if (!newTag.trim()) return;

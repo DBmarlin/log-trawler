@@ -35,12 +35,14 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { FileItem } from "@/types/fileSystem";
+import TagsDialog from "./TagsDialog";
 
 
 interface RecentFilesProps {
   onFileSelect: (file: FileItem) => void;
   onMultipleFilesSelect?: (files: FileItem[]) => void;
   renameItem: (itemId: string, newName: string) => Promise<boolean>;
+  onSaveTags?: (itemId: string, tags: string[]) => void;
   loadedFileIds?: string[];
   onFileClose?: (fileId: string) => void;
 }
@@ -58,6 +60,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   onFileSelect,
   onMultipleFilesSelect,
   renameItem,
+  onSaveTags,
   loadedFileIds,
   onFileClose,
 }) => {
@@ -76,6 +79,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [renamingItemId, setRenamingItemId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState("");
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
+  const [tagsDialogItem, setTagsDialogItem] = useState<FileItem | null>(null);
 
 
   // Load recent files from IndexedDB on mount and when files change
@@ -141,6 +145,40 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       console.error("Failed to save expanded folders to localStorage:", error);
     }
   }, [expandedFolders]);
+
+  // Load sort preferences from localStorage on mount
+  useEffect(() => {
+    try {
+      const storedSortField = localStorage.getItem("logTrawler_sortField");
+      const storedSortDirection = localStorage.getItem("logTrawler_sortDirection");
+      if (storedSortField) {
+        setSortField(storedSortField as SortField);
+      }
+      if (storedSortDirection) {
+        setSortDirection(storedSortDirection as SortDirection);
+      }
+    } catch (error) {
+      console.error("Failed to load sort preferences from localStorage:", error);
+    }
+  }, []);
+
+  // Save sortField to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("logTrawler_sortField", sortField);
+    } catch (error) {
+      console.error("Failed to save sortField to localStorage:", error);
+    }
+  }, [sortField]);
+
+  // Save sortDirection to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("logTrawler_sortDirection", sortDirection);
+    } catch (error) {
+      console.error("Failed to save sortDirection to localStorage:", error);
+    }
+  }, [sortDirection]);
 
   const handleSort = (field: SortField) => {
     if (field === sortField) {
@@ -404,10 +442,10 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     const isFolder = item.type === 'folder';
     const isExpanded = isFolder && expandedFolders.has(item.id);
     // Add extra indent for files so their icon lines up with folder icon
-    // Use 8px for a slightly greater indent as requested
+    // Use 24px to align with the folder button space
     const indentStyle = isFolder
       ? { paddingLeft: `${level * 16}px` }
-      : { paddingLeft: `${level * 16 + 8}px` };
+      : { paddingLeft: `${level * 16 + 24}px` };
 
     // Highlight drop target for folders
     const dropHighlight =
@@ -446,6 +484,14 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
               createMenuItem("Rename", () => {
                 setRenamingItemId(item.id);
                 setRenameValue(item.name);
+                document.body.removeChild(contextMenu);
+              }),
+            );
+
+            // Manage Tags option
+            contextMenu.appendChild(
+              createMenuItem("Manage Tags", () => {
+                setTagsDialogItem(item);
                 document.body.removeChild(contextMenu);
               }),
             );
@@ -1042,6 +1088,18 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Tags Dialog */}
+      {tagsDialogItem && onSaveTags && (
+        <TagsDialog
+          isOpen={!!tagsDialogItem}
+          onClose={() => setTagsDialogItem(null)}
+          itemId={tagsDialogItem.id}
+          itemName={tagsDialogItem.name}
+          initialTags={tagsDialogItem.tags || []}
+          onSaveTags={onSaveTags}
+        />
+      )}
     </Card>
   );
 };

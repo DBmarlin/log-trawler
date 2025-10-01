@@ -59,7 +59,7 @@ interface FileViewProps {
   onUpdateInterestingLines: (fileId: string, lines: number[]) => void;
   onUpdateShowOnlyMarked: (fileId: string, showOnly: boolean) => void;
   onSaveNotes: (fileId: string, notes: string) => void; // Added for NotesPanel
-  onSaveTags: (fileId: string, tags: string[]) => void; // Added for TagsPanel
+  onSaveTags: (itemId: string, tags: string[]) => void; // Updated for TagsPanel (now generic)
   updateFileState: (fileId: string, updates: Partial<LogFile>) => void; // Added previously
   handleLoadPreset: (preset: FilterPreset) => void; // Add the preset load handler prop
   handleCloseOtherFiles: (id: string) => void; // Callback to close other files
@@ -367,7 +367,7 @@ const FileView: React.FC<FileViewProps> = ({
 
                   {/* Tags Panel */}
                   <TagsPanel
-                    fileId={activeFile.id}
+                    itemId={activeFile.id}
                     initialTags={activeFile.tags || []}
                     onSaveTags={(tags) => onSaveTags(activeFile.id, tags)}
                   />

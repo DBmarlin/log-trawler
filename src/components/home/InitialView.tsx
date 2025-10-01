@@ -23,6 +23,7 @@ interface InitialViewProps {
   setActiveFileId: (id: string | null) => void; // To return to files if some are open
   handleCloseAllFiles: () => void;
   renameItem: (itemId: string, newName: string) => Promise<boolean>;
+  onSaveTags?: (itemId: string, tags: string[]) => void;
   loadedFileIds?: string[];
   onFileClose?: (fileId: string) => void;
 }
@@ -38,6 +39,7 @@ const InitialView: React.FC<InitialViewProps> = ({
   setActiveFileId,
   handleCloseAllFiles,
   renameItem,
+  onSaveTags,
   loadedFileIds,
   onFileClose,
 }) => {
@@ -155,6 +157,7 @@ const InitialView: React.FC<InitialViewProps> = ({
         onFileSelect={handleRecentFileSelect}
         onMultipleFilesSelect={onMultipleFilesSelect}
         renameItem={renameItem}
+        onSaveTags={onSaveTags}
         loadedFileIds={loadedFileIds}
         onFileClose={onFileClose}
       />
