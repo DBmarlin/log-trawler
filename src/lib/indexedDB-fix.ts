@@ -18,7 +18,7 @@ const parseDate = (dateValue: any): Date | undefined => {
 };
 
 const DB_NAME = "logTrawlerDB";
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 const METADATA_STORE = "metadata";
 const CONTENT_STORE = "content";
 
@@ -65,12 +65,11 @@ export const initDB = (): Promise<IDBDatabase> => {
         // Migrate data from old single table if it exists
         if (db.objectStoreNames.contains("logFiles")) {
           const oldStore = (event.target as any).transaction.objectStore("logFiles");
-          const request = oldStore.openCursor();
+          const getAllRequest = oldStore.getAll();
 
-          request.onsuccess = (event) => {
-            const cursor = (event.target as IDBRequest).result;
-            if (cursor) {
-              const item = cursor.value;
+          getAllRequest.onsuccess = (e) => {
+            const items = (e.target as IDBRequest).result;
+            items.forEach(item => {
               // Extract content and store separately
               const { content, ...metadata } = item;
 
@@ -89,15 +88,13 @@ export const initDB = (): Promise<IDBDatabase> => {
                 const contentStore = (event.target as any).transaction.objectStore(CONTENT_STORE);
                 contentStore.put({ id: item.id, content });
               }
-
-              cursor.continue();
-            }
+            });
           };
         }
       }
 
-      // Clean up old table in version 4
-      if (oldVersion < 4 && db.objectStoreNames.contains("logFiles")) {
+      // Clean up old table in version 5
+      if (oldVersion < 5 && db.objectStoreNames.contains("logFiles")) {
         db.deleteObjectStore("logFiles");
         console.log("Old logFiles table deleted - migration to optimized schema complete");
       }
