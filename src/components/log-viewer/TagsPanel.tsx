@@ -7,12 +7,14 @@ import { Badge } from "@/components/ui/badge";
 
 interface TagsPanelProps {
   itemId: string;
+  itemIds?: string[];
   initialTags?: string[];
   onSaveTags: (tags: string[]) => void;
 }
 
 const TagsPanel = ({
   itemId,
+  itemIds,
   initialTags = [],
   onSaveTags,
 }: TagsPanelProps) => {
@@ -22,11 +24,11 @@ const TagsPanel = ({
     "idle" | "saving" | "saved" | "error"
   >("idle");
 
-  // Update tags when itemId or initialTags changes
+  // Update tags when itemId/itemIds or initialTags changes
   useEffect(() => {
     setTags(initialTags);
     setSaveStatus("idle");
-  }, [itemId, initialTags]);
+  }, [itemId, itemIds, initialTags]);
 
   const handleAddTag = () => {
     if (!newTag.trim()) return;

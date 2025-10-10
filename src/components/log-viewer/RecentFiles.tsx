@@ -13,6 +13,7 @@ import {
   Folder,
   Plus,
   Eye,
+  File,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
@@ -78,8 +79,8 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [parentFolderId, setParentFolderId] = useState<string | null>(null);
   const [renamingItemId, setRenamingItemId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState("");
-  const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
-  const [tagsDialogItem, setTagsDialogItem] = useState<FileItem | null>(null);
+  const [deletingItemIds, setDeletingItemIds] = useState<Set<string> | null>(null);
+  const [tagsDialogItem, setTagsDialogItem] = useState<(FileItem & { itemIds?: string[]; itemNames?: string[] }) | null>(null);
 
 
   // Load recent files from IndexedDB on mount and when files change
@@ -458,6 +459,19 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         <tr
           className={`border-b border-muted hover:bg-muted/50 ${selectedItems.has(item.id) ? "bg-primary/10" : ""} ${dropHighlight}`}
           draggable
+          onClick={(e) => {
+            if (selectionMode) {
+              setSelectedItems((prev) => {
+                const newSet = new Set(prev);
+                if (newSet.has(item.id)) {
+                  newSet.delete(item.id);
+                } else {
+                  newSet.add(item.id);
+                }
+                return newSet;
+              });
+            }
+          }}
           onDragStart={(e) => handleDragStart(e, item.id)}
           onDrop={(e) => isFolder && handleDrop(e, item.id)}
           onDragOver={(e) => isFolder && handleDragOver(e, item.id)}
@@ -479,43 +493,94 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
               return item;
             };
 
-            // Rename option
-            contextMenu.appendChild(
-              createMenuItem("Rename", () => {
-                setRenamingItemId(item.id);
-                setRenameValue(item.name);
-                document.body.removeChild(contextMenu);
-              }),
-            );
+            // Check if multiple items are selected
+            const hasMultipleSelected = selectionMode && selectedItems.size > 1;
 
-            // Manage Tags option
-            contextMenu.appendChild(
-              createMenuItem("Manage Tags", () => {
-                setTagsDialogItem(item);
-                document.body.removeChild(contextMenu);
-              }),
-            );
-
-            // Open all files option (folders only)
-            if (isFolder) {
+            if (hasMultipleSelected) {
+              // Multiple files selected menu
+              // Manage Tags option (for multiple)
               contextMenu.appendChild(
-                createMenuItem("Open all files", () => {
-                  const filesToOpen = getAllFilesFromFolder(item.id, recentItems);
+                createMenuItem("Manage Tags", () => {
+                  const selectedItemsList = recentItems.filter(item => selectedItems.has(item.id));
+                  const allTags = Array.from(new Set(selectedItemsList.flatMap(item => item.tags || [])));
+                  setTagsDialogItem({
+                    ...item, // Keep for compatibility, but we'll use itemIds
+                    itemIds: Array.from(selectedItems),
+                    itemNames: selectedItemsList.map(item => item.name),
+                    tags: allTags,
+                  });
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Open Files option
+              contextMenu.appendChild(
+                createMenuItem("Open Files", () => {
+                  const filesToOpen = recentItems.filter(item => selectedItems.has(item.id) && item.type === 'file');
                   if (filesToOpen.length > 0 && onMultipleFilesSelect) {
                     onMultipleFilesSelect(filesToOpen);
                   }
                   document.body.removeChild(contextMenu);
                 }),
               );
-            }
 
-            // Delete option
-            contextMenu.appendChild(
-              createMenuItem("Delete", () => {
-                handleRemoveItem(item.id);
-                document.body.removeChild(contextMenu);
-              }),
-            );
+              // Consolidate Files option
+              contextMenu.appendChild(
+                createMenuItem("Consolidate Files", () => {
+                  handleConsolidateFiles();
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Delete Selected option
+              contextMenu.appendChild(
+                createMenuItem("Delete Selected", () => {
+                  setDeletingItemIds(new Set(selectedItems));
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+            } else {
+              // Single file menu
+              // Rename option
+              contextMenu.appendChild(
+                createMenuItem("Rename", () => {
+                  setRenamingItemId(item.id);
+                  setRenameValue(item.name);
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Manage Tags option
+              contextMenu.appendChild(
+                createMenuItem("Manage Tags", () => {
+                  setTagsDialogItem(item);
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Open option
+              contextMenu.appendChild(
+                createMenuItem("Open", () => {
+                  if (isFolder) {
+                    const filesToOpen = getAllFilesFromFolder(item.id, recentItems);
+                    if (filesToOpen.length > 0 && onMultipleFilesSelect) {
+                      onMultipleFilesSelect(filesToOpen);
+                    }
+                  } else {
+                    onFileSelect(item);
+                  }
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Delete option
+              contextMenu.appendChild(
+                createMenuItem("Delete", () => {
+                  handleRemoveItem(item.id);
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+            }
 
             document.body.appendChild(contextMenu);
 
@@ -787,31 +852,102 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     return files;
   };
 
-  const handleRemoveItem = (id: string) => {
-    setDeletingItemId(id);
+  const handleConsolidateFiles = async () => {
+    if (selectedItems.size < 2) return;
+
+    try {
+      const { getLogFileById, saveLogFile, deleteLogFile } = await import("@/lib/indexedDB-fix");
+
+      // Get selected files with content
+      const selectedFiles: FileItem[] = [];
+      for (const id of selectedItems) {
+        const file = await getLogFileById(id);
+        if (file && file.type === 'file' && file.content) {
+          selectedFiles.push(file);
+        }
+      }
+
+      if (selectedFiles.length < 2) return;
+
+      // Sort by startDate
+      selectedFiles.sort((a, b) => {
+        const aDate = a.startDate ? new Date(a.startDate).getTime() : 0;
+        const bDate = b.startDate ? new Date(b.startDate).getTime() : 0;
+        return aDate - bDate;
+      });
+
+      // Combine content
+      const combinedContentLines = selectedFiles.flatMap(file => file.content || []);
+
+      // Create new file
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+      const newFileName = `Consolidated Logs ${timestamp}.log`;
+
+      // Create note with consolidated file names
+      const consolidatedFrom = selectedFiles.map(file => file.name).join(', ');
+      const consolidationNote = `Consolidated from: ${consolidatedFrom}`;
+
+      const consolidatedFile: FileItem = {
+        id: `consolidated_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+        name: newFileName,
+        type: 'file',
+        content: combinedContentLines,
+        lastOpened: Date.now(),
+        size: combinedContentLines.reduce((sum, line) => sum + line.length, 0),
+        lines: combinedContentLines.length,
+        startDate: selectedFiles[0].startDate,
+        endDate: selectedFiles[selectedFiles.length - 1].endDate,
+        notes: consolidationNote,
+      };
+
+      // Save new file
+      await saveLogFile(consolidatedFile);
+
+      // Delete original files
+      await Promise.all(selectedFiles.map(file => deleteLogFile(file.id)));
+
+      // Clear selection and exit selection mode
+      setSelectedItems(new Set());
+      setSelectionMode(false);
+
+      // Dispatch event to refresh the list
+      document.dispatchEvent(new CustomEvent("filesChanged"));
+    } catch (error) {
+      console.error("Failed to consolidate files:", error);
+    }
   };
 
-  const performDelete = (id: string) => {
-    // Check if the item exists before removing
-    const itemToRemove = recentItems.find((item) => item.id === id);
-    if (!itemToRemove) return;
+  const handleRemoveItem = (id: string) => {
+    setDeletingItemIds(new Set([id]));
+  };
 
-    console.log("Removing item:", itemToRemove.name, "with ID:", id);
+  const performDelete = (ids: string[]) => {
+    const allIdsToRemove: string[] = [];
+    for (const id of ids) {
+      // Check if the item exists before removing
+      const itemToRemove = recentItems.find((item) => item.id === id);
+      if (!itemToRemove) continue;
 
-    // Close the file if it's open
-    if (itemToRemove.type === 'file' && loadedFileIds?.includes(id) && onFileClose) {
-      onFileClose(id);
+      console.log("Removing item:", itemToRemove.name, "with ID:", id);
+
+      // Close the file if it's open
+      if (itemToRemove.type === 'file' && loadedFileIds?.includes(id) && onFileClose) {
+        onFileClose(id);
+      }
+
+      // Get all IDs to remove (item and descendants)
+      allIdsToRemove.push(...getAllDescendantIds(id, recentItems));
     }
 
-    // Get all IDs to remove (item and descendants)
-    const idsToRemove = getAllDescendantIds(id, recentItems);
+    // Remove duplicates
+    const uniqueIdsToRemove = Array.from(new Set(allIdsToRemove));
 
     // Remove from IndexedDB
     try {
       import("@/lib/indexedDB-fix").then(async ({ deleteLogFile }) => {
         // Wait for all deletions to complete
         await Promise.all(
-          idsToRemove.map(idToDelete =>
+          uniqueIdsToRemove.map(idToDelete =>
             deleteLogFile(idToDelete).catch((err) =>
               console.error(`Failed to delete ${idToDelete} from IndexedDB:`, err),
             )
@@ -819,6 +955,12 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         );
         // Dispatch event to refresh the list after all deletions are complete
         document.dispatchEvent(new CustomEvent("filesChanged"));
+
+        // Clear selection if bulk delete
+        if (ids.length > 1) {
+          setSelectedItems(new Set());
+          setSelectionMode(false);
+        }
       });
     } catch (error) {
       console.error("Error importing IndexedDB module:", error);
@@ -909,6 +1051,19 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                 >
                   <Check className="h-4 w-4 mr-1" />
                   Open Selected ({selectedItems.size})
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (selectedItems.size > 0) {
+                      setDeletingItemIds(new Set(selectedItems));
+                    }
+                  }}
+                  disabled={selectedItems.size === 0}
+                >
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  Delete Selected ({selectedItems.size})
                 </Button>
                 <Button
                   variant="ghost"
@@ -1091,23 +1246,33 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       </CardContent>
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={!!deletingItemId} onOpenChange={() => setDeletingItemId(null)}>
+      <AlertDialog open={!!deletingItemIds} onOpenChange={() => setDeletingItemIds(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Item</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{recentItems.find(item => item.id === deletingItemId)?.name}"?
-              {recentItems.find(item => item.id === deletingItemId)?.type === 'folder' ? ' This will also delete all files and subfolders inside it.' : ''}
-              This action cannot be undone.
+              {(() => {
+                const itemsToDelete = Array.from(deletingItemIds || []).map(id => recentItems.find(item => item.id === id)).filter(Boolean);
+                const itemNames = itemsToDelete.map(item => item!.name).join(', ');
+                const hasFolders = itemsToDelete.some(item => item!.type === 'folder');
+                const count = deletingItemIds?.size || 0;
+                return (
+                  <>
+                    Are you sure you want to delete {count === 1 ? `"${itemNames}"` : `these ${count} items: ${itemNames}`}?
+                    {hasFolders ? ' This will also delete all files and subfolders inside the folders.' : ''}
+                    This action cannot be undone.
+                  </>
+                );
+              })()}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
-                if (deletingItemId) {
-                  performDelete(deletingItemId);
-                  setDeletingItemId(null);
+                if (deletingItemIds) {
+                  performDelete(Array.from(deletingItemIds));
+                  setDeletingItemIds(null);
                 }
               }}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -1123,8 +1288,10 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         <TagsDialog
           isOpen={!!tagsDialogItem}
           onClose={() => setTagsDialogItem(null)}
-          itemId={tagsDialogItem.id}
-          itemName={tagsDialogItem.name}
+          itemId={tagsDialogItem.itemIds ? undefined : tagsDialogItem.id}
+          itemName={tagsDialogItem.itemIds ? undefined : tagsDialogItem.name}
+          itemIds={tagsDialogItem.itemIds}
+          itemNames={tagsDialogItem.itemNames}
           initialTags={tagsDialogItem.tags || []}
           onSaveTags={onSaveTags}
         />
