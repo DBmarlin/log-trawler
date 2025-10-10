@@ -55,7 +55,7 @@ const LogStats = (props: LogStatsProps) => {
     allEntries.forEach((entry) => {
       // Extract log level
       const levelMatch = entry.message.match(
-        /\b(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY)\b/i,
+        /\b(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|CRIT|FATAL|ALERT|EMERG|EMERGENCY|CONFIG)\b/i,
       );
 
       const level = levelMatch ? levelMatch[1].toUpperCase() : "OTHER";
@@ -100,6 +100,12 @@ const LogStats = (props: LogStatsProps) => {
       bar: "bg-rose-400",
     },
     CRITICAL: {
+      bg: "bg-red-200",
+      text: "text-red-900",
+      border: "border-red-300",
+      bar: "bg-red-500",
+    },
+    CRIT: {
       bg: "bg-red-200",
       text: "text-red-900",
       border: "border-red-300",
@@ -158,6 +164,12 @@ const LogStats = (props: LogStatsProps) => {
       text: "text-indigo-800",
       border: "border-indigo-200",
       bar: "bg-indigo-400",
+    },
+    CONFIG: {
+      bg: "bg-cyan-100",
+      text: "text-cyan-800",
+      border: "border-cyan-200",
+      bar: "bg-cyan-400",
     },
     OTHER: {
       bg: "bg-gray-100",

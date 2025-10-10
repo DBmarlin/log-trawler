@@ -207,10 +207,12 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
                   "ERROR",
                   "SEVERE",
                   "CRITICAL",
+                  "CRIT",
                   "FATAL",
                   "ALERT",
                   "EMERG",
                   "EMERGENCY",
+                  "CONFIG",
                 ];
 
                 if (logLevels.includes(searchTerm)) {
@@ -248,10 +250,12 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
                    "ERROR",
                    "SEVERE",
                    "CRITICAL",
+                   "CRIT",
                    "FATAL",
                    "ALERT",
                    "EMERG",
                    "EMERGENCY",
+                   "CONFIG",
                  ];
 
                  if (logLevels.includes(searchTerm)) {

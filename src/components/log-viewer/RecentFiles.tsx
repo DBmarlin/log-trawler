@@ -81,6 +81,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [renameValue, setRenameValue] = useState("");
   const [deletingItemIds, setDeletingItemIds] = useState<Set<string> | null>(null);
   const [tagsDialogItem, setTagsDialogItem] = useState<(FileItem & { itemIds?: string[]; itemNames?: string[] }) | null>(null);
+  const [lastClickedIndex, setLastClickedIndex] = useState<number | null>(null);
 
 
   // Load recent files from IndexedDB on mount and when files change
@@ -295,6 +296,21 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     return { itemMap: map, rootItems: roots };
   }, [sortedItems, sortField, sortDirection]);
 
+  // Build flat list of visible item IDs in display order for range selection
+  const visibleItemIds = React.useMemo(() => {
+    const ids: string[] = [];
+    const collectVisibleIds = (itemId: string) => {
+      const item = itemMap.get(itemId);
+      if (!item) return;
+      ids.push(itemId);
+      if (item.type === 'folder' && expandedFolders.has(itemId) && item.children) {
+        item.children.forEach(childId => collectVisibleIds(childId));
+      }
+    };
+    rootItems.forEach(item => collectVisibleIds(item.id));
+    return ids;
+  }, [itemMap, rootItems, expandedFolders]);
+
   // Handle folder expansion
   const toggleFolder = (folderId: string) => {
     setExpandedFolders((prev) => {
@@ -461,15 +477,31 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           draggable
           onClick={(e) => {
             if (selectionMode) {
-              setSelectedItems((prev) => {
-                const newSet = new Set(prev);
-                if (newSet.has(item.id)) {
-                  newSet.delete(item.id);
-                } else {
-                  newSet.add(item.id);
-                }
-                return newSet;
-              });
+              const currentIndex = visibleItemIds.indexOf(item.id);
+              if (e.shiftKey && lastClickedIndex !== null && currentIndex !== -1) {
+                // Range selection with Shift+click
+                const startIndex = Math.min(lastClickedIndex, currentIndex);
+                const endIndex = Math.max(lastClickedIndex, currentIndex);
+                const rangeIds = visibleItemIds.slice(startIndex, endIndex + 1);
+                setSelectedItems((prev) => {
+                  const newSet = new Set(prev);
+                  rangeIds.forEach(id => newSet.add(id));
+                  return newSet;
+                });
+              } else {
+                // Normal click - toggle selection
+                setSelectedItems((prev) => {
+                  const newSet = new Set(prev);
+                  if (newSet.has(item.id)) {
+                    newSet.delete(item.id);
+                  } else {
+                    newSet.add(item.id);
+                  }
+                  return newSet;
+                });
+                // Update last clicked index for range selection
+                setLastClickedIndex(currentIndex);
+              }
             }
           }}
           onDragStart={(e) => handleDragStart(e, item.id)}
@@ -856,7 +888,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     if (selectedItems.size < 2) return;
 
     try {
-      const { getLogFileById, saveLogFile, deleteLogFile } = await import("@/lib/indexedDB-fix");
+      const { getLogFileById, saveLogFile, deleteLogFile, updateLogFile } = await import("@/lib/indexedDB-fix");
 
       // Get selected files with content
       const selectedFiles: FileItem[] = [];
@@ -868,6 +900,16 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       }
 
       if (selectedFiles.length < 2) return;
+
+      // Check if all files are at the same level (same parentId)
+      const parentIds = new Set(selectedFiles.map(f => f.parentId || null));
+      if (parentIds.size > 1) {
+        console.error("Cannot consolidate files from different folders");
+        // TODO: Show user-friendly error message
+        return;
+      }
+
+      const commonParentId = selectedFiles[0].parentId;
 
       // Sort by startDate
       selectedFiles.sort((a, b) => {
@@ -887,6 +929,31 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
       const consolidatedFrom = selectedFiles.map(file => file.name).join(', ');
       const consolidationNote = `Consolidated from: ${consolidatedFrom}`;
 
+      // Calculate bucket size for consolidated file
+      let bucketSize = "5m";
+      const consolidatedStartDate = selectedFiles[0].startDate;
+      const consolidatedEndDate = selectedFiles[selectedFiles.length - 1].endDate;
+      if (consolidatedStartDate && consolidatedEndDate) {
+        const diffMinutes = (new Date(consolidatedEndDate).getTime() - new Date(consolidatedStartDate).getTime()) / 60000;
+        if (diffMinutes <= 1) bucketSize = "5s";
+        else if (diffMinutes <= 60) bucketSize = "30s";
+        else {
+          const idealBucketSizeMinutes = Math.max(1, Math.ceil(diffMinutes / 120));
+          if (idealBucketSizeMinutes <= 0.08) bucketSize = "5s";
+          else if (idealBucketSizeMinutes <= 0.17) bucketSize = "10s";
+          else if (idealBucketSizeMinutes <= 0.5) bucketSize = "30s";
+          else if (idealBucketSizeMinutes <= 1) bucketSize = "1m";
+          else if (idealBucketSizeMinutes <= 5) bucketSize = "5m";
+          else if (idealBucketSizeMinutes <= 10) bucketSize = "10m";
+          else if (idealBucketSizeMinutes <= 30) bucketSize = "30m";
+          else if (idealBucketSizeMinutes <= 60) bucketSize = "60m";
+          else if (idealBucketSizeMinutes <= 360) bucketSize = "360m";
+          else if (idealBucketSizeMinutes <= 720) bucketSize = "720m";
+          else if (idealBucketSizeMinutes <= 1440) bucketSize = "1440m";
+          else bucketSize = "10080m";
+        }
+      }
+
       const consolidatedFile: FileItem = {
         id: `consolidated_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         name: newFileName,
@@ -895,13 +962,27 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         lastOpened: Date.now(),
         size: combinedContentLines.reduce((sum, line) => sum + line.length, 0),
         lines: combinedContentLines.length,
-        startDate: selectedFiles[0].startDate,
-        endDate: selectedFiles[selectedFiles.length - 1].endDate,
+        startDate: consolidatedStartDate,
+        endDate: consolidatedEndDate,
+        bucketSize: bucketSize,
         notes: consolidationNote,
+        parentId: commonParentId,
       };
 
       // Save new file
       await saveLogFile(consolidatedFile);
+
+      // Update the parent folder's children if applicable
+      if (commonParentId) {
+        const parent = await getLogFileById(commonParentId);
+        if (parent && parent.type === 'folder') {
+          const updatedParent = {
+            ...parent,
+            children: [...(parent.children || []), consolidatedFile.id]
+          };
+          await updateLogFile(commonParentId, updatedParent);
+        }
+      }
 
       // Delete original files
       await Promise.all(selectedFiles.map(file => deleteLogFile(file.id)));
@@ -1045,6 +1126,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                       onMultipleFilesSelect(itemsToOpen);
                       setSelectionMode(false);
                       setSelectedItems(new Set());
+                      setLastClickedIndex(null);
                     }
                   }}
                   disabled={selectedItems.size === 0}
@@ -1058,6 +1140,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   onClick={() => {
                     if (selectedItems.size > 0) {
                       setDeletingItemIds(new Set(selectedItems));
+                      setLastClickedIndex(null);
                     }
                   }}
                   disabled={selectedItems.size === 0}
@@ -1071,6 +1154,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
                   onClick={() => {
                     setSelectionMode(false);
                     setSelectedItems(new Set());
+                    setLastClickedIndex(null);
                   }}
                 >
                   Cancel
