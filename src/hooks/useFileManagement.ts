@@ -3,6 +3,51 @@ import { FileItem } from "@/types/fileSystem";
 import { parseLogLine, parseTimestamp } from "@/lib/utils";
 import { getLogFileById, saveLogFile, updateLogFile, deleteLogFile } from "@/lib/indexedDB-fix";
 
+// Threshold for using streaming (50MB)
+const STREAMING_THRESHOLD = 50 * 1024 * 1024;
+
+// Utility to read large files using IPC streaming
+const readFileStreaming = (filePath: string, onProgress?: (progress: number) => void): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    const { ipcRenderer } = window.require('electron');
+    const lines: string[] = [];
+    let buffer = '';
+    let totalSize = 0;
+
+    ipcRenderer.send('start-file-stream', filePath);
+
+    const chunkHandler = (event: any, chunk: string) => {
+      buffer += chunk;
+      totalSize += chunk.length;
+      const parts = buffer.split('\n');
+      lines.push(...parts.slice(0, -1));
+      buffer = parts[parts.length - 1];
+      if (onProgress) onProgress(totalSize); // Approximate progress
+    };
+
+    const endHandler = () => {
+      if (buffer) lines.push(buffer);
+      cleanup();
+      resolve(lines);
+    };
+
+    const errorHandler = (event: any, error: string) => {
+      cleanup();
+      reject(new Error(error));
+    };
+
+    const cleanup = () => {
+      ipcRenderer.removeListener('file-chunk', chunkHandler);
+      ipcRenderer.removeListener('file-end', endHandler);
+      ipcRenderer.removeListener('file-error', errorHandler);
+    };
+
+    ipcRenderer.on('file-chunk', chunkHandler);
+    ipcRenderer.on('file-end', endHandler);
+    ipcRenderer.on('file-error', errorHandler);
+  });
+};
+
 type RecentFile = Omit<FileItem, 'content'> & { lines?: number };
 type LogFile = FileItem & { isLoading?: boolean };
 
@@ -86,7 +131,7 @@ export function useFileManagement() {
     }
 
     // Gather all log files to process (direct or extracted)
-    let logFilesToProcess: { name: string, content: string | Uint8Array, folderId?: string, children?: string[] }[] = [];
+    let logFilesToProcess: { name: string, content: string | Uint8Array | null, filePath?: string, size?: number, folderId?: string, children?: string[] }[] = [];
 
     for (const file of droppedFiles) {
       if (file.name.endsWith(".zip") || file.name.endsWith(".tar.gz")) {
@@ -225,7 +270,11 @@ export function useFileManagement() {
         }
       } else if (file.name.endsWith(".log")) {
         // Direct log file
-        logFilesToProcess.push({ name: file.name, content: await file.text() });
+        if (file.size > STREAMING_THRESHOLD) {
+          logFilesToProcess.push({ name: file.name, content: null, filePath: (file as any).path, size: file.size });
+        } else {
+          logFilesToProcess.push({ name: file.name, content: await file.text(), size: file.size });
+        }
       }
       // Ignore other file types
     }
@@ -256,7 +305,14 @@ export function useFileManagement() {
     const processedFilesPromises = logFilesToProcess.map(async (logFile, index) => {
       const fileId = loadingFileIds[index].id;
       let lines: string[] = [];
-      if (typeof logFile.content === "string") {
+      if (logFile.content === null && logFile.filePath) {
+        // Streaming for large files
+        lines = await readFileStreaming(logFile.filePath, (bytesRead) => {
+          const progress = logFile.size ? Math.min(100, (bytesRead / logFile.size) * 100) : 50;
+          setLoadingFiles((prev) => ({ ...prev, [fileId]: progress }));
+        });
+        setLoadingFiles((prev) => ({ ...prev, [fileId]: 100 }));
+      } else if (typeof logFile.content === "string") {
         lines = logFile.content.split("\n");
         setLoadingFiles((prev) => ({ ...prev, [fileId]: 100 }));
       } else {

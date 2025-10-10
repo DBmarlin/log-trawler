@@ -107,11 +107,12 @@ const Home = () => {
   // context menu handlers are now provided by useFileManagement hook.
 
   // Handlers related to active file state modification (will be passed down)
-  const handleAddFilter = useCallback((term: string, type: "include" | "exclude", isRegex = false) => {
+  const handleAddFilter = useCallback((term: string | string[], type: "include" | "exclude", isRegex = false) => {
     if (!term || !activeFile) return;
-    const newFilter = { id: Math.random().toString(), type, term, isRegex };
+    const terms = Array.isArray(term) ? term : [term];
+    const newFilters = terms.map(t => ({ id: Math.random().toString(), type, term: t, isRegex }));
     const currentFilters = activeFile.filters || [];
-    updateFileState(activeFile.id, { filters: [...currentFilters, newFilter] });
+    updateFileState(activeFile.id, { filters: [...currentFilters, ...newFilters] });
   }, [activeFile, updateFileState]); // Depends on activeFile and updateFileState from hook
 
   const handleFilterLogicChange = useCallback((logic: "AND" | "OR") => {

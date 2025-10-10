@@ -42,7 +42,7 @@ interface FileViewProps {
   statsVisible: boolean;
   setStatsVisible: (visible: boolean) => void;
   handleAddFilter: (
-    term: string,
+    term: string | string[],
     type: "include" | "exclude",
     isRegex?: boolean,
   ) => void;
@@ -353,8 +353,8 @@ const FileView: React.FC<FileViewProps> = ({
                       setStatsVisible(false);
                     }}
                     showStats={statsVisible}
-                    onAddFilter={(term, type = "include") =>
-                      handleAddFilter(term, type)
+                    onAddFilter={(term, type = "include", isRegex = false) =>
+                      handleAddFilter(term, type, isRegex)
                     }
                   />
 

@@ -3,6 +3,24 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
+// IPC handlers for file streaming
+ipcMain.on('start-file-stream', (event, filePath) => {
+  try {
+    const stream = fs.createReadStream(filePath, { highWaterMark: 64 * 1024 }); // 64KB chunks
+    stream.on('data', (chunk) => {
+      event.sender.send('file-chunk', chunk.toString());
+    });
+    stream.on('end', () => {
+      event.sender.send('file-end');
+    });
+    stream.on('error', (error: NodeJS.ErrnoException) => {
+      event.sender.send('file-error', error.message);
+    });
+  } catch (error) {
+    event.sender.send('file-error', error instanceof Error ? error.message : String(error));
+  }
+});
+
 // Register the app protocol as a standard, secure scheme before app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } }

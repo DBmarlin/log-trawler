@@ -189,11 +189,38 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
           if (excludeFilters.length > 0) {
             const shouldExclude = excludeFilters.some((filter) => {
               try {
-                const searchTerm = filter.term.toLowerCase();
-                const message = entry.message.toLowerCase();
-                return filter.isRegex
-                  ? new RegExp(filter.term, "i").test(entry.message) // Use original case for regex
-                  : message.includes(searchTerm);
+                if (filter.isRegex) {
+                  return new RegExp(filter.term, "i").test(entry.message);
+                }
+
+                const searchTerm = filter.term.toUpperCase();
+                const message = entry.message.toUpperCase();
+
+                // Special handling for log level terms
+                const logLevels = [
+                  "TRACE",
+                  "DEBUG",
+                  "INFO",
+                  "NOTICE",
+                  "WARN",
+                  "WARNING",
+                  "ERROR",
+                  "SEVERE",
+                  "CRITICAL",
+                  "FATAL",
+                  "ALERT",
+                  "EMERG",
+                  "EMERGENCY",
+                ];
+
+                if (logLevels.includes(searchTerm)) {
+                  // Match log level as whole word
+                  const regex = new RegExp(`\\b${searchTerm}\\b`, "i");
+                  return regex.test(message);
+                }
+
+                // For other terms, use simple includes
+                return message.includes(searchTerm);
               } catch { return false; } // Ignore invalid regex
             });
             if (shouldExclude) return false; // Exclude if any exclude filter matches
@@ -203,11 +230,38 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
           if (includeFilters.length > 0) {
             const testFn = (filter: typeof includeFilters[0]) => {
                try {
-                 const searchTerm = filter.term.toLowerCase();
-                 const message = entry.message.toLowerCase();
-                 return filter.isRegex
-                   ? new RegExp(filter.term, "i").test(entry.message) // Use original case for regex
-                   : message.includes(searchTerm);
+                 if (filter.isRegex) {
+                   return new RegExp(filter.term, "i").test(entry.message);
+                 }
+
+                 const searchTerm = filter.term.toUpperCase();
+                 const message = entry.message.toUpperCase();
+
+                 // Special handling for log level terms
+                 const logLevels = [
+                   "TRACE",
+                   "DEBUG",
+                   "INFO",
+                   "NOTICE",
+                   "WARN",
+                   "WARNING",
+                   "ERROR",
+                   "SEVERE",
+                   "CRITICAL",
+                   "FATAL",
+                   "ALERT",
+                   "EMERG",
+                   "EMERGENCY",
+                 ];
+
+                 if (logLevels.includes(searchTerm)) {
+                   // Match log level as whole word
+                   const regex = new RegExp(`\\b${searchTerm}\\b`, "i");
+                   return regex.test(message);
+                 }
+
+                 // For other terms, use simple includes
+                 return message.includes(searchTerm);
                } catch { return false; } // Ignore invalid regex
             };
             // Return true only if include conditions are met

@@ -24,7 +24,7 @@ interface LogStatsProps {
   onToggle?: () => void;
   showStats?: boolean;
   showHourlyActivity?: boolean;
-  onAddFilter?: (term: string, type?: "include" | "exclude") => void;
+  onAddFilter?: (term: string | string[], type?: "include" | "exclude", isRegex?: boolean) => void;
 }
 
 const LogStats = (props: LogStatsProps) => {
@@ -50,26 +50,13 @@ const LogStats = (props: LogStatsProps) => {
     }
 
     // Use the full dataset instead of just the first 5000 entries
-    const allEntries = entries;
+    const allEntries = props.allEntries || entries;
 
     allEntries.forEach((entry) => {
       // Extract log level
-      const levelMatch =
-        entry.message.match(
-          /\[(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY)\]/i,
-        ) ||
-        entry.message.match(
-          /\s(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY)\s/i,
-        ) ||
-        entry.message.match(
-          /\s(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY):/i,
-        ) ||
-        entry.message.match(
-          /^(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY)\s/i,
-        ) ||
-        entry.message.match(
-          /^(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY):/i,
-        );
+      const levelMatch = entry.message.match(
+        /\b(TRACE|DEBUG|INFO|NOTICE|WARN|WARNING|ERROR|SEVERE|CRITICAL|FATAL|ALERT|EMERG|EMERGENCY)\b/i,
+      );
 
       const level = levelMatch ? levelMatch[1].toUpperCase() : "OTHER";
       levels.set(level, (levels.get(level) || 0) + 1);
@@ -276,25 +263,9 @@ const LogStats = (props: LogStatsProps) => {
                     className={`${levelColors[level]?.bg || levelColors.OTHER.bg} ${levelColors[level]?.text || levelColors.OTHER.text} border ${levelColors[level]?.border || levelColors.OTHER.border} cursor-pointer hover:ring-1 hover:ring-offset-1`}
                     onClick={() => {
                       if (level === "OTHER") {
-                        // For OTHER, add exclude filters for all standard log levels
-                        const standardLevels = [
-                          "TRACE",
-                          "DEBUG",
-                          "INFO",
-                          "NOTICE",
-                          "WARN",
-                          "WARNING",
-                          "ERROR",
-                          "SEVERE",
-                          "CRITICAL",
-                          "FATAL",
-                          "ALERT",
-                          "EMERG",
-                          "EMERGENCY",
-                        ];
-                        standardLevels.forEach((lvl) =>
-                          props.onAddFilter?.(lvl, "exclude"),
-                        );
+                        // For OTHER, add exclude filters for all log levels present in the file except OTHER
+                        const levelsToExclude = Object.keys(stats.levels).filter(lvl => lvl !== "OTHER");
+                        props.onAddFilter?.(levelsToExclude, "exclude");
                       } else {
                         props.onAddFilter?.(level, "include");
                       }
