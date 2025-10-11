@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,21 +31,29 @@ const TimeRangeFilter = ({
   const [endTime, setEndTime] = useState(
     endDate ? format(endDate, "HH:mm:ss") : "23:59:59",
   );
+  const [startButtonText, setStartButtonText] = useState(
+    startDate ? formatDate(startDate) : "Start date & time",
+  );
+  const [endButtonText, setEndButtonText] = useState(
+    endDate ? formatDate(endDate) : "End date & time",
+  );
   const [startOpen, setStartOpen] = useState(false);
   const [endOpen, setEndOpen] = useState(false);
 
-  // Update temp dates when props change
+  // Update temp dates and button text when props change
   React.useEffect(() => {
     setTempStartDate(startDate);
     setTempEndDate(endDate);
     setStartTime(startDate ? format(startDate, "HH:mm:ss") : "00:00:00");
     setEndTime(endDate ? format(endDate, "HH:mm:ss") : "23:59:59");
+    setStartButtonText(startDate ? formatDate(startDate) : "Start date & time");
+    setEndButtonText(endDate ? formatDate(endDate) : "End date & time");
   }, [startDate, endDate]);
 
-  const formatDate = (date?: Date) => {
+  function formatDate(date?: Date) {
     if (!date) return "";
     return format(date, "dd-MMM-yyyy HH:mm:ss");
-  };
+  }
 
   const handleTimeChange = (timeStr: string, isStart: boolean) => {
     const [hours, minutes, seconds] = timeStr.split(":").map(Number);
@@ -87,10 +95,10 @@ const TimeRangeFilter = ({
 
   const handleApply = (isStart: boolean) => {
     if (isStart) {
-      onRangeChange(tempStartDate, endDate);
+      onRangeChange(tempStartDate, tempEndDate);
       setStartOpen(false);
     } else {
-      onRangeChange(startDate, tempEndDate);
+      onRangeChange(tempStartDate, tempEndDate);
       setEndOpen(false);
     }
   };
@@ -124,7 +132,7 @@ const TimeRangeFilter = ({
             className={`justify-start text-left font-normal text-foreground ${!startDate && "text-muted-foreground"}`}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {startDate ? formatDate(startDate) : "Start date & time"}
+            {startButtonText}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-4" align="start">
@@ -172,7 +180,7 @@ const TimeRangeFilter = ({
             className={`justify-start text-left font-normal text-foreground ${!endDate && "text-muted-foreground"}`}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {endDate ? formatDate(endDate) : "End date & time"}
+            {endButtonText}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-4" align="start">

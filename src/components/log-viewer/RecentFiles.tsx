@@ -1337,12 +1337,24 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
             <AlertDialogDescription>
               {(() => {
                 const itemsToDelete = Array.from(deletingItemIds || []).map(id => recentItems.find(item => item.id === id)).filter(Boolean);
-                const itemNames = itemsToDelete.map(item => item!.name).join(', ');
                 const hasFolders = itemsToDelete.some(item => item!.type === 'folder');
                 const count = deletingItemIds?.size || 0;
+
+                let itemDescription = '';
+                if (count === 1) {
+                  itemDescription = `"${itemsToDelete[0]!.name}"`;
+                } else if (count <= 5) {
+                  const itemNames = itemsToDelete.map(item => item!.name).join(', ');
+                  itemDescription = `these ${count} items: ${itemNames}`;
+                } else {
+                  const firstThreeNames = itemsToDelete.slice(0, 3).map(item => item!.name).join(', ');
+                  const remainingCount = count - 3;
+                  itemDescription = `these ${count} items: ${firstThreeNames} and ${remainingCount} more`;
+                }
+
                 return (
                   <>
-                    Are you sure you want to delete {count === 1 ? `"${itemNames}"` : `these ${count} items: ${itemNames}`}?
+                    Are you sure you want to delete {itemDescription}?
                     {hasFolders ? ' This will also delete all files and subfolders inside the folders.' : ''}
                     This action cannot be undone.
                   </>

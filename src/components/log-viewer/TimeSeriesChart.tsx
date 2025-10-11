@@ -639,7 +639,7 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
       const startIndex = Math.min(selectionStart, selectionEnd);
       const endIndex = Math.max(selectionStart, selectionEnd);
 
-      if (startIndex !== endIndex && originalLabels.length > 0) {
+      if (startIndex >= 0 && endIndex >= 0 && originalLabels.length > 0) {
         const startLabel = originalLabels[startIndex];
         const endLabel = originalLabels[endIndex];
 

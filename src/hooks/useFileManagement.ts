@@ -73,13 +73,15 @@ export function useFileManagement() {
   }, []);
 
   const updateFileState = useCallback((fileId: string, updates: Partial<FileItem>) => {
+    // Deep clone the updates to avoid modifying the original object
+    const updatesClone = JSON.parse(JSON.stringify(updates));
     setFiles(prevFiles => {
         const newFiles = prevFiles.map(file =>
             file.id === fileId ? { ...file, ...updates } : file
         );
         // Persist change to IndexedDB
         try {
-            updateLogFile(fileId, updates).catch(err =>
+            updateLogFile(fileId, updatesClone).catch(err =>
                 console.error(`Failed to update in IndexedDB:`, err)
             );
         } catch (error) {
