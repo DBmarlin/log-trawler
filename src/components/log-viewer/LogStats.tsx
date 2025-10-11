@@ -73,9 +73,9 @@ const LogStats = (props: LogStatsProps) => {
 
     return {
       levels: Object.fromEntries(levels),
-      errorRate: (errorCount / entries.length) * 100,
-      warningRate: (warningCount / entries.length) * 100,
-      totalEntries: entries.length,
+      errorRate: (errorCount / allEntries.length) * 100,
+      warningRate: (warningCount / allEntries.length) * 100,
+      totalEntries: allEntries.length,
       hourlyByLevel,
     };
   }, [entries]);

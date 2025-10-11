@@ -134,9 +134,8 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
     // Use requestAnimationFrame for better performance
     const rafId = requestAnimationFrame(() => {
       try {
-        // Use filtered entries if available and filters are applied, otherwise use all entries
-        const dataToProcess =
-          filteredEntries.length > 0 ? filteredEntries : entries;
+        // Use filtered entries (always use filteredEntries since it's passed as the current visible data)
+        const dataToProcess = filteredEntries;
         if (!dataToProcess.length) return;
 
         // If we have a selected range, use that instead of the full file range
