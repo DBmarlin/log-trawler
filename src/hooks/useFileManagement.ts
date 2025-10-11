@@ -95,6 +95,24 @@ export function useFileManagement() {
 
 
   const processFilesInternal = useCallback(async (droppedFiles: File[]) => {
+    // Helper function to generate unique names
+    const getUniqueName = (baseName: string, existingNames: Set<string>): string => {
+      if (!existingNames.has(baseName)) return baseName;
+      let counter = 2;
+      let name = `${baseName} (${counter})`;
+      while (existingNames.has(name)) {
+        counter++;
+        name = `${baseName} (${counter})`;
+      }
+      return name;
+    };
+
+    // Get existing names from current files and recent files
+    const existingNames = new Set([
+      ...files.map(f => f.name),
+      ...(JSON.parse(localStorage.getItem("logTrawler_recentFiles") || "[]") as any[]).map(f => f.name)
+    ]);
+
     // Dynamically import archive libraries
     const JSZip = (await import("jszip")).default;
     const { gunzipSync, strFromU8 } = await import("fflate");
@@ -144,10 +162,12 @@ export function useFileManagement() {
           const baseName = isZip
             ? file.name.replace(/\.zip$/i, "")
             : file.name.replace(/\.tar\.gz$/i, "");
-          const folderId = `folder_${baseName.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}`;
+          const uniqueBaseName = getUniqueName(baseName, existingNames);
+          existingNames.add(uniqueBaseName);
+          const folderId = `folder_${uniqueBaseName.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}`;
           const folder = {
             id: folderId,
-            name: baseName,
+            name: uniqueBaseName,
             type: "folder" as const,
             lastOpened: Date.now(),
             children: [],
@@ -258,10 +278,10 @@ export function useFileManagement() {
         try {
           const stored = localStorage.getItem("logTrawler_recentFiles");
           let recentFilesList: RecentFile[] = stored ? JSON.parse(stored) : [];
-          recentFilesList = recentFilesList.filter(f => f.name !== baseName);
+          recentFilesList = recentFilesList.filter(f => f.name !== uniqueBaseName);
           recentFilesList.unshift({
             id: folderId,
-            name: baseName,
+            name: uniqueBaseName,
             lastOpened: Date.now(),
             type: 'folder',
           });
@@ -280,6 +300,13 @@ export function useFileManagement() {
       }
       // Ignore other file types
     }
+
+    // Make filenames unique for direct log files
+    logFilesToProcess.forEach(logFile => {
+      const uniqueName = getUniqueName(logFile.name, existingNames);
+      existingNames.add(uniqueName);
+      logFile.name = uniqueName;
+    });
 
     // Now process all log files (direct or extracted)
     const loadingFileIds = logFilesToProcess.map((file) => ({

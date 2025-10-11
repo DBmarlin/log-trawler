@@ -470,6 +470,9 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
         ? "bg-blue-500/20 border-blue-500"
         : "";
 
+    // Aggregate stats for folders
+    const folderAggregates = isFolder ? getFolderAggregates(item.id, recentItems) : null;
+
     return (
       <React.Fragment key={item.id}>
         <tr
@@ -800,12 +803,12 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           <td className="py-2">
             {format(new Date(item.lastOpened), "dd MMM yyyy HH:mm")}
           </td>
-          <td className="py-2">{isFolder ? "-" : formatFileSize(item.size)}</td>
+          <td className="py-2">{isFolder ? formatFileSize(folderAggregates!.size) : formatFileSize(item.size)}</td>
           <td className="py-2">
-            {isFolder ? "-" : (item.lines?.toLocaleString() || "Unknown")}
+            {isFolder ? folderAggregates!.lines.toLocaleString() : (item.lines?.toLocaleString() || "Unknown")}
           </td>
-          <td className="py-2">{isFolder ? "-" : formatDate(item.startDate)}</td>
-          <td className="py-2">{isFolder ? "-" : formatDate(item.endDate)}</td>
+          <td className="py-2">{isFolder ? formatDate(folderAggregates!.startDate) : formatDate(item.startDate)}</td>
+          <td className="py-2">{isFolder ? formatDate(folderAggregates!.endDate) : formatDate(item.endDate)}</td>
           <td className="py-2 text-right">
             <Button
               variant="ghost"
@@ -882,6 +885,23 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     }
 
     return files;
+  };
+
+  // Helper function to aggregate stats for a folder
+  const getFolderAggregates = (folderId: string, items: FileItem[]) => {
+    const files = getAllFilesFromFolder(folderId, items);
+    if (files.length === 0) return { size: 0, lines: 0, startDate: undefined, endDate: undefined };
+
+    const size = files.reduce((sum, f) => sum + (f.size || 0), 0);
+    const lines = files.reduce((sum, f) => sum + (f.lines || 0), 0);
+
+    const startDates = files.map(f => f.startDate).filter(d => d !== undefined);
+    const endDates = files.map(f => f.endDate).filter(d => d !== undefined);
+
+    const startDate = startDates.length > 0 ? new Date(Math.min(...startDates.map(d => new Date(d!).getTime()))) : undefined;
+    const endDate = endDates.length > 0 ? new Date(Math.max(...endDates.map(d => new Date(d!).getTime()))) : undefined;
+
+    return { size, lines, startDate, endDate };
   };
 
   const handleConsolidateFiles = async () => {
