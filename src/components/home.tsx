@@ -234,6 +234,8 @@ const Home = () => {
         onChange={async (e) => {
           if (e.target.files) {
             await processFiles(Array.from(e.target.files)); // Use processFiles from hook
+            // Dispatch event to notify other components of file changes
+            setTimeout(() => document.dispatchEvent(new CustomEvent("filesChanged")), 200);
           }
         }}
       />

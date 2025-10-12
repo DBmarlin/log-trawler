@@ -125,6 +125,20 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
     };
   }, []);
 
+  // Listen for expand folder events
+  useEffect(() => {
+    const handleExpandFolder = (event: CustomEvent<{ folderId: string }>) => {
+      const { folderId } = event.detail;
+      setExpandedFolders((prev) => new Set([...prev, folderId]));
+    };
+
+    document.addEventListener("expandFolder", handleExpandFolder as EventListener);
+
+    return () => {
+      document.removeEventListener("expandFolder", handleExpandFolder as EventListener);
+    };
+  }, []);
+
   // Load expanded folders from localStorage on mount
   useEffect(() => {
     try {

@@ -287,6 +287,9 @@ export function useFileManagement() {
           });
           localStorage.setItem("logTrawler_recentFiles", JSON.stringify(recentFilesList.slice(0, 20)));
         } catch (error) { console.error("Failed to update recent files", error); }
+
+        // Dispatch event to expand the folder
+        document.dispatchEvent(new CustomEvent("expandFolder", { detail: { folderId } }));
         } finally {
           setIsExtractingArchive(false);
         }
