@@ -37,6 +37,7 @@ import {
 
 import { FileItem } from "@/types/fileSystem";
 import TagsDialog from "./TagsDialog";
+import NotesDialog from "./NotesDialog";
 
 
 interface RecentFilesProps {
@@ -44,6 +45,7 @@ interface RecentFilesProps {
   onMultipleFilesSelect?: (files: FileItem[]) => void;
   renameItem: (itemId: string, newName: string) => Promise<boolean>;
   onSaveTags?: (itemId: string, tags: string[]) => void;
+  onSaveNotes?: (itemId: string, notes: string) => void;
   loadedFileIds?: string[];
   onFileClose?: (fileId: string) => void;
 }
@@ -62,6 +64,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   onMultipleFilesSelect,
   renameItem,
   onSaveTags,
+  onSaveNotes,
   loadedFileIds,
   onFileClose,
 }) => {
@@ -81,6 +84,7 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
   const [renameValue, setRenameValue] = useState("");
   const [deletingItemIds, setDeletingItemIds] = useState<Set<string> | null>(null);
   const [tagsDialogItem, setTagsDialogItem] = useState<(FileItem & { itemIds?: string[]; itemNames?: string[] }) | null>(null);
+  const [notesDialogItem, setNotesDialogItem] = useState<FileItem | null>(null);
   const [lastClickedIndex, setLastClickedIndex] = useState<number | null>(null);
 
 
@@ -603,6 +607,14 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
               contextMenu.appendChild(
                 createMenuItem("Manage Tags", () => {
                   setTagsDialogItem(item);
+                  document.body.removeChild(contextMenu);
+                }),
+              );
+
+              // Notes option
+              contextMenu.appendChild(
+                createMenuItem("Notes", () => {
+                  setNotesDialogItem(item);
                   document.body.removeChild(contextMenu);
                 }),
               );
@@ -1424,6 +1436,18 @@ const RecentFiles: React.FC<RecentFilesProps> = ({
           itemNames={tagsDialogItem.itemNames}
           initialTags={tagsDialogItem.tags || []}
           onSaveTags={onSaveTags}
+        />
+      )}
+
+      {/* Notes Dialog */}
+      {notesDialogItem && onSaveNotes && (
+        <NotesDialog
+          isOpen={!!notesDialogItem}
+          onClose={() => setNotesDialogItem(null)}
+          itemId={notesDialogItem.id}
+          itemName={notesDialogItem.name}
+          initialNotes={notesDialogItem.notes || ""}
+          onSaveNotes={onSaveNotes}
         />
       )}
     </Card>

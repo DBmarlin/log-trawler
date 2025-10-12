@@ -24,6 +24,7 @@ interface InitialViewProps {
   handleCloseAllFiles: () => void;
   renameItem: (itemId: string, newName: string) => Promise<boolean>;
   onSaveTags?: (itemId: string, tags: string[]) => void;
+  onSaveNotes?: (itemId: string, notes: string) => void;
   loadedFileIds?: string[];
   onFileClose?: (fileId: string) => void;
 }
@@ -40,6 +41,7 @@ const InitialView: React.FC<InitialViewProps> = ({
   handleCloseAllFiles,
   renameItem,
   onSaveTags,
+  onSaveNotes,
   loadedFileIds,
   onFileClose,
 }) => {
@@ -180,6 +182,7 @@ const InitialView: React.FC<InitialViewProps> = ({
         onMultipleFilesSelect={onMultipleFilesSelect}
         renameItem={renameItem}
         onSaveTags={onSaveTags}
+        onSaveNotes={onSaveNotes}
         loadedFileIds={loadedFileIds}
         onFileClose={onFileClose}
       />

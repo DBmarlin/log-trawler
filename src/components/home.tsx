@@ -352,6 +352,7 @@ const Home = () => {
               handleCloseAllFiles={handleCloseAllFiles} // From hook
               renameItem={renameItem} // From hook
               onSaveTags={handleSaveTags} // Pass tags handler
+              onSaveNotes={handleSaveNotes} // Pass notes handler
               loadedFileIds={files.map(f => f.id)} // Pass loaded file ids
               onFileClose={handleRemoveFile} // Pass handleRemoveFile as onFileClose
             />
