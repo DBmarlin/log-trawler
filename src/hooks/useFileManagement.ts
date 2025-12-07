@@ -95,6 +95,10 @@ export function useFileManagement() {
 
 
   const processFilesInternal = useCallback(async (droppedFiles: File[]) => {
+    console.log("[FileProcessing] Processing dropped files", {
+      count: droppedFiles.length,
+      names: droppedFiles.map(f => f.name),
+    });
     // Helper function to generate unique names
     const getUniqueName = (baseName: string, existingNames: Set<string>): string => {
       if (!existingNames.has(baseName)) return baseName;
@@ -179,7 +183,7 @@ export function useFileManagement() {
           const arrayBuffer = await file.arrayBuffer();
           const zip = await JSZip.loadAsync(arrayBuffer);
           for (const [zipEntryName, zipEntry] of Object.entries(zip.files)) {
-            if (!zipEntry.dir && zipEntryName.endsWith(".log")) {
+            if (!zipEntry.dir && /\.(log|txt)$/i.test(zipEntryName)) {
               const content = await zipEntry.async("uint8array");
               extractedEntries.push({ name: zipEntryName, content });
             }
@@ -191,7 +195,7 @@ export function useFileManagement() {
           const tarData = gunzipSync(uint8);
           const entries = extractTarEntries(tarData);
           for (const entry of entries) {
-            if (entry.name.endsWith(".log")) {
+            if (/\.(log|txt)$/i.test(entry.name)) {
               extractedEntries.push({ name: entry.name, content: entry.data });
             }
           }
@@ -293,13 +297,19 @@ export function useFileManagement() {
         } finally {
           setIsExtractingArchive(false);
         }
-      } else if (file.name.endsWith(".log")) {
-        // Direct log file
+      } else if (/\.(log|txt)$/i.test(file.name)) {
+        // Direct log or text log file
         if (file.size > STREAMING_THRESHOLD) {
           logFilesToProcess.push({ name: file.name, content: null, filePath: (file as any).path, size: file.size });
         } else {
           logFilesToProcess.push({ name: file.name, content: await file.text(), size: file.size });
         }
+      } else {
+        console.warn("[FileProcessing] Ignoring unsupported file type", {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+        });
       }
       // Ignore other file types
     }
@@ -312,6 +322,12 @@ export function useFileManagement() {
     });
 
     // Now process all log files (direct or extracted)
+    if (logFilesToProcess.length === 0) {
+      console.error("[FileProcessing] No supported log files found in dropped files. Supported extensions are .log and .txt.", {
+        droppedFiles: droppedFiles.map(f => ({ name: f.name, type: f.type, size: f.size })),
+      });
+      return;
+    }
     const loadingFileIds = logFilesToProcess.map((file) => ({
       id: file.name.replace(/[^a-z0-9]/gi, "_") + "_" + Date.now(),
       name: file.name,
@@ -381,6 +397,13 @@ export function useFileManagement() {
       }
 
       const validDates = dates.filter(d => d instanceof Date && !isNaN(d.getTime()));
+      if (validDates.length === 0) {
+        console.warn("[FileProcessing] No valid timestamps found while parsing file", {
+          name: logFile.name,
+          totalLines: lines.length,
+          sampleLines: lines.slice(0, 5),
+        });
+      }
       const startDate = validDates.length > 0 ? new Date(Math.min(...validDates.map(d => d.getTime()))) : undefined;
       const endDate = validDates.length > 0 ? new Date(Math.max(...validDates.map(d => d.getTime()))) : undefined;
 

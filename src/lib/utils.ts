@@ -185,9 +185,9 @@ export const parseLogLine = (line: string): ParsedLogLine => {
     };
   }
 
-  // Match various timestamp formats
+  // Match various timestamp formats, including high-precision ISO timestamps
   const timestampRegex =
-    /(\d{4}-\d{2}-\d{2}(?:[T\s])\d{1,2}:\d{2}:\d{2}(?:,\d{3})?(?:\.\d{3})?(?:[Z])?|\d{2}[-/](?:[A-Za-z]+|\d{2})[-/]\d{4}(?:\s|:)\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?|\d{4}\/\d{2}\/\d{2}\s\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?|\[?(?:[A-Za-z]{3}\s[A-Za-z]{3}\s\d{2}\s\d{2}:\d{2}:\d{2}(?:\s\d{4})?)\]?|(?:[A-Za-z]{3}\s\d{1,2}\s\d{2}:\d{2}:\d{2})|(?:\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}(?:\.\d{3})?))/;
+    /(\d{4}-\d{2}-\d{2}(?:[T\s])\d{1,2}:\d{2}:\d{2}(?:,[0-9]{3,9})?(?:\.[0-9]{3,9})?(?:[Z])?|\d{2}[-/](?:[A-Za-z]+|\d{2})[-/]\d{4}(?:\s|:)\d{1,2}:\d{2}:\d{2}(?:\.[0-9]{3,9})?|\d{4}\/\d{2}\/\d{2}\s\d{1,2}:\d{2}:\d{2}(?:\.[0-9]{3,9})?|\[?(?:[A-Za-z]{3}\s[A-Za-z]{3}\s\d{2}\s\d{2}:\d{2}:\d{2}(?:\s\d{4})?)\]?|(?:[A-Za-z]{3}\s\d{1,2}\s\d{2}:\d{2}:\d{2})|(?:\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}(?:\.[0-9]{3,9})?))/;
   const match = line.match(timestampRegex);
 
   if (match) {
@@ -209,31 +209,49 @@ export const parseTimestamp = (timestamp: string): Date | undefined => {
   try {
     if (timestamp === "-") return undefined;
 
+    // Normalize common variants and high-precision ISO timestamps
+    let ts = timestamp.trim();
+
+    // Remove trailing colon if present (e.g. "2025-11-25T15:01:25.206569:")
+    if (ts.endsWith(":")) {
+      ts = ts.slice(0, -1);
+    }
+
+    // Reduce sub-millisecond precision to milliseconds for JS Date compatibility
+    const highPrecisionMatch = ts.match(
+      /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})([.,]\d{4,9})(Z?)$/,
+    );
+    if (highPrecisionMatch) {
+      const [, base, fraction, zone] = highPrecisionMatch;
+      const millis = fraction.replace(/^[.,]/, "").slice(0, 3);
+      ts = `${base}.${millis}${zone}`;
+    }
+
     // Try ISO format first
     try {
-      const isoDate = parseISO(timestamp);
+      const isoDate = parseISO(ts);
       if (isValid(isoDate)) return isoDate;
     } catch {}
 
     // Try each format until one works
     for (const format of DATE_FORMATS) {
-      const date = tryParseDate(timestamp, format);
+      const date = tryParseDate(ts, format);
       if (date) return date;
     }
 
     // Try to parse standard log format: 2024-12-21 21:41:36
-    if (timestamp.match(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/)) {
-      const date = new Date(timestamp.replace(" ", "T"));
+    if (ts.match(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/)) {
+      const date = new Date(ts.replace(" ", "T"));
       if (isValid(date)) return date;
     }
 
     // Handle formats like "Dec 10 06:55:46" or "Jun 14 15:16:01" without explicit year
-    const monthDayTimeMatch = timestamp.match(
+    const monthDayTimeMatch = ts.match(
       /([A-Za-z]{3})\s+(\d{1,2})\s+(\d{2}:\d{2}:\d{2})/,
     );
 
     // Handle formats like "03-17 16:13:38.811" without explicit year
-    const numericMonthDayTimeMatch = timestamp.match(
+    const numericMonthDayTimeMatch = ts.match(
       /(\d{2})-(\d{2})\s+(\d{2}:\d{2}:\d{2}(?:\.\d{3})?)/,
     );
     if (monthDayTimeMatch) {
@@ -270,7 +288,7 @@ export const parseTimestamp = (timestamp: string): Date | undefined => {
 
     // Try direct Date constructor as last resort
     try {
-      const date = new Date(timestamp);
+      const date = new Date(ts);
       if (isValid(date) && date.getFullYear() > 2000) return date;
     } catch {}
 

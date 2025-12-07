@@ -43,7 +43,7 @@ export function useLogProcessing(activeFile: LogFile | undefined) {
               // Minimal parseLogLine for worker - adjust if more complex parsing is needed
               const parseLogLine = (line) => {
                 if (!line || !line.trim()) return { timestamp: "-", message: line || "" };
-                const timestampRegex = /(\\d{4}-\\d{2}-\\d{2}(?:[T\\s])\\d{1,2}:\\d{2}:\\d{2}(?:\\.\\d{3})?(?:[Z])?|\\d{2}[-/](?:[A-Za-z]+|\\d{2})[-/]\\d{4}(?:\\s|:)\\d{1,2}:\\d{2}:\\d{2}(?:\\.\\d{3})?|\\d{4}\\/\\d{2}\\/\\d{2}\\s\\d{1,2}:\\d{2}:\\d{2}(?:\\.\\d{3})?)/.exec(line);
+                const timestampRegex = /(\\d{4}-\\d{2}-\\d{2}(?:[T\\s])\\d{1,2}:\\d{2}:\\d{2}(?:,[0-9]{3,9})?(?:\\.[0-9]{3,9})?(?:[Z])?|\\d{2}[-/](?:[A-Za-z]+|\\d{2})[-/]\\d{4}(?:\\s|:)\\d{1,2}:\\d{2}:\\d{2}(?:\\.[0-9]{3,9})?|\\d{4}\\/\\d{2}\\/\\d{2}\\s\\d{1,2}:\\d{2}:\\d{2}(?:\\.[0-9]{3,9})?)/.exec(line);
                 return timestampRegex ? { timestamp: timestampRegex[1], message: line } : { timestamp: "-", message: line };
               };
               for (let i = 0; i < lines.length; i++) {
