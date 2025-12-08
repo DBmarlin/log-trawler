@@ -12,6 +12,10 @@ import {
   WrapText,
   ChevronsUp,
   ChevronsDown,
+  ChevronUp,
+  ChevronDown,
+  MoveUp,
+  MoveDown,
   BookmarkIcon,
   AlignJustify,
 } from "lucide-react";
@@ -256,12 +260,104 @@ const LogDisplay = ({
     overscan: 5,
   });
 
+  const getCurrentTopIndex = () => {
+    const virtualItems = rowVirtualizer.getVirtualItems();
+    if (!virtualItems || virtualItems.length === 0) {
+      return 0;
+    }
+
+    const scrollElement = parentRef.current;
+    if (scrollElement) {
+      const scrollTop = scrollElement.scrollTop;
+      const topItem = virtualItems.find((item) => item.start >= scrollTop);
+      if (topItem) {
+        return topItem.index;
+      }
+    }
+
+    return virtualItems[0]?.index ?? 0;
+  };
+
   const scrollToTop = () => {
-    rowVirtualizer.scrollToIndex(0);
+    rowVirtualizer.scrollToIndex(0, { align: "start" });
   };
 
   const scrollToBottom = () => {
-    rowVirtualizer.scrollToIndex(filteredEntries.length - 1);
+    rowVirtualizer.scrollToIndex(filteredEntries.length - 1, {
+      align: "end",
+    });
+  };
+
+  const scrollPageUp = () => {
+    const scrollElement = parentRef.current;
+    if (!scrollElement) return;
+
+    const newScrollTop = Math.max(
+      0,
+      scrollElement.scrollTop - scrollElement.clientHeight,
+    );
+    scrollElement.scrollTop = newScrollTop;
+  };
+
+  const scrollPageDown = () => {
+    const scrollElement = parentRef.current;
+    if (!scrollElement) return;
+
+    const maxScrollTop =
+      scrollElement.scrollHeight - scrollElement.clientHeight;
+    const newScrollTop = Math.min(
+      maxScrollTop,
+      scrollElement.scrollTop + scrollElement.clientHeight,
+    );
+    scrollElement.scrollTop = newScrollTop;
+  };
+
+  const scrollToPreviousMarker = () => {
+    if (interestingLines.size === 0 || filteredEntries.length === 0) {
+      return;
+    }
+
+    const currentIndex = getCurrentTopIndex();
+
+    // Search backwards from the current top index
+    for (let i = currentIndex - 1; i >= 0; i--) {
+      if (interestingLines.has(filteredEntries[i].lineNumber)) {
+        rowVirtualizer.scrollToIndex(i, { align: "start" });
+        return;
+      }
+    }
+
+    // Wrap around to the bottom if nothing found above
+    for (let i = filteredEntries.length - 1; i >= currentIndex; i--) {
+      if (interestingLines.has(filteredEntries[i].lineNumber)) {
+        rowVirtualizer.scrollToIndex(i, { align: "start" });
+        return;
+      }
+    }
+  };
+
+  const scrollToNextMarker = () => {
+    if (interestingLines.size === 0 || filteredEntries.length === 0) {
+      return;
+    }
+
+    const currentIndex = getCurrentTopIndex();
+
+    // Search forwards from the current top index
+    for (let i = currentIndex + 1; i < filteredEntries.length; i++) {
+      if (interestingLines.has(filteredEntries[i].lineNumber)) {
+        rowVirtualizer.scrollToIndex(i, { align: "start" });
+        return;
+      }
+    }
+
+    // Wrap around to the top if nothing found below
+    for (let i = 0; i <= currentIndex; i++) {
+      if (interestingLines.has(filteredEntries[i].lineNumber)) {
+        rowVirtualizer.scrollToIndex(i, { align: "start" });
+        return;
+      }
+    }
   };
 
   useEffect(() => {
@@ -313,6 +409,43 @@ const LogDisplay = ({
                       <ButtonWithRef
                         variant="ghost"
                         size="icon"
+                        onClick={scrollToPreviousMarker}
+                        className="h-8 w-8"
+                        disabled={interestingLines.size === 0}
+                      >
+                        <ChevronUp className="h-4 w-4" />
+                      </ButtonWithRef>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Previous marker</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <ButtonWithRef
+                        variant="ghost"
+                        size="icon"
+                        onClick={scrollPageUp}
+                        className="h-8 w-8"
+                      >
+                        <MoveUp className="h-4 w-4" />
+                      </ButtonWithRef>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Page up</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <ButtonWithRef
+                        variant="ghost"
+                        size="icon"
                         onClick={scrollToTop}
                         className="h-8 w-8"
                       >
@@ -339,6 +472,43 @@ const LogDisplay = ({
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Jump to bottom</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <ButtonWithRef
+                        variant="ghost"
+                        size="icon"
+                        onClick={scrollPageDown}
+                        className="h-8 w-8"
+                      >
+                        <MoveDown className="h-4 w-4" />
+                      </ButtonWithRef>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Page down</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <ButtonWithRef
+                        variant="ghost"
+                        size="icon"
+                        onClick={scrollToNextMarker}
+                        className="h-8 w-8"
+                        disabled={interestingLines.size === 0}
+                      >
+                        <ChevronDown className="h-4 w-4" />
+                      </ButtonWithRef>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Next marker</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
