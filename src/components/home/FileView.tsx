@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { X, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchBar from "../log-viewer/SearchBar";
 import ActiveFilters from "../log-viewer/ActiveFilters";
-import LogDisplay from "../log-viewer/LogDisplay";
+import LogDisplay, { type LogDisplayHandle } from "../log-viewer/LogDisplay";
 import LogStats from "../log-viewer/LogStats";
 import TimeSeriesChart from "../log-viewer/TimeSeriesChart";
 import { FilterPresets, type FilterPreset } from "../log-viewer/FilterPresets";
@@ -103,6 +103,9 @@ const FileView: React.FC<FileViewProps> = ({
   handleCloseFilesToLeft, // Destructure new prop
   handleCloseFilesToRight, // Destructure new prop
 }) => {
+  const logDisplayRef = useRef<LogDisplayHandle>(null);
+  const [canNavigateSearch, setCanNavigateSearch] = useState(false);
+
   if (!activeFile) {
     // Should ideally not happen if FileView is rendered correctly, but good practice
     return (
@@ -399,6 +402,13 @@ const FileView: React.FC<FileViewProps> = ({
             <div className="flex flex-col h-full relative">
               <SearchBar
                 onSearch={handleSearch}
+                onPreviousOccurrence={() =>
+                  logDisplayRef.current?.scrollToPreviousSearchMatch()
+                }
+                onNextOccurrence={() =>
+                  logDisplayRef.current?.scrollToNextSearchMatch()
+                }
+                canNavigateSearch={canNavigateSearch}
                 onAddInclude={(term, isRegex) =>
                   handleAddFilter(term, "include", isRegex)
                 }
@@ -441,9 +451,11 @@ const FileView: React.FC<FileViewProps> = ({
               />
 
               <LogDisplay
+                ref={logDisplayRef}
                 entries={visibleEntries}
                 filters={activeFile?.filters}
                 searchTerm={searchTerm}
+                isRegexSearch={isRegexSearch}
                 onAddInclude={(term) => handleAddFilter(term, "include")}
                 onAddExclude={(term) => handleAddFilter(term, "exclude")}
                 fileId={activeFile?.id}
@@ -451,6 +463,7 @@ const FileView: React.FC<FileViewProps> = ({
                 initialInterestingLines={activeFile?.interestingLines}
                 initialShowOnlyMarked={activeFile?.showOnlyMarked}
                 onUpdateShowOnlyMarked={onUpdateShowOnlyMarked}
+                onSearchMatchesChange={setCanNavigateSearch}
               />
             </div>
           </ResizablePanel>

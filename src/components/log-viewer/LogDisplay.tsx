@@ -2,10 +2,22 @@
 const openUrl = (url: string) => {
   window.open(url, "_blank");
 };
-import React, { useRef, useEffect, useState, forwardRef } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+  useMemo,
+  useImperativeHandle,
+} from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { getFilterColor, getFilterIndex } from "@/lib/utils";
 import { useGlobalSettings } from "@/hooks/useGlobalSettings";
+import {
+  findSearchMatchIndex,
+  getSearchMatches,
+  doesTextMatchSearch,
+} from "./searchMatching";
 import {
   Plus,
   Minus,
@@ -45,6 +57,7 @@ interface LogDisplayProps {
   entries?: LogEntry[];
   filters?: FilterItem[];
   searchTerm?: string;
+  isRegexSearch?: boolean;
   className?: string;
   onAddInclude?: (term: string) => void;
   onAddExclude?: (term: string) => void;
@@ -53,6 +66,13 @@ interface LogDisplayProps {
   initialInterestingLines?: number[];
   initialShowOnlyMarked?: boolean;
   onUpdateShowOnlyMarked?: (fileId: string, showOnly: boolean) => void;
+  onSearchMatchesChange?: (hasMatches: boolean) => void;
+}
+
+export interface LogDisplayHandle {
+  scrollToNextSearchMatch: () => void;
+  scrollToPreviousSearchMatch: () => void;
+  hasSearchMatches: () => boolean;
 }
 
 const DEFAULT_ENTRIES: LogEntry[] = [
@@ -73,10 +93,11 @@ const ButtonWithRef = forwardRef<
   React.ComponentProps<typeof Button>
 >((props, ref) => <Button ref={ref} {...props} />);
 
-const LogDisplay = ({
+const LogDisplay = forwardRef<LogDisplayHandle, LogDisplayProps>(({
   entries = DEFAULT_ENTRIES,
   filters = [],
   searchTerm = "",
+  isRegexSearch = false,
   className = "",
   onAddInclude = () => {},
   onAddExclude = () => {},
@@ -85,7 +106,8 @@ const LogDisplay = ({
   initialInterestingLines = [],
   initialShowOnlyMarked = false,
   onUpdateShowOnlyMarked = () => {},
-}: LogDisplayProps) => {
+  onSearchMatchesChange = () => {},
+}, ref) => {
   const { settings, updateSettings } = useGlobalSettings();
   const wrapText = settings.wrapText;
   const compact = settings.compact;
@@ -159,52 +181,34 @@ const LogDisplay = ({
       : matches;
   };
 
-  const highlightText = React.useMemo(() => {
+  const highlightText = useMemo(() => {
     return (text: string) => {
       if (!text) return text;
       if (filters.length === 0 && !searchTerm) return text;
       const highlights = getHighlights(text);
       if (highlights.length === 0) {
         if (!searchTerm) return text;
-        if (searchTerm.length < 2) return text;
-        try {
-          let searchRegex;
-          try {
-            searchRegex = new RegExp(searchTerm, "gi");
-          } catch (e) {
-            searchRegex = new RegExp(
-              `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-              "gi",
-            );
+        const matches = getSearchMatches(text, searchTerm, isRegexSearch);
+        if (matches.length === 0) return text;
+
+        let lastIndex = 0;
+        const result = [];
+        for (let i = 0; i < matches.length; i++) {
+          const match = matches[i];
+          if (match.start > lastIndex) {
+            result.push(text.substring(lastIndex, match.start));
           }
-          const matches = Array.from(text.matchAll(searchRegex));
-          if (matches.length === 0) return text;
-          let lastIndex = 0;
-          const result = [];
-          for (let i = 0; i < matches.length; i++) {
-            const match = matches[i];
-            const matchIndex = match.index;
-            const matchText = match[0];
-            if (matchIndex > lastIndex) {
-              result.push(text.substring(lastIndex, matchIndex));
-            }
-            result.push(
-              <span
-                key={i}
-                className="bg-yellow-100 text-yellow-700 font-medium"
-              >
-                {matchText}
-              </span>,
-            );
-            lastIndex = matchIndex + matchText.length;
-          }
-          if (lastIndex < text.length) {
-            result.push(text.substring(lastIndex));
-          }
-          return result;
-        } catch (e) {
-          return text;
+          result.push(
+            <span key={i} className="bg-yellow-100 text-yellow-700 font-medium">
+              {match.text}
+            </span>,
+          );
+          lastIndex = match.end;
         }
+        if (lastIndex < text.length) {
+          result.push(text.substring(lastIndex));
+        }
+        return result;
       }
       let lastIndex = 0;
       const result = [];
@@ -235,7 +239,7 @@ const LogDisplay = ({
       }
       return result;
     };
-  }, [filters, searchTerm]);
+  }, [filters, searchTerm, isRegexSearch]);
 
   const handleContextMenu = (e: React.MouseEvent, entry: LogEntry) => {
     e.preventDefault();
@@ -252,6 +256,14 @@ const LogDisplay = ({
   const filteredEntries = showOnlyMarked
     ? entries.filter((entry) => interestingLines.has(entry.lineNumber))
     : entries;
+
+  const hasSearchMatches = useMemo(() => {
+    const term = searchTerm.trim();
+    if (!term || filteredEntries.length === 0) return false;
+    return filteredEntries.some((entry) =>
+      doesTextMatchSearch(entry.message, term, isRegexSearch),
+    );
+  }, [filteredEntries, searchTerm, isRegexSearch]);
 
   const rowVirtualizer = useVirtualizer({
     count: filteredEntries.length,
@@ -277,6 +289,49 @@ const LogDisplay = ({
 
     return virtualItems[0]?.index ?? 0;
   };
+
+  const getSearchMatchIndex = (direction: 1 | -1) => {
+    if (!hasSearchMatches || filteredEntries.length === 0) return -1;
+    const currentIndex = Math.max(
+      0,
+      Math.min(getCurrentTopIndex(), filteredEntries.length - 1),
+    );
+    return findSearchMatchIndex(
+      filteredEntries.map((entry) => entry.message),
+      searchTerm,
+      isRegexSearch,
+      currentIndex,
+      direction,
+    );
+  };
+
+  const scrollToSearchMatch = (direction: 1 | -1) => {
+    const matchIndex = getSearchMatchIndex(direction);
+    if (matchIndex >= 0) {
+      rowVirtualizer.scrollToIndex(matchIndex, { align: "start" });
+    }
+  };
+
+  const scrollToPreviousSearchMatch = () => {
+    scrollToSearchMatch(-1);
+  };
+
+  const scrollToNextSearchMatch = () => {
+    scrollToSearchMatch(1);
+  };
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      scrollToNextSearchMatch,
+      scrollToPreviousSearchMatch,
+      hasSearchMatches: () => hasSearchMatches,
+    }),
+  );
+
+  useEffect(() => {
+    onSearchMatchesChange(hasSearchMatches);
+  }, [hasSearchMatches, onSearchMatchesChange]);
 
   const scrollToTop = () => {
     rowVirtualizer.scrollToIndex(0, { align: "start" });
@@ -778,6 +833,8 @@ const LogDisplay = ({
       )}
     </div>
   );
-};
+});
+
+LogDisplay.displayName = "LogDisplay";
 
 export default LogDisplay;

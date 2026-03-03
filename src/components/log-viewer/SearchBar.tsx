@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Plus, Minus, Code } from "lucide-react";
+import { Search, Plus, Minus, Code, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -14,6 +14,9 @@ interface SearchBarProps {
   onSearch?: (term: string, isRegex?: boolean) => void;
   onAddInclude?: (term: string, isRegex?: boolean) => void;
   onAddExclude?: (term: string, isRegex?: boolean) => void;
+  onPreviousOccurrence?: () => void;
+  onNextOccurrence?: () => void;
+  canNavigateSearch?: boolean;
   searchTerm?: string;
   isRegex?: boolean;
 }
@@ -22,6 +25,9 @@ const SearchBar = ({
   onSearch = () => {},
   onAddInclude = () => {},
   onAddExclude = () => {},
+  onPreviousOccurrence = () => {},
+  onNextOccurrence = () => {},
+  canNavigateSearch = false,
   searchTerm = "",
   isRegex: initialIsRegex = false,
 }: SearchBarProps) => {
@@ -40,6 +46,42 @@ const SearchBar = ({
             onChange={(e) => onSearch(e.target.value, isRegex)}
           />
         </div>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onPreviousOccurrence}
+                disabled={!canNavigateSearch}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Previous occurrence</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onNextOccurrence}
+                disabled={!canNavigateSearch}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Next occurrence</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <TooltipProvider>
           <Tooltip>
