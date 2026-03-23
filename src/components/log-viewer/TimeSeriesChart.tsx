@@ -606,38 +606,48 @@ function TimeSeriesChart(props: TimeSeriesChartProps) {
     return Math.max(0, Math.min(chartData.labels.length - 1, index));
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!chartRef.current) return;
-
-    // Get the exact position within the chart area
+  const isWithinPlotArea = (e: React.MouseEvent) => {
+    if (!chartRef.current) return false;
     const chart = chartRef.current;
     const rect = chart.canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    // Only proceed if click is within chart area
-    if (x >= chart.chartArea.left && x <= chart.chartArea.right) {
-      const index = getIndexFromPosition(x);
-      if (index >= 0) {
-        setIsSelecting(true);
-        setSelectionStart(index);
-        setSelectionEnd(index);
-      }
+    return (
+      x >= chart.chartArea.left &&
+      x <= chart.chartArea.right &&
+      y >= chart.chartArea.top &&
+      y <= chart.chartArea.bottom
+    );
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!chartRef.current) return;
+
+    // Only start selection when clicking inside the actual plot area,
+    // not legend/title/padding regions.
+    if (!isWithinPlotArea(e)) return;
+
+    const x = getMouseXPosition(e);
+    const index = getIndexFromPosition(x);
+    if (index >= 0) {
+      setIsSelecting(true);
+      setSelectionStart(index);
+      setSelectionEnd(index);
     }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isSelecting || !chartRef.current) return;
 
-    const chart = chartRef.current;
-    const rect = chart.canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    // Ignore pointer movement outside the plot area to prevent accidental
+    // selection updates from non-chart regions.
+    if (!isWithinPlotArea(e)) return;
 
-    // Constrain to chart area
-    if (x >= chart.chartArea.left && x <= chart.chartArea.right) {
-      const index = getIndexFromPosition(x);
-      if (index >= 0) {
-        setSelectionEnd(index);
-      }
+    const x = getMouseXPosition(e);
+    const index = getIndexFromPosition(x);
+    if (index >= 0) {
+      setSelectionEnd(index);
     }
   };
 
