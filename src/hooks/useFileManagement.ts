@@ -201,9 +201,61 @@ export function useFileManagement() {
           }
         }
 
-        // Save each extracted log file with parentId = folderId
-        const fileIds: string[] = [];
+        // Save extracted entries as a proper folder tree based on archive paths
+        const childIdsByFolder = new Map<string, string[]>();
+        const nestedFolderIdByPath = new Map<string, string>();
+        childIdsByFolder.set(folderId, []);
+
+        const addChildToFolder = (parentId: string, childId: string) => {
+          const existingChildren = childIdsByFolder.get(parentId) || [];
+          if (!existingChildren.includes(childId)) {
+            existingChildren.push(childId);
+            childIdsByFolder.set(parentId, existingChildren);
+          }
+        };
+
+        const normalizeArchivePath = (path: string) => {
+          return path
+            .replace(/\\/g, "/")
+            .replace(/^\/+/, "")
+            .split("/")
+            .map(segment => segment.trim())
+            .filter(Boolean);
+        };
+
         for (const entry of extractedEntries) {
+          const pathSegments = normalizeArchivePath(entry.name);
+          if (pathSegments.length === 0) {
+            continue;
+          }
+
+          let currentParentId = folderId;
+          const directorySegments = pathSegments.slice(0, -1);
+          const fileName = pathSegments[pathSegments.length - 1];
+
+          for (const segment of directorySegments) {
+            const pathKey = `${currentParentId}::${segment}`;
+            let nestedFolderId = nestedFolderIdByPath.get(pathKey);
+
+            if (!nestedFolderId) {
+              nestedFolderId = `folder_${segment.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+              const nestedFolder: FileItem = {
+                id: nestedFolderId,
+                name: segment,
+                type: "folder",
+                lastOpened: Date.now(),
+                parentId: currentParentId,
+                children: [],
+              };
+              await saveLogFile(nestedFolder);
+              nestedFolderIdByPath.set(pathKey, nestedFolderId);
+              childIdsByFolder.set(nestedFolderId, []);
+              addChildToFolder(currentParentId, nestedFolderId);
+            }
+
+            currentParentId = nestedFolderId;
+          }
+
           const logFileId = `file_${entry.name.replace(/[^a-z0-9]/gi, "_")}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
           const decoder = new TextDecoder("utf-8");
           const lines = decoder.decode(entry.content).split("\n");
@@ -261,10 +313,10 @@ export function useFileManagement() {
 
           const logFile = {
             id: logFileId,
-            name: entry.name,
+            name: fileName,
             type: "file" as const,
             lastOpened: Date.now(),
-            parentId: folderId,
+            parentId: currentParentId,
             content: lines,
             size: entry.content.length,
             lines: lines.length,
@@ -273,10 +325,12 @@ export function useFileManagement() {
             bucketSize: bucketSize,
           };
           await saveLogFile(logFile as FileItem);
-          fileIds.push(logFileId);
+          addChildToFolder(currentParentId, logFileId);
         }
-        // Update folder with children (no startDate/endDate for folders)
-        await updateLogFile(folderId, { children: fileIds });
+        // Update all folders with their children (no startDate/endDate for folders)
+        for (const [folderIdToUpdate, children] of childIdsByFolder.entries()) {
+          await updateLogFile(folderIdToUpdate, { children });
+        }
 
         // Add folder to localStorage recent files
         try {

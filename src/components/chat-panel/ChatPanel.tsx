@@ -47,32 +47,31 @@ interface ChatPanelProps {
 
 // List of some popular OpenRouter models
 const openRouterModels = [
+  "openai/gpt-5.4",
+  "openai/gpt-5.4-mini",
+  "openai/gpt-5.4-nano",
+  "openai/gpt-5.4-pro",
+  "openai/gpt-5.3-chat",
+  "openai/gpt-5.3-codex",
   "openai/gpt-5",
+  "openai/gpt-5-pro",
   "openai/gpt-5-mini",
   "openai/gpt-5-nano",
-  "openai/gpt-3.5-turbo",
-  "openai/gpt-4o",
-  "openai/gpt-4-turbo",
-  "openai/gpt-4.1",
-  "openai/gpt-4.1-mini",
-  "openai/gpt-4.1-nano",
-  "google/gemini-pro-1.5",
-  "anthropic/claude-3.5-sonnet",
-  "anthropic/claude-3-opus",
-  "anthropic/claude-3-haiku",
+  "google/gemini-2.5-pro",
+  "anthropic/claude-sonnet-4",
 ];
 
 // List of common OpenAI models
 const openaiModels = [
+  "gpt-5.4",
+  "gpt-5.4-mini",
+  "gpt-5.4-nano",
+  "gpt-5.4-pro",
+  "gpt-5.3-codex",
   "gpt-5",
+  "gpt-5-pro",
   "gpt-5-mini",
   "gpt-5-nano",
-  "gpt-4o",
-  "gpt-4-turbo",
-  "gpt-4.1",
-  "gpt-4.1-mini",
-  "gpt-4.1-nano",
-  "gpt-3.5-turbo",
 ];
 
 // Custom markdown renderer with copy button for code blocks

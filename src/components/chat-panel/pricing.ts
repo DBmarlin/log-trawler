@@ -6,120 +6,125 @@
 // Fallback pricing data for various models
 export const FALLBACK_PRICING: Record<string, any> = {
   // OpenAI Models
-  "gpt-4-turbo": {
-    input_cost_per_1k_tokens: 0.01,
-    output_cost_per_1k_tokens: 0.03,
-    max_input_tokens: 128000,
-  },
-  "gpt-4o": {
-    input_cost_per_1k_tokens: 0.005,
+  "gpt-5.4": {
+    input_cost_per_1k_tokens: 0.0025,
     output_cost_per_1k_tokens: 0.015,
-    max_input_tokens: 128000,
-  },
-  "gpt-3.5-turbo": {
-    input_cost_per_1k_tokens: 0.0005,
-    output_cost_per_1k_tokens: 0.0015,
-    max_input_tokens: 16385,
-  },
-  "gpt-4.1": {
-    input_cost_per_1k_tokens: 0.01,
-    output_cost_per_1k_tokens: 0.03,
-    max_input_tokens: 128000,
-  },
-  "gpt-4.1-mini": {
-    input_cost_per_1k_tokens: 0.0004,
-    output_cost_per_1k_tokens: 0.0016,
     max_input_tokens: 1048576,
   },
-  "gpt-4.1-nano": {
+  "gpt-5.4-mini": {
+    input_cost_per_1k_tokens: 0.00075,
+    output_cost_per_1k_tokens: 0.0045,
+    max_input_tokens: 400000,
+  },
+  "gpt-5.4-nano": {
     input_cost_per_1k_tokens: 0.0002,
-    output_cost_per_1k_tokens: 0.0008,
+    output_cost_per_1k_tokens: 0.00125,
+    max_input_tokens: 400000,
+  },
+  "gpt-5.4-pro": {
+    input_cost_per_1k_tokens: 0.03,
+    output_cost_per_1k_tokens: 0.18,
     max_input_tokens: 1048576,
+  },
+  "gpt-5.3-codex": {
+    input_cost_per_1k_tokens: 0.00175,
+    output_cost_per_1k_tokens: 0.014,
+    max_input_tokens: 400000,
+  },
+  "gpt-5": {
+    input_cost_per_1k_tokens: 0.00125,
+    output_cost_per_1k_tokens: 0.01,
+    max_input_tokens: 400000,
+  },
+  "gpt-5-pro": {
+    input_cost_per_1k_tokens: 0.015,
+    output_cost_per_1k_tokens: 0.12,
+    max_input_tokens: 400000,
+  },
+  "gpt-5-mini": {
+    input_cost_per_1k_tokens: 0.00025,
+    output_cost_per_1k_tokens: 0.002,
+    max_input_tokens: 400000,
+  },
+  "gpt-5-nano": {
+    input_cost_per_1k_tokens: 0.00005,
+    output_cost_per_1k_tokens: 0.0004,
+    max_input_tokens: 400000,
   },
 
   // OpenRouter Models
-  "openai/gpt-4-turbo": {
-    input_cost_per_1k_tokens: 0.01,
-    output_cost_per_1k_tokens: 0.03,
-    max_input_tokens: 128000,
-  },
-  "openai/gpt-4o": {
-    input_cost_per_1k_tokens: 0.005,
+  "openai/gpt-5.4": {
+    input_cost_per_1k_tokens: 0.0025,
     output_cost_per_1k_tokens: 0.015,
-    max_input_tokens: 128000,
-  },
-  "openai/gpt-3.5-turbo": {
-    input_cost_per_1k_tokens: 0.0005,
-    output_cost_per_1k_tokens: 0.0015,
-    max_input_tokens: 16385,
-  },
-  "openai/gpt-4.1": {
-    input_cost_per_1k_tokens: 0.01,
-    output_cost_per_1k_tokens: 0.03,
-    max_input_tokens: 128000,
-  },
-  "openai/gpt-4.1-mini": {
-    input_cost_per_1k_tokens: 0.0004,
-    output_cost_per_1k_tokens: 0.0016,
     max_input_tokens: 1048576,
   },
-  "openai/gpt-4.1-nano": {
+  "openai/gpt-5.4-mini": {
+    input_cost_per_1k_tokens: 0.00075,
+    output_cost_per_1k_tokens: 0.0045,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5.4-nano": {
     input_cost_per_1k_tokens: 0.0002,
-    output_cost_per_1k_tokens: 0.0008,
+    output_cost_per_1k_tokens: 0.00125,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5.4-pro": {
+    input_cost_per_1k_tokens: 0.03,
+    output_cost_per_1k_tokens: 0.18,
     max_input_tokens: 1048576,
+  },
+  "openai/gpt-5.3-chat": {
+    input_cost_per_1k_tokens: 0.00175,
+    output_cost_per_1k_tokens: 0.014,
+    max_input_tokens: 128000,
+  },
+  "openai/gpt-5.3-codex": {
+    input_cost_per_1k_tokens: 0.00175,
+    output_cost_per_1k_tokens: 0.014,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5": {
+    input_cost_per_1k_tokens: 0.00125,
+    output_cost_per_1k_tokens: 0.01,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5-pro": {
+    input_cost_per_1k_tokens: 0.015,
+    output_cost_per_1k_tokens: 0.12,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5-mini": {
+    input_cost_per_1k_tokens: 0.00025,
+    output_cost_per_1k_tokens: 0.002,
+    max_input_tokens: 400000,
+  },
+  "openai/gpt-5-nano": {
+    input_cost_per_1k_tokens: 0.00005,
+    output_cost_per_1k_tokens: 0.0004,
+    max_input_tokens: 400000,
   },
 
   // Google Models
-  "gemini-pro-1.5": {
-    input_cost_per_1k_tokens: 0.0025,
-    output_cost_per_1k_tokens: 0.0075,
-    max_input_tokens: 128000,
+  "gemini-2.5-pro": {
+    input_cost_per_1k_tokens: 0.00125,
+    output_cost_per_1k_tokens: 0.01,
+    max_input_tokens: 1048576,
   },
-  "google/gemini-pro-1.5": {
-    input_cost_per_1k_tokens: 0.0025,
-    output_cost_per_1k_tokens: 0.0075,
-    max_input_tokens: 128000,
-  },
-  "gemini-flash-1.5": {
-    input_cost_per_1k_tokens: 0.00035,
-    output_cost_per_1k_tokens: 0.00105,
-    max_input_tokens: 128000,
-  },
-  "google/gemini-flash-1.5": {
-    input_cost_per_1k_tokens: 0.00035,
-    output_cost_per_1k_tokens: 0.00105,
-    max_input_tokens: 128000,
+  "google/gemini-2.5-pro": {
+    input_cost_per_1k_tokens: 0.00125,
+    output_cost_per_1k_tokens: 0.01,
+    max_input_tokens: 1048576,
   },
 
   // Anthropic Models
-  "claude-3.5-sonnet": {
-    input_cost_per_1k_tokens: 0.0015,
-    output_cost_per_1k_tokens: 0.0075,
+  "claude-sonnet-4": {
+    input_cost_per_1k_tokens: 0.003,
+    output_cost_per_1k_tokens: 0.015,
     max_input_tokens: 200000,
   },
-  "anthropic/claude-3.5-sonnet": {
-    input_cost_per_1k_tokens: 0.0015,
-    output_cost_per_1k_tokens: 0.0075,
-    max_input_tokens: 200000,
-  },
-  "claude-3-opus": {
-    input_cost_per_1k_tokens: 0.015,
-    output_cost_per_1k_tokens: 0.075,
-    max_input_tokens: 200000,
-  },
-  "anthropic/claude-3-opus": {
-    input_cost_per_1k_tokens: 0.015,
-    output_cost_per_1k_tokens: 0.075,
-    max_input_tokens: 200000,
-  },
-  "claude-3-haiku": {
-    input_cost_per_1k_tokens: 0.00025,
-    output_cost_per_1k_tokens: 0.00125,
-    max_input_tokens: 200000,
-  },
-  "anthropic/claude-3-haiku": {
-    input_cost_per_1k_tokens: 0.00025,
-    output_cost_per_1k_tokens: 0.00125,
+  "anthropic/claude-sonnet-4": {
+    input_cost_per_1k_tokens: 0.003,
+    output_cost_per_1k_tokens: 0.015,
     max_input_tokens: 200000,
   },
 
